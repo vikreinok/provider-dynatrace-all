@@ -9,3 +9,6 @@ cover.out
 # ignore IDE folders
 .vscode/
 .idea/
+secret.yaml
+naming_deviations.md
+examples-generated

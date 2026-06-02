@@ -1,0 +1,1507 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: attributes.request.dynatrace.m.crossplane.io
+spec:
+  group: request.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Attribute
+    listKind: AttributeList
+    plural: attributes
+    singular: attribute
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Attribute is the Schema for the Attributes API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AttributeSpec defines the desired state of Attribute
+            properties:
+              forProvider:
+                properties:
+                  aggregation:
+                    description: |-
+                      (String) Aggregation type for the request values
+                      Aggregation type for the request values
+                    type: string
+                  confidential:
+                    description: |-
+                      (Boolean) Confidential data flag. Set true to treat the captured data as confidential
+                      Confidential data flag. Set `true` to treat the captured data as confidential
+                    type: boolean
+                  dataSources:
+                    description: |-
+                      (Block List) The list of data sources (see below for nested schema)
+                      The list of data sources
+                    items:
+                      properties:
+                        capturingAndStorageLocation:
+                          description: |-
+                            (String) Specifies the location where the values are captured and stored.  Required if the source is one of the following: GET_PARAMETER, URI, REQUEST_HEADER, RESPONSE_HEADER.   Not applicable in other cases.   If the source value is REQUEST_HEADER or RESPONSE_HEADER, the CAPTURE_AND_STORE_ON_BOTH location is not allowed
+                            Specifies the location where the values are captured and stored.  Required if the **source** is one of the following: `GET_PARAMETER`, `URI`, `REQUEST_HEADER`, `RESPONSE_HEADER`.   Not applicable in other cases.   If the **source** value is `REQUEST_HEADER` or `RESPONSE_HEADER`, the `CAPTURE_AND_STORE_ON_BOTH` location is not allowed
+                          type: string
+                        cicsSdkMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        cicsTransactionCallType:
+                          description: |-
+                            (String) CICS transaction call type condition for which the value is captured. Required if the source is: CICS_TRANSACTION_CALL_TYPE. Not applicable in other cases.
+                            CICS transaction call type condition for which the value is captured. Required if the source is: `CICS_TRANSACTION_CALL_TYPE`. Not applicable in other cases.
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) The request attribute is enabled (true) or disabled (false)
+                            The data source is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        iibLabelMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        iibMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        iibNodeType:
+                          description: |-
+                            (String) The IBM integration bus node type for which the value is captured.  This or iibMethodNodeCondition is required if the source is: IIB_NODE.  Not applicable in other cases
+                            The IBM integration bus node type for which the value is captured.  This or `iibMethodNodeCondition` is required if the **source** is: `IIB_NODE`.  Not applicable in other cases
+                          type: string
+                        iibNodeTypeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        imsTransactionCallType:
+                          description: |-
+                            (String) IMS transaction call type condition for which the value is captured. Required if the source is: IMS_TRANSACTION_CALL_TYPE. Not applicable in other cases.
+                            IMS transaction call type condition for which the value is captured. Required if the source is: `IMS_TRANSACTION_CALL_TYPE`. Not applicable in other cases.
+                          type: string
+                        methods:
+                          description: |-
+                            (Block List) The method specification if the source value is METHOD_PARAM.   Not applicable in other cases (see below for nested schema)
+                            The method specification if the **source** value is `METHOD_PARAM`.   Not applicable in other cases
+                          items:
+                            properties:
+                              argumentIndex:
+                                description: |-
+                                  (Number) The index of the argument to capture. Set 0 to capture the return value, 1 or higher to capture a mehtod argument.   Required if the capture is set to ARGUMENT.  Not applicable in other cases
+                                  The index of the argument to capture. Set `0` to capture the return value, `1` or higher to capture a mehtod argument.   Required if the **capture** is set to `ARGUMENT`.  Not applicable in other cases
+                                type: number
+                              capture:
+                                description: |-
+                                  (String) What to capture from the method
+                                  What to capture from the method
+                                type: string
+                              deepObjectAccess:
+                                description: |-
+                                  (String) The getter chain to apply to the captured object. It is required in one of the following cases:  The capture is set to THIS.    The capture is set to ARGUMENT, and the argument is not a primitive, a primitive wrapper class, a string, or an array.   Not applicable in other cases
+                                  The getter chain to apply to the captured object. It is required in one of the following cases:  The **capture** is set to `THIS`.    The **capture** is set to `ARGUMENT`, and the argument is not a primitive, a primitive wrapper class, a string, or an array.   Not applicable in other cases
+                                type: string
+                              method:
+                                description: |-
+                                  (Block List, Max: 1) Configuration of a method to be captured (see below for nested schema)
+                                  Configuration of a method to be captured
+                                items:
+                                  properties:
+                                    argumentTypes:
+                                      description: |-
+                                        (List of String) Configuration of a method to be captured
+                                        Configuration of a method to be captured
+                                      items:
+                                        type: string
+                                      type: array
+                                    className:
+                                      description: |-
+                                        (String) The class name where the method to capture resides.   Either this or the fileName must be set
+                                        The class name where the method to capture resides.   Either this or the **fileName** must be set
+                                      type: string
+                                    fileName:
+                                      description: |-
+                                        (String) The file name where the method to capture resides.   Either this or className must be set
+                                        The file name where the method to capture resides.   Either this or **className** must be set
+                                      type: string
+                                    fileNameMatcher:
+                                      description: |-
+                                        (String) The operator of the comparison. If not set, EQUALS is used
+                                        The operator of the comparison. If not set, `EQUALS` is used
+                                      type: string
+                                    methodName:
+                                      description: |-
+                                        (String) The name of the method to capture
+                                        The name of the method to capture
+                                      type: string
+                                    modifiers:
+                                      description: |-
+                                        (Set of String) The modifiers of the method to capture
+                                        The modifiers of the method to capture
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    returnType:
+                                      description: |-
+                                        (String) The return type
+                                        The return type
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                    visibility:
+                                      description: |-
+                                        (String) The visibility of the method to capture
+                                        The visibility of the method to capture
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        parameterName:
+                          description: |-
+                            (String) The name of the web request parameter to capture.  Required if the source is one of the following: POST_PARAMETER, GET_PARAMETER, REQUEST_HEADER, RESPONSE_HEADER, CUSTOM_ATTRIBUTE.  Not applicable in other cases
+                            The name of the web request parameter to capture.  Required if the **source** is one of the following: `POST_PARAMETER`, `GET_PARAMETER`, `REQUEST_HEADER`, `RESPONSE_HEADER`, `CUSTOM_ATTRIBUTE`.  Not applicable in other cases
+                          type: string
+                        scope:
+                          description: |-
+                            (Block List, Max: 1) Conditions for data capturing (see below for nested schema)
+                            Conditions for data capturing
+                          items:
+                            properties:
+                              hostGroup:
+                                description: |-
+                                  (String) Only applies to this host group
+                                  Only applies to this host group
+                                type: string
+                              processGroup:
+                                description: |-
+                                  (String) Only applies to this process group. Note that this can't be transferred between different clusters or environments
+                                  Only applies to this process group. Note that this can't be transferred between different clusters or environments
+                                type: string
+                              serviceTechnology:
+                                description: |-
+                                  (String) Only applies to this service technology
+                                  Only applies to this service technology
+                                type: string
+                              tagOfProcessGroup:
+                                description: |-
+                                  (String) Only apply to process groups matching this tag
+                                  Only apply to process groups matching this tag
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        serverVariableTechnology:
+                          description: |-
+                            (String) The technology of the server variable to capture if the source value is SERVER_VARIABLE.
+                            The technology of the server variable to capture if the source value is SERVER_VARIABLE.
+
+                            Not applicable in other cases.
+                          type: string
+                        sessionAttributeTechnology:
+                          description: |-
+                            (String) The technology of the session attribute to capture if the source value is SESSION_ATTRIBUTE.
+                            The technology of the session attribute to capture if the **source** value is `SESSION_ATTRIBUTE`.
+
+                            Not applicable in other cases
+                          type: string
+                        source:
+                          description: |-
+                            (String) The source of the attribute to capture. Works in conjunction with parameterName or methods and technology
+                            The source of the attribute to capture. Works in conjunction with **parameterName** or **methods** and **technology**
+                          type: string
+                        spanAttributeKey:
+                          description: |-
+                            (String) The key of the span attribute to capture. Required if the source is: SPAN_ATTRIBUTE. Not applicable in other cases.
+                            The key of the span attribute to capture. Required if the source is: `SPAN_ATTRIBUTE`. Not applicable in other cases.
+                          type: string
+                        technology:
+                          description: |-
+                            (String) The technology of the method to capture if the source value is METHOD_PARAM.
+                            The technology of the method to capture if the **source** value is `METHOD_PARAM`.
+
+                            Not applicable in other cases
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        valueProcessing:
+                          description: |-
+                            (Block List, Max: 1) Process values as specified (see below for nested schema)
+                            Process values as specified
+                          items:
+                            properties:
+                              extractSubstring:
+                                description: |-
+                                  (Block List, Max: 1) Preprocess by extracting a substring from the original value (see below for nested schema)
+                                  Preprocess by extracting a substring from the original value
+                                items:
+                                  properties:
+                                    delimiter:
+                                      description: |-
+                                        (String) The delimiter string
+                                        The delimiter string
+                                      type: string
+                                    endDelimiter:
+                                      description: |-
+                                        delimiter string.   Required if the position value is BETWEEN. Otherwise not allowed
+                                        The end-delimiter string.   Required if the **position** value is `BETWEEN`. Otherwise not allowed
+                                      type: string
+                                    position:
+                                      description: |-
+                                        (String) The position of the extracted string relative to delimiters
+                                        The position of the extracted string relative to delimiters
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                  type: object
+                                type: array
+                              splitAt:
+                                description: |-
+                                  (String) Split (preprocessed) string values at this separator
+                                  Split (preprocessed) string values at this separator
+                                type: string
+                              trim:
+                                description: |-
+                                  (Boolean) Prune Whitespaces. Defaults to false
+                                  Prune Whitespaces. Defaults to false
+                                type: boolean
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              valueCondition:
+                                description: |-
+                                  (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                                  IBM integration bus label node name condition for which the value is captured
+                                items:
+                                  properties:
+                                    negate:
+                                      description: |-
+                                        (Boolean) Negate the comparison
+                                        Negate the comparison
+                                      type: boolean
+                                    operator:
+                                      description: |-
+                                        (String) Operator comparing the extracted value to the comparison value
+                                        Operator comparing the extracted value to the comparison value
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to compare to
+                                        The value to compare to
+                                      type: string
+                                  type: object
+                                type: array
+                              valueExtractorRegex:
+                                description: |-
+                                  (String) Extract value from captured data per regex
+                                  Extract value from captured data per regex
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  dataType:
+                    description: |-
+                      (String) The data type of the request attribute
+                      The data type of the request attribute
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) The request attribute is enabled (true) or disabled (false)
+                      The request attribute is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) The name of the request attribute
+                      The name of the request attribute
+                    type: string
+                  normalization:
+                    description: |-
+                      (String) String values transformation.   If the dataType is not string, set the Original here
+                      String values transformation.   If the **dataType** is not `string`, set the `Original` here
+                    type: string
+                  skipPersonalDataMasking:
+                    description: |-
+                      (Boolean) Personal data masking flag. Set true to skip masking.   Warning: This will potentially access personalized data
+                      Personal data masking flag. Set `true` to skip masking.   Warning: This will potentially access personalized data
+                    type: boolean
+                  unknowns:
+                    description: |-
+                      (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                      allows for configuring properties that are not explicitly supported by the current version of this provider
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  aggregation:
+                    description: |-
+                      (String) Aggregation type for the request values
+                      Aggregation type for the request values
+                    type: string
+                  confidential:
+                    description: |-
+                      (Boolean) Confidential data flag. Set true to treat the captured data as confidential
+                      Confidential data flag. Set `true` to treat the captured data as confidential
+                    type: boolean
+                  dataSources:
+                    description: |-
+                      (Block List) The list of data sources (see below for nested schema)
+                      The list of data sources
+                    items:
+                      properties:
+                        capturingAndStorageLocation:
+                          description: |-
+                            (String) Specifies the location where the values are captured and stored.  Required if the source is one of the following: GET_PARAMETER, URI, REQUEST_HEADER, RESPONSE_HEADER.   Not applicable in other cases.   If the source value is REQUEST_HEADER or RESPONSE_HEADER, the CAPTURE_AND_STORE_ON_BOTH location is not allowed
+                            Specifies the location where the values are captured and stored.  Required if the **source** is one of the following: `GET_PARAMETER`, `URI`, `REQUEST_HEADER`, `RESPONSE_HEADER`.   Not applicable in other cases.   If the **source** value is `REQUEST_HEADER` or `RESPONSE_HEADER`, the `CAPTURE_AND_STORE_ON_BOTH` location is not allowed
+                          type: string
+                        cicsSdkMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        cicsTransactionCallType:
+                          description: |-
+                            (String) CICS transaction call type condition for which the value is captured. Required if the source is: CICS_TRANSACTION_CALL_TYPE. Not applicable in other cases.
+                            CICS transaction call type condition for which the value is captured. Required if the source is: `CICS_TRANSACTION_CALL_TYPE`. Not applicable in other cases.
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) The request attribute is enabled (true) or disabled (false)
+                            The data source is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        iibLabelMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        iibMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        iibNodeType:
+                          description: |-
+                            (String) The IBM integration bus node type for which the value is captured.  This or iibMethodNodeCondition is required if the source is: IIB_NODE.  Not applicable in other cases
+                            The IBM integration bus node type for which the value is captured.  This or `iibMethodNodeCondition` is required if the **source** is: `IIB_NODE`.  Not applicable in other cases
+                          type: string
+                        iibNodeTypeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        imsTransactionCallType:
+                          description: |-
+                            (String) IMS transaction call type condition for which the value is captured. Required if the source is: IMS_TRANSACTION_CALL_TYPE. Not applicable in other cases.
+                            IMS transaction call type condition for which the value is captured. Required if the source is: `IMS_TRANSACTION_CALL_TYPE`. Not applicable in other cases.
+                          type: string
+                        methods:
+                          description: |-
+                            (Block List) The method specification if the source value is METHOD_PARAM.   Not applicable in other cases (see below for nested schema)
+                            The method specification if the **source** value is `METHOD_PARAM`.   Not applicable in other cases
+                          items:
+                            properties:
+                              argumentIndex:
+                                description: |-
+                                  (Number) The index of the argument to capture. Set 0 to capture the return value, 1 or higher to capture a mehtod argument.   Required if the capture is set to ARGUMENT.  Not applicable in other cases
+                                  The index of the argument to capture. Set `0` to capture the return value, `1` or higher to capture a mehtod argument.   Required if the **capture** is set to `ARGUMENT`.  Not applicable in other cases
+                                type: number
+                              capture:
+                                description: |-
+                                  (String) What to capture from the method
+                                  What to capture from the method
+                                type: string
+                              deepObjectAccess:
+                                description: |-
+                                  (String) The getter chain to apply to the captured object. It is required in one of the following cases:  The capture is set to THIS.    The capture is set to ARGUMENT, and the argument is not a primitive, a primitive wrapper class, a string, or an array.   Not applicable in other cases
+                                  The getter chain to apply to the captured object. It is required in one of the following cases:  The **capture** is set to `THIS`.    The **capture** is set to `ARGUMENT`, and the argument is not a primitive, a primitive wrapper class, a string, or an array.   Not applicable in other cases
+                                type: string
+                              method:
+                                description: |-
+                                  (Block List, Max: 1) Configuration of a method to be captured (see below for nested schema)
+                                  Configuration of a method to be captured
+                                items:
+                                  properties:
+                                    argumentTypes:
+                                      description: |-
+                                        (List of String) Configuration of a method to be captured
+                                        Configuration of a method to be captured
+                                      items:
+                                        type: string
+                                      type: array
+                                    className:
+                                      description: |-
+                                        (String) The class name where the method to capture resides.   Either this or the fileName must be set
+                                        The class name where the method to capture resides.   Either this or the **fileName** must be set
+                                      type: string
+                                    fileName:
+                                      description: |-
+                                        (String) The file name where the method to capture resides.   Either this or className must be set
+                                        The file name where the method to capture resides.   Either this or **className** must be set
+                                      type: string
+                                    fileNameMatcher:
+                                      description: |-
+                                        (String) The operator of the comparison. If not set, EQUALS is used
+                                        The operator of the comparison. If not set, `EQUALS` is used
+                                      type: string
+                                    methodName:
+                                      description: |-
+                                        (String) The name of the method to capture
+                                        The name of the method to capture
+                                      type: string
+                                    modifiers:
+                                      description: |-
+                                        (Set of String) The modifiers of the method to capture
+                                        The modifiers of the method to capture
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    returnType:
+                                      description: |-
+                                        (String) The return type
+                                        The return type
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                    visibility:
+                                      description: |-
+                                        (String) The visibility of the method to capture
+                                        The visibility of the method to capture
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        parameterName:
+                          description: |-
+                            (String) The name of the web request parameter to capture.  Required if the source is one of the following: POST_PARAMETER, GET_PARAMETER, REQUEST_HEADER, RESPONSE_HEADER, CUSTOM_ATTRIBUTE.  Not applicable in other cases
+                            The name of the web request parameter to capture.  Required if the **source** is one of the following: `POST_PARAMETER`, `GET_PARAMETER`, `REQUEST_HEADER`, `RESPONSE_HEADER`, `CUSTOM_ATTRIBUTE`.  Not applicable in other cases
+                          type: string
+                        scope:
+                          description: |-
+                            (Block List, Max: 1) Conditions for data capturing (see below for nested schema)
+                            Conditions for data capturing
+                          items:
+                            properties:
+                              hostGroup:
+                                description: |-
+                                  (String) Only applies to this host group
+                                  Only applies to this host group
+                                type: string
+                              processGroup:
+                                description: |-
+                                  (String) Only applies to this process group. Note that this can't be transferred between different clusters or environments
+                                  Only applies to this process group. Note that this can't be transferred between different clusters or environments
+                                type: string
+                              serviceTechnology:
+                                description: |-
+                                  (String) Only applies to this service technology
+                                  Only applies to this service technology
+                                type: string
+                              tagOfProcessGroup:
+                                description: |-
+                                  (String) Only apply to process groups matching this tag
+                                  Only apply to process groups matching this tag
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        serverVariableTechnology:
+                          description: |-
+                            (String) The technology of the server variable to capture if the source value is SERVER_VARIABLE.
+                            The technology of the server variable to capture if the source value is SERVER_VARIABLE.
+
+                            Not applicable in other cases.
+                          type: string
+                        sessionAttributeTechnology:
+                          description: |-
+                            (String) The technology of the session attribute to capture if the source value is SESSION_ATTRIBUTE.
+                            The technology of the session attribute to capture if the **source** value is `SESSION_ATTRIBUTE`.
+
+                            Not applicable in other cases
+                          type: string
+                        source:
+                          description: |-
+                            (String) The source of the attribute to capture. Works in conjunction with parameterName or methods and technology
+                            The source of the attribute to capture. Works in conjunction with **parameterName** or **methods** and **technology**
+                          type: string
+                        spanAttributeKey:
+                          description: |-
+                            (String) The key of the span attribute to capture. Required if the source is: SPAN_ATTRIBUTE. Not applicable in other cases.
+                            The key of the span attribute to capture. Required if the source is: `SPAN_ATTRIBUTE`. Not applicable in other cases.
+                          type: string
+                        technology:
+                          description: |-
+                            (String) The technology of the method to capture if the source value is METHOD_PARAM.
+                            The technology of the method to capture if the **source** value is `METHOD_PARAM`.
+
+                            Not applicable in other cases
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        valueProcessing:
+                          description: |-
+                            (Block List, Max: 1) Process values as specified (see below for nested schema)
+                            Process values as specified
+                          items:
+                            properties:
+                              extractSubstring:
+                                description: |-
+                                  (Block List, Max: 1) Preprocess by extracting a substring from the original value (see below for nested schema)
+                                  Preprocess by extracting a substring from the original value
+                                items:
+                                  properties:
+                                    delimiter:
+                                      description: |-
+                                        (String) The delimiter string
+                                        The delimiter string
+                                      type: string
+                                    endDelimiter:
+                                      description: |-
+                                        delimiter string.   Required if the position value is BETWEEN. Otherwise not allowed
+                                        The end-delimiter string.   Required if the **position** value is `BETWEEN`. Otherwise not allowed
+                                      type: string
+                                    position:
+                                      description: |-
+                                        (String) The position of the extracted string relative to delimiters
+                                        The position of the extracted string relative to delimiters
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                  type: object
+                                type: array
+                              splitAt:
+                                description: |-
+                                  (String) Split (preprocessed) string values at this separator
+                                  Split (preprocessed) string values at this separator
+                                type: string
+                              trim:
+                                description: |-
+                                  (Boolean) Prune Whitespaces. Defaults to false
+                                  Prune Whitespaces. Defaults to false
+                                type: boolean
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              valueCondition:
+                                description: |-
+                                  (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                                  IBM integration bus label node name condition for which the value is captured
+                                items:
+                                  properties:
+                                    negate:
+                                      description: |-
+                                        (Boolean) Negate the comparison
+                                        Negate the comparison
+                                      type: boolean
+                                    operator:
+                                      description: |-
+                                        (String) Operator comparing the extracted value to the comparison value
+                                        Operator comparing the extracted value to the comparison value
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to compare to
+                                        The value to compare to
+                                      type: string
+                                  type: object
+                                type: array
+                              valueExtractorRegex:
+                                description: |-
+                                  (String) Extract value from captured data per regex
+                                  Extract value from captured data per regex
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  dataType:
+                    description: |-
+                      (String) The data type of the request attribute
+                      The data type of the request attribute
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) The request attribute is enabled (true) or disabled (false)
+                      The request attribute is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) The name of the request attribute
+                      The name of the request attribute
+                    type: string
+                  normalization:
+                    description: |-
+                      (String) String values transformation.   If the dataType is not string, set the Original here
+                      String values transformation.   If the **dataType** is not `string`, set the `Original` here
+                    type: string
+                  skipPersonalDataMasking:
+                    description: |-
+                      (Boolean) Personal data masking flag. Set true to skip masking.   Warning: This will potentially access personalized data
+                      Personal data masking flag. Set `true` to skip masking.   Warning: This will potentially access personalized data
+                    type: boolean
+                  unknowns:
+                    description: |-
+                      (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                      allows for configuring properties that are not explicitly supported by the current version of this provider
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.aggregation is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.aggregation)
+                || (has(self.initProvider) && has(self.initProvider.aggregation))'
+            - message: spec.forProvider.dataType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataType)
+                || (has(self.initProvider) && has(self.initProvider.dataType))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.normalization is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.normalization)
+                || (has(self.initProvider) && has(self.initProvider.normalization))'
+          status:
+            description: AttributeStatus defines the observed state of Attribute.
+            properties:
+              atProvider:
+                properties:
+                  aggregation:
+                    description: |-
+                      (String) Aggregation type for the request values
+                      Aggregation type for the request values
+                    type: string
+                  confidential:
+                    description: |-
+                      (Boolean) Confidential data flag. Set true to treat the captured data as confidential
+                      Confidential data flag. Set `true` to treat the captured data as confidential
+                    type: boolean
+                  dataSources:
+                    description: |-
+                      (Block List) The list of data sources (see below for nested schema)
+                      The list of data sources
+                    items:
+                      properties:
+                        capturingAndStorageLocation:
+                          description: |-
+                            (String) Specifies the location where the values are captured and stored.  Required if the source is one of the following: GET_PARAMETER, URI, REQUEST_HEADER, RESPONSE_HEADER.   Not applicable in other cases.   If the source value is REQUEST_HEADER or RESPONSE_HEADER, the CAPTURE_AND_STORE_ON_BOTH location is not allowed
+                            Specifies the location where the values are captured and stored.  Required if the **source** is one of the following: `GET_PARAMETER`, `URI`, `REQUEST_HEADER`, `RESPONSE_HEADER`.   Not applicable in other cases.   If the **source** value is `REQUEST_HEADER` or `RESPONSE_HEADER`, the `CAPTURE_AND_STORE_ON_BOTH` location is not allowed
+                          type: string
+                        cicsSdkMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        cicsTransactionCallType:
+                          description: |-
+                            (String) CICS transaction call type condition for which the value is captured. Required if the source is: CICS_TRANSACTION_CALL_TYPE. Not applicable in other cases.
+                            CICS transaction call type condition for which the value is captured. Required if the source is: `CICS_TRANSACTION_CALL_TYPE`. Not applicable in other cases.
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) The request attribute is enabled (true) or disabled (false)
+                            The data source is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        iibLabelMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        iibMethodNodeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        iibNodeType:
+                          description: |-
+                            (String) The IBM integration bus node type for which the value is captured.  This or iibMethodNodeCondition is required if the source is: IIB_NODE.  Not applicable in other cases
+                            The IBM integration bus node type for which the value is captured.  This or `iibMethodNodeCondition` is required if the **source** is: `IIB_NODE`.  Not applicable in other cases
+                          type: string
+                        iibNodeTypeCondition:
+                          description: |-
+                            (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                            IBM integration bus label node name condition for which the value is captured
+                          items:
+                            properties:
+                              negate:
+                                description: |-
+                                  (Boolean) Negate the comparison
+                                  Negate the comparison
+                                type: boolean
+                              operator:
+                                description: |-
+                                  (String) Operator comparing the extracted value to the comparison value
+                                  Operator comparing the extracted value to the comparison value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value to compare to
+                                  The value to compare to
+                                type: string
+                            type: object
+                          type: array
+                        imsTransactionCallType:
+                          description: |-
+                            (String) IMS transaction call type condition for which the value is captured. Required if the source is: IMS_TRANSACTION_CALL_TYPE. Not applicable in other cases.
+                            IMS transaction call type condition for which the value is captured. Required if the source is: `IMS_TRANSACTION_CALL_TYPE`. Not applicable in other cases.
+                          type: string
+                        methods:
+                          description: |-
+                            (Block List) The method specification if the source value is METHOD_PARAM.   Not applicable in other cases (see below for nested schema)
+                            The method specification if the **source** value is `METHOD_PARAM`.   Not applicable in other cases
+                          items:
+                            properties:
+                              argumentIndex:
+                                description: |-
+                                  (Number) The index of the argument to capture. Set 0 to capture the return value, 1 or higher to capture a mehtod argument.   Required if the capture is set to ARGUMENT.  Not applicable in other cases
+                                  The index of the argument to capture. Set `0` to capture the return value, `1` or higher to capture a mehtod argument.   Required if the **capture** is set to `ARGUMENT`.  Not applicable in other cases
+                                type: number
+                              capture:
+                                description: |-
+                                  (String) What to capture from the method
+                                  What to capture from the method
+                                type: string
+                              deepObjectAccess:
+                                description: |-
+                                  (String) The getter chain to apply to the captured object. It is required in one of the following cases:  The capture is set to THIS.    The capture is set to ARGUMENT, and the argument is not a primitive, a primitive wrapper class, a string, or an array.   Not applicable in other cases
+                                  The getter chain to apply to the captured object. It is required in one of the following cases:  The **capture** is set to `THIS`.    The **capture** is set to `ARGUMENT`, and the argument is not a primitive, a primitive wrapper class, a string, or an array.   Not applicable in other cases
+                                type: string
+                              method:
+                                description: |-
+                                  (Block List, Max: 1) Configuration of a method to be captured (see below for nested schema)
+                                  Configuration of a method to be captured
+                                items:
+                                  properties:
+                                    argumentTypes:
+                                      description: |-
+                                        (List of String) Configuration of a method to be captured
+                                        Configuration of a method to be captured
+                                      items:
+                                        type: string
+                                      type: array
+                                    className:
+                                      description: |-
+                                        (String) The class name where the method to capture resides.   Either this or the fileName must be set
+                                        The class name where the method to capture resides.   Either this or the **fileName** must be set
+                                      type: string
+                                    fileName:
+                                      description: |-
+                                        (String) The file name where the method to capture resides.   Either this or className must be set
+                                        The file name where the method to capture resides.   Either this or **className** must be set
+                                      type: string
+                                    fileNameMatcher:
+                                      description: |-
+                                        (String) The operator of the comparison. If not set, EQUALS is used
+                                        The operator of the comparison. If not set, `EQUALS` is used
+                                      type: string
+                                    methodName:
+                                      description: |-
+                                        (String) The name of the method to capture
+                                        The name of the method to capture
+                                      type: string
+                                    modifiers:
+                                      description: |-
+                                        (Set of String) The modifiers of the method to capture
+                                        The modifiers of the method to capture
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    returnType:
+                                      description: |-
+                                        (String) The return type
+                                        The return type
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                    visibility:
+                                      description: |-
+                                        (String) The visibility of the method to capture
+                                        The visibility of the method to capture
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        parameterName:
+                          description: |-
+                            (String) The name of the web request parameter to capture.  Required if the source is one of the following: POST_PARAMETER, GET_PARAMETER, REQUEST_HEADER, RESPONSE_HEADER, CUSTOM_ATTRIBUTE.  Not applicable in other cases
+                            The name of the web request parameter to capture.  Required if the **source** is one of the following: `POST_PARAMETER`, `GET_PARAMETER`, `REQUEST_HEADER`, `RESPONSE_HEADER`, `CUSTOM_ATTRIBUTE`.  Not applicable in other cases
+                          type: string
+                        scope:
+                          description: |-
+                            (Block List, Max: 1) Conditions for data capturing (see below for nested schema)
+                            Conditions for data capturing
+                          items:
+                            properties:
+                              hostGroup:
+                                description: |-
+                                  (String) Only applies to this host group
+                                  Only applies to this host group
+                                type: string
+                              processGroup:
+                                description: |-
+                                  (String) Only applies to this process group. Note that this can't be transferred between different clusters or environments
+                                  Only applies to this process group. Note that this can't be transferred between different clusters or environments
+                                type: string
+                              serviceTechnology:
+                                description: |-
+                                  (String) Only applies to this service technology
+                                  Only applies to this service technology
+                                type: string
+                              tagOfProcessGroup:
+                                description: |-
+                                  (String) Only apply to process groups matching this tag
+                                  Only apply to process groups matching this tag
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        serverVariableTechnology:
+                          description: |-
+                            (String) The technology of the server variable to capture if the source value is SERVER_VARIABLE.
+                            The technology of the server variable to capture if the source value is SERVER_VARIABLE.
+
+                            Not applicable in other cases.
+                          type: string
+                        sessionAttributeTechnology:
+                          description: |-
+                            (String) The technology of the session attribute to capture if the source value is SESSION_ATTRIBUTE.
+                            The technology of the session attribute to capture if the **source** value is `SESSION_ATTRIBUTE`.
+
+                            Not applicable in other cases
+                          type: string
+                        source:
+                          description: |-
+                            (String) The source of the attribute to capture. Works in conjunction with parameterName or methods and technology
+                            The source of the attribute to capture. Works in conjunction with **parameterName** or **methods** and **technology**
+                          type: string
+                        spanAttributeKey:
+                          description: |-
+                            (String) The key of the span attribute to capture. Required if the source is: SPAN_ATTRIBUTE. Not applicable in other cases.
+                            The key of the span attribute to capture. Required if the source is: `SPAN_ATTRIBUTE`. Not applicable in other cases.
+                          type: string
+                        technology:
+                          description: |-
+                            (String) The technology of the method to capture if the source value is METHOD_PARAM.
+                            The technology of the method to capture if the **source** value is `METHOD_PARAM`.
+
+                            Not applicable in other cases
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        valueProcessing:
+                          description: |-
+                            (Block List, Max: 1) Process values as specified (see below for nested schema)
+                            Process values as specified
+                          items:
+                            properties:
+                              extractSubstring:
+                                description: |-
+                                  (Block List, Max: 1) Preprocess by extracting a substring from the original value (see below for nested schema)
+                                  Preprocess by extracting a substring from the original value
+                                items:
+                                  properties:
+                                    delimiter:
+                                      description: |-
+                                        (String) The delimiter string
+                                        The delimiter string
+                                      type: string
+                                    endDelimiter:
+                                      description: |-
+                                        delimiter string.   Required if the position value is BETWEEN. Otherwise not allowed
+                                        The end-delimiter string.   Required if the **position** value is `BETWEEN`. Otherwise not allowed
+                                      type: string
+                                    position:
+                                      description: |-
+                                        (String) The position of the extracted string relative to delimiters
+                                        The position of the extracted string relative to delimiters
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                  type: object
+                                type: array
+                              splitAt:
+                                description: |-
+                                  (String) Split (preprocessed) string values at this separator
+                                  Split (preprocessed) string values at this separator
+                                type: string
+                              trim:
+                                description: |-
+                                  (Boolean) Prune Whitespaces. Defaults to false
+                                  Prune Whitespaces. Defaults to false
+                                type: boolean
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              valueCondition:
+                                description: |-
+                                  (Block List, Max: 1) IBM integration bus label node name condition for which the value is captured (see below for nested schema)
+                                  IBM integration bus label node name condition for which the value is captured
+                                items:
+                                  properties:
+                                    negate:
+                                      description: |-
+                                        (Boolean) Negate the comparison
+                                        Negate the comparison
+                                      type: boolean
+                                    operator:
+                                      description: |-
+                                        (String) Operator comparing the extracted value to the comparison value
+                                        Operator comparing the extracted value to the comparison value
+                                      type: string
+                                    unknowns:
+                                      description: |-
+                                        (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                        allows for configuring properties that are not explicitly supported by the current version of this provider
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to compare to
+                                        The value to compare to
+                                      type: string
+                                  type: object
+                                type: array
+                              valueExtractorRegex:
+                                description: |-
+                                  (String) Extract value from captured data per regex
+                                  Extract value from captured data per regex
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  dataType:
+                    description: |-
+                      (String) The data type of the request attribute
+                      The data type of the request attribute
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) The request attribute is enabled (true) or disabled (false)
+                      The request attribute is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  name:
+                    description: |-
+                      (String) The name of the request attribute
+                      The name of the request attribute
+                    type: string
+                  normalization:
+                    description: |-
+                      (String) String values transformation.   If the dataType is not string, set the Original here
+                      String values transformation.   If the **dataType** is not `string`, set the `Original` here
+                    type: string
+                  skipPersonalDataMasking:
+                    description: |-
+                      (Boolean) Personal data masking flag. Set true to skip masking.   Warning: This will potentially access personalized data
+                      Personal data masking flag. Set `true` to skip masking.   Warning: This will potentially access personalized data
+                    type: boolean
+                  unknowns:
+                    description: |-
+                      (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                      allows for configuring properties that are not explicitly supported by the current version of this provider
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

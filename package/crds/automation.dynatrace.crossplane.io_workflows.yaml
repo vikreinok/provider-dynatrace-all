@@ -1,0 +1,1679 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: workflows.automation.dynatrace.crossplane.io
+spec:
+  group: automation.dynatrace.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Workflow
+    listKind: WorkflowList
+    plural: workflows
+    singular: workflow
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Workflow is the Schema for the Workflows API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WorkflowSpec defines the desired state of Workflow
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  actor:
+                    description: |-
+                      (String) The user context the executions of the workflow will happen with
+                      The user context the executions of the workflow will happen with
+                    type: string
+                  description:
+                    description: |-
+                      (String) An optional description for the workflow
+                      An optional description for the workflow
+                    type: string
+                  guide:
+                    description: |-
+                      (String) Informational guide text for the workflow
+                      Informational guide text for the workflow
+                    type: string
+                  hourlyExecutionLimit:
+                    description: |-
+                      (Number) Maximum number of executions per hour. Default is 1000
+                      Maximum number of executions per hour. Default is `1000`
+                    type: number
+                  input:
+                    description: |-
+                      level input parameters as JSON. These parameters are available to all tasks in the workflow
+                      Workflow-level input parameters as JSON. These parameters are available to all tasks in the workflow
+                    type: string
+                  isDeployed:
+                    description: |-
+                      (Boolean) Defines whether this workflow is deployed and active, or kept as a draft. An undeployed workflow is not billed and its automatic trigger will not be running. Default is true
+                      Defines whether this workflow is deployed and active, or kept as a draft. An undeployed workflow is not billed and its automatic trigger will not be running. Default is `true`
+                    type: boolean
+                  owner:
+                    description: |-
+                      (String) The ID of the owner of this workflow
+                      The ID of the owner of this workflow
+                    type: string
+                  ownerType:
+                    description: |-
+                      (String) The type of the owner. Possible values are USER and GROUP
+                      The type of the owner. Possible values are `USER` and `GROUP`
+                    type: string
+                  private:
+                    description: |-
+                      (Boolean) Defines whether this workflow is private to the owner or not. Default is true
+                      Defines whether this workflow is private to the owner or not. Default is `true`
+                    type: boolean
+                  result:
+                    description: |-
+                      (String) The result of the workflow
+                      The result of the workflow
+                    type: string
+                  tasks:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) The tasks to run for every execution of this workflow (see below for nested schema)
+                      The tasks to run for every execution of this workflow
+                    items:
+                      properties:
+                        task:
+                          description: '(Block Set) TODO: No documentation available
+                            (see below for nested schema)'
+                          items:
+                            properties:
+                              action:
+                                description: |-
+                                  function, dynatrace.automations:run-javascript, and dynatrace.automations:execute-dql-query. Additional action types are also supported.
+                                  Specifies the action type for the task. Examples include `dynatrace.automations:http-function`, `dynatrace.automations:run-javascript`, and `dynatrace.automations:execute-dql-query`. Additional action types are also supported.
+                                type: string
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  Specifies whether a task should be skipped as a no operation or not
+                                type: boolean
+                              concurrency:
+                                description: |-
+                                  (String) Required if with_items is specified. By default loops execute sequentially with concurrency set to 1. You can increase how often it runs in parallel
+                                  Required if `with_items` is specified. By default loops execute sequentially with concurrency set to 1. You can increase how often it runs in parallel
+                                type: string
+                              conditions:
+                                description: |-
+                                  (Block List, Max: 1) Conditions that have to be met in order to execute that task (see below for nested schema)
+                                  Conditions that have to be met in order to execute that task
+                                items:
+                                  properties:
+                                    custom:
+                                      description: |-
+                                        (String) A custom condition that needs to be met for the current task to get executed
+                                        A custom condition that needs to be met for the current task to get executed
+                                      type: string
+                                    else:
+                                      description: |-
+                                        (String) Possible values are SKIP and STOP
+                                        Possible values are `SKIP` and `STOP`
+                                      type: string
+                                    states:
+                                      additionalProperties:
+                                        type: string
+                                      description: |-
+                                        (Map of String) key/value pairs where the key is the name of another task and the value the status it needs to be for the current task to get executed. Possible values are SUCCESS, ERROR, ANY, OK (Success or Skipped) and NOK (Error or Cancelled)
+                                        key/value pairs where the `key` is the name of another task and the value the status it needs to be for the current task to get executed. Possible values are `SUCCESS`, `ERROR`, `ANY`, `OK` (Success or Skipped) and `NOK` (Error or Cancelled)
+                                      type: object
+                                      x-kubernetes-map-type: granular
+                                  type: object
+                                type: array
+                              description:
+                                description: |-
+                                  (String) An optional description for the workflow
+                                  A description for this task
+                                type: string
+                              input:
+                                description: |-
+                                  level input parameters as JSON. These parameters are available to all tasks in the workflow
+                                  Parameters and values for this task as JSON code. Contents depend on the kind of task - determined by the attribute `action`
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the task
+                                  The name of the task
+                                type: string
+                              position:
+                                description: |-
+                                  (Block List, Max: 1) Layouting information about the task tile when visualized. If not specified Dynatrace will position the task tiles automatically (see below for nested schema)
+                                  Layouting information about the task tile when visualized. If not specified Dynatrace will position the task tiles automatically
+                                items:
+                                  properties:
+                                    x:
+                                      description: |-
+                                        coordinate for layouting
+                                        x-coordinate for layouting
+                                      type: number
+                                    "y":
+                                      description: |-
+                                        coordinate for layouting
+                                        y-coordinate for layouting
+                                      type: number
+                                  type: object
+                                type: array
+                              retry:
+                                description: |-
+                                  (Block List, Max: 1) Configure whether to automatically rerun the task on failure. If not specified no retries will be attempted (see below for nested schema)
+                                  Configure whether to automatically rerun the task on failure. If not specified no retries will be attempted
+                                items:
+                                  properties:
+                                    count:
+                                      description: |-
+                                        (String) Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression ({{}}). Default: 1
+                                        Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression (`{{}}`). Default: 1
+                                      type: string
+                                    delay:
+                                      description: |-
+                                        (String) Specifies a delay in seconds between subsequent task retries. You can specify either a number between 1 and 3600 here or an expression ({{...}}). Default: 1
+                                        Specifies a delay in seconds between subsequent task retries. You can specify either a number between 1 and 3600 here or an expression (`{{...}}`). Default: 1
+                                      type: string
+                                    failedLoopIterationsOnly:
+                                      description: |-
+                                        (Boolean) Specifies whether retrying the failed iterations or the whole loop. Default: true
+                                        Specifies whether retrying the failed iterations or the whole loop. Default: true
+                                      type: boolean
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Specifies a default task timeout in seconds. 15 * 60 (15min) is used when not set. Minimum 1. Maximum 604800
+                                  Specifies a default task timeout in seconds. 15 * 60 (15min) is used when not set. Minimum 1. Maximum 604800
+                                type: string
+                              waitBefore:
+                                description: |-
+                                  (String) Specifies a default task wait before in seconds. 0 is used when not set
+                                  Specifies a default task wait before in seconds. 0 is used when not set
+                                type: string
+                              withItems:
+                                description: |-
+                                  with the current number available for scripting using the expression {{ _.item }}
+                                  Iterates over items in a list, allowing actions to be executed repeatedly. Example: Specifying `item in [1, 2, 3]` here will execute the task three times for the numbers 1, 2 and 3 - with the current number available for scripting using the expression `{{ _.item }}`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  title:
+                    description: |-
+                      (String) The title / name of the workflow
+                      The title / name of the workflow
+                    type: string
+                  trigger:
+                    description: |-
+                      (Block List, Max: 1) Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered (see below for nested schema)
+                      Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered
+                    items:
+                      properties:
+                        event:
+                          description: |-
+                            (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                            If specified the workflow is getting triggered based on events
+                          items:
+                            properties:
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  If specified the workflow is getting triggered based on a schedule
+                                type: boolean
+                              config:
+                                description: |-
+                                  (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                                  If specified the workflow is getting triggered based on events
+                                items:
+                                  properties:
+                                    davisEvent:
+                                      description: |-
+                                        (Block List, Max: 1) Contains trigger configuration based on Davis Events. Either davis_event, davis_problem, davis_event or config need to set (see below for nested schema)
+                                        Contains trigger configuration based on Davis Events. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          customFilter:
+                                            description: |-
+                                              (String) Additional DQL matcher expression to further filter events to match
+                                              Additional DQL matcher expression to further filter events to match
+                                            type: string
+                                          entityTags:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              (Map of String) key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                              key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          entityTagsMatch:
+                                            description: |-
+                                              (String) Specifies whether all or just any of the configured entity tags need to match. Possible values: all and any. Omit this attribute if all entities should match
+                                              Specifies whether all or just any of the configured entity tags need to match. Possible values: `all` and `any`. Omit this attribute if all entities should match
+                                            type: string
+                                          names:
+                                            description: |-
+                                              (Block List, Max: 1) The Davis Events to match on (see below for nested schema)
+                                              The Davis Events to match on
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: |-
+                                                    (String) The name of the task
+                                                    A combination of name and match
+                                                  items:
+                                                    properties:
+                                                      match:
+                                                        description: |-
+                                                          (String) Possible values: equals and contains. The Davis event name must equal or contain the string provided in attribute name
+                                                          Possible values: `equals` and `contains`. The Davis event name must equal or contain the string provided in attribute `name`
+                                                        type: string
+                                                      name:
+                                                        description: |-
+                                                          (String) The name of the task
+                                                          The event name
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          onProblemClose:
+                                            description: |-
+                                              (Boolean) If set to true closing a problem also is considered an event that triggers the execution
+                                              If set to `true` closing a problem also is considered an event that triggers the execution
+                                            type: boolean
+                                          types:
+                                            description: |-
+                                              (Set of String, Deprecated) The types of davis events to trigger an execution. Possible values are CUSTOM_ANNOTATION, APPLICATION_UNEXPECTED_HIGH_LOAD, APPLICATION_UNEXPECTED_LOW_LOAD, APPLICATION_OVERLOAD_PREVENTION, APPLICATION_SLOWDOWN, AVAILABILITY_EVENT, LOG_AVAILABILITY, EC2_HIGH_CPU, RDS_BACKUP_COMPLETED, RDS_BACKUP_STARTED, SYNTHETIC_GLOBAL_OUTAGE, SYNTHETIC_LOCAL_OUTAGE, SYNTHETIC_TEST_LOCATION_SLOWDOWN, CUSTOM_CONFIGURATION, PROCESS_NA_HIGH_CONN_FAIL_RATE, OSI_HIGH_CPU, CUSTOM_ALERT, CUSTOM_APP_CRASH_RATE_INCREASED, CUSTOM_APPLICATION_ERROR_RATE_INCREASED, CUSTOM_APPLICATION_UNEXPECTED_HIGH_LOAD, CUSTOM_APPLICATION_UNEXPECTED_LOW_LOAD, CUSTOM_APPLICATION_OVERLOAD_PREVENTION, CUSTOM_APPLICATION_SLOWDOWN, PGI_CUSTOM_AVAILABILITY, PGI_CUSTOM_ERROR, CUSTOM_INFO, PGI_CUSTOM_PERFORMANCE, CUSTOM_DEPLOYMENT, DEPLOYMENT_CHANGED_CHANGE, DEPLOYMENT_CHANGED_NEW, DEPLOYMENT_CHANGED_REMOVED, EBS_VOLUME_HIGH_LATENCY, ERROR_EVENT, LOG_ERROR, ESXI_HOST_CONNECTION_FAILED, ESXI_HOST_CONNECTION_LOST, ESXI_GUEST_CPU_LIMIT_REACHED, ESXI_GUEST_ACTIVE_SWAP_WAIT, ESXI_HOST_CPU_SATURATION, ESXI_HOST_MEMORY_SATURATION, ESXI_HOST_MAINTENANCE, ESXI_HOST_NETWORK_PROBLEMS, ESXI_HOST_NO_CONNECTION, ESXI_HOST_SHUTDOWN, ESXI_HOST_DISK_SLOW, ESXI_HOST_UP, ESXI_HOST_TIMEOUT, ESXI_VM_IMPACT_HOST_CPU_SATURATION, ESXI_VM_IMPACT_HOST_MEMORY_SATURATION, DATABASE_CONNECTION_FAILURE, RDS_AZ_FAILOVER_COMPLETED, RDS_AZ_FAILOVER_STARTED, SERVICE_ERROR_RATE_INCREASED, RDS_HIGH_LATENCY, OSI_NIC_UTILIZATION_HIGH, OSI_NIC_ERRORS_HIGH, PGI_HAPROXY_QUEUED_REQUESTS_HIGH, PGI_RMQ_HIGH_FILE_DESC_USAGE, PGI_RMQ_HIGH_MEM_USAGE, PGI_RMQ_HIGH_PROCESS_USAGE, PGI_RMQ_HIGH_SOCKETS_USAGE, OSI_NIC_DROPPED_PACKETS_HIGH, PGI_MYSQL_SLOW_QUERIES_RATE_HIGH, PGI_KEYSTONE_SLOW, PGI_HAPROXY_SESSION_USAGE_HIGH, HOST_LOG_AVAILABILITY, HOST_LOG_ERROR, OSI_GRACEFULLY_SHUTDOWN, HOST_LOG_MATCHED, OSI_UNEXPECTEDLY_UNAVAILABLE, HOST_LOG_PERFORMANCE, HOST_OF_SERVICE_UNAVAILABLE, HTTP_CHECK_GLOBAL_OUTAGE, HTTP_CHECK_LOCAL_OUTAGE, HTTP_CHECK_TEST_LOCATION_SLOWDOWN, ESXI_HOST_DISK_QUEUE_SLOW, LOG_MATCHED, APPLICATION_ERROR_RATE_INCREASED, APPLICATION_JS_FRAMEWORK_DETECTED, AWS_LAMBDA_HIGH_ERROR_RATE, ELB_HIGH_BACKEND_ERROR_RATE, ELB_HIGH_FRONTEND_ERROR_RATE, ELB_HIGH_UNHEALTHY_HOST_RATE, PROCESS_HIGH_GC_ACTIVITY, ESXI_HOST_DATASTORE_LOW_DISK_SPACE, OSI_DOCKER_DEVICEMAPPER_LOW_DATA_SPACE, OSI_LOW_DISK_SPACE, OSI_DOCKER_DEVICEMAPPER_LOW_METADATA_SPACE, OSI_DISK_LOW_INODES, PGI_RMQ_LOW_DISK_SPACE, RDS_LOW_STORAGE_SPACE, MARKED_FOR_TERMINATION, PROCESS_MEMORY_RESOURCE_EXHAUSTED, OSI_HIGH_MEMORY, MOBILE_APP_CRASH_RATE_INCREASED, MOBILE_APPLICATION_ERROR_RATE_INCREASED, MOBILE_APPLICATION_OVERLOAD_PREVENTION, MOBILE_APPLICATION_SLOWDOWN, MOBILE_APPLICATION_UNEXPECTED_HIGH_LOAD, MOBILE_APPLICATION_UNEXPECTED_LOW_LOAD, MONITORING_UNAVAILABLE, PROCESS_NA_HIGH_LOSS_RATE, PGI_KEYSTONE_UNHEALTHY, ESXI_HOST_OVERLOADED_STORAGE, PERFORMANCE_EVENT, LOG_PERFORMANCE, PGI_LOG_AVAILABILITY, PGI_CRASHED_INFO, PROCESS_CRASHED, PGI_LOG_ERROR, PG_LOW_INSTANCE_COUNT, PGI_LOG_MATCHED, PGI_MEMDUMP, PGI_LOG_PERFORMANCE, PROCESS_RESTART, PGI_UNAVAILABLE, RDS_HIGH_CPU, RDS_LOW_MEMORY, RDS_OF_SERVICE_UNAVAILABLE, RESOURCE_CONTENTION_EVENT, SERVICE_SLOWDOWN, RDS_RESTART, RDS_RESTART_SEQUENCE, PGI_OF_SERVICE_UNAVAILABLE, OSI_SLOW_DISK, SYNTHETIC_NODE_OUTAGE, SYNTHETIC_PRIVATE_LOCATION_OUTAGE, EXTERNAL_SYNTHETIC_TEST_OUTAGE, EXTERNAL_SYNTHETIC_TEST_SLOWDOWN, PROCESS_THREADS_RESOURCE_EXHAUSTED, SERVICE_UNEXPECTED_HIGH_LOAD, SERVICE_UNEXPECTED_LOW_LOAD, ESXI_VM_DISCONNECTED, OPENSTACK_VM_LAUNCH_FAILED, ESXI_HOST_VM_MOTION_LEFT, ESXI_HOST_VM_MOTION_ARRIVED, ESXI_VM_MOTION, OPENSTACK_VM_MOTION, ESXI_VM_POWER_OFF, ESXI_VM_SHUTDOWN, OPENSTACK_HOST_VM_SHUTDOWN, ESXI_VM_START, ESXI_HOST_VM_STARTED, OPENSTACK_HOST_VM_STARTED
+                                              The types of davis events to trigger an execution. Possible values are `CUSTOM_ANNOTATION`, `APPLICATION_UNEXPECTED_HIGH_LOAD`, `APPLICATION_UNEXPECTED_LOW_LOAD`, `APPLICATION_OVERLOAD_PREVENTION`, `APPLICATION_SLOWDOWN`, `AVAILABILITY_EVENT`, `LOG_AVAILABILITY`, `EC2_HIGH_CPU`, `RDS_BACKUP_COMPLETED`, `RDS_BACKUP_STARTED`, `SYNTHETIC_GLOBAL_OUTAGE`, `SYNTHETIC_LOCAL_OUTAGE`, `SYNTHETIC_TEST_LOCATION_SLOWDOWN`, `CUSTOM_CONFIGURATION`, `PROCESS_NA_HIGH_CONN_FAIL_RATE`, `OSI_HIGH_CPU`, `CUSTOM_ALERT`, `CUSTOM_APP_CRASH_RATE_INCREASED`, `CUSTOM_APPLICATION_ERROR_RATE_INCREASED`, `CUSTOM_APPLICATION_UNEXPECTED_HIGH_LOAD`, `CUSTOM_APPLICATION_UNEXPECTED_LOW_LOAD`, `CUSTOM_APPLICATION_OVERLOAD_PREVENTION`, `CUSTOM_APPLICATION_SLOWDOWN`, `PGI_CUSTOM_AVAILABILITY`, `PGI_CUSTOM_ERROR`, `CUSTOM_INFO`, `PGI_CUSTOM_PERFORMANCE`, `CUSTOM_DEPLOYMENT`, `DEPLOYMENT_CHANGED_CHANGE`, `DEPLOYMENT_CHANGED_NEW`, `DEPLOYMENT_CHANGED_REMOVED`, `EBS_VOLUME_HIGH_LATENCY`, `ERROR_EVENT`, `LOG_ERROR`, `ESXI_HOST_CONNECTION_FAILED`, `ESXI_HOST_CONNECTION_LOST`, `ESXI_GUEST_CPU_LIMIT_REACHED`, `ESXI_GUEST_ACTIVE_SWAP_WAIT`, `ESXI_HOST_CPU_SATURATION`, `ESXI_HOST_MEMORY_SATURATION`, `ESXI_HOST_MAINTENANCE`, `ESXI_HOST_NETWORK_PROBLEMS`, `ESXI_HOST_NO_CONNECTION`, `ESXI_HOST_SHUTDOWN`, `ESXI_HOST_DISK_SLOW`, `ESXI_HOST_UP`, `ESXI_HOST_TIMEOUT`, `ESXI_VM_IMPACT_HOST_CPU_SATURATION`, `ESXI_VM_IMPACT_HOST_MEMORY_SATURATION`, `DATABASE_CONNECTION_FAILURE`, `RDS_AZ_FAILOVER_COMPLETED`, `RDS_AZ_FAILOVER_STARTED`, `SERVICE_ERROR_RATE_INCREASED`, `RDS_HIGH_LATENCY`, `OSI_NIC_UTILIZATION_HIGH`, `OSI_NIC_ERRORS_HIGH`, `PGI_HAPROXY_QUEUED_REQUESTS_HIGH`, `PGI_RMQ_HIGH_FILE_DESC_USAGE`, `PGI_RMQ_HIGH_MEM_USAGE`, `PGI_RMQ_HIGH_PROCESS_USAGE`, `PGI_RMQ_HIGH_SOCKETS_USAGE`, `OSI_NIC_DROPPED_PACKETS_HIGH`, `PGI_MYSQL_SLOW_QUERIES_RATE_HIGH`, `PGI_KEYSTONE_SLOW`, `PGI_HAPROXY_SESSION_USAGE_HIGH`, `HOST_LOG_AVAILABILITY`, `HOST_LOG_ERROR`, `OSI_GRACEFULLY_SHUTDOWN`, `HOST_LOG_MATCHED`, `OSI_UNEXPECTEDLY_UNAVAILABLE`, `HOST_LOG_PERFORMANCE`, `HOST_OF_SERVICE_UNAVAILABLE`, `HTTP_CHECK_GLOBAL_OUTAGE`, `HTTP_CHECK_LOCAL_OUTAGE`, `HTTP_CHECK_TEST_LOCATION_SLOWDOWN`, `ESXI_HOST_DISK_QUEUE_SLOW`, `LOG_MATCHED`, `APPLICATION_ERROR_RATE_INCREASED`, `APPLICATION_JS_FRAMEWORK_DETECTED`, `AWS_LAMBDA_HIGH_ERROR_RATE`, `ELB_HIGH_BACKEND_ERROR_RATE`, `ELB_HIGH_FRONTEND_ERROR_RATE`, `ELB_HIGH_UNHEALTHY_HOST_RATE`, `PROCESS_HIGH_GC_ACTIVITY`, `ESXI_HOST_DATASTORE_LOW_DISK_SPACE`, `OSI_DOCKER_DEVICEMAPPER_LOW_DATA_SPACE`, `OSI_LOW_DISK_SPACE`, `OSI_DOCKER_DEVICEMAPPER_LOW_METADATA_SPACE`, `OSI_DISK_LOW_INODES`, `PGI_RMQ_LOW_DISK_SPACE`, `RDS_LOW_STORAGE_SPACE`, `MARKED_FOR_TERMINATION`, `PROCESS_MEMORY_RESOURCE_EXHAUSTED`, `OSI_HIGH_MEMORY`, `MOBILE_APP_CRASH_RATE_INCREASED`, `MOBILE_APPLICATION_ERROR_RATE_INCREASED`, `MOBILE_APPLICATION_OVERLOAD_PREVENTION`, `MOBILE_APPLICATION_SLOWDOWN`, `MOBILE_APPLICATION_UNEXPECTED_HIGH_LOAD`, `MOBILE_APPLICATION_UNEXPECTED_LOW_LOAD`, `MONITORING_UNAVAILABLE`, `PROCESS_NA_HIGH_LOSS_RATE`, `PGI_KEYSTONE_UNHEALTHY`, `ESXI_HOST_OVERLOADED_STORAGE`, `PERFORMANCE_EVENT`, `LOG_PERFORMANCE`, `PGI_LOG_AVAILABILITY`, `PGI_CRASHED_INFO`, `PROCESS_CRASHED`, `PGI_LOG_ERROR`, `PG_LOW_INSTANCE_COUNT`, `PGI_LOG_MATCHED`, `PGI_MEMDUMP`, `PGI_LOG_PERFORMANCE`, `PROCESS_RESTART`, `PGI_UNAVAILABLE`, `RDS_HIGH_CPU`, `RDS_LOW_MEMORY`, `RDS_OF_SERVICE_UNAVAILABLE`, `RESOURCE_CONTENTION_EVENT`, `SERVICE_SLOWDOWN`, `RDS_RESTART`, `RDS_RESTART_SEQUENCE`, `PGI_OF_SERVICE_UNAVAILABLE`, `OSI_SLOW_DISK`, `SYNTHETIC_NODE_OUTAGE`, `SYNTHETIC_PRIVATE_LOCATION_OUTAGE`, `EXTERNAL_SYNTHETIC_TEST_OUTAGE`, `EXTERNAL_SYNTHETIC_TEST_SLOWDOWN`, `PROCESS_THREADS_RESOURCE_EXHAUSTED`, `SERVICE_UNEXPECTED_HIGH_LOAD`, `SERVICE_UNEXPECTED_LOW_LOAD`, `ESXI_VM_DISCONNECTED`, `OPENSTACK_VM_LAUNCH_FAILED`, `ESXI_HOST_VM_MOTION_LEFT`, `ESXI_HOST_VM_MOTION_ARRIVED`, `ESXI_VM_MOTION`, `OPENSTACK_VM_MOTION`, `ESXI_VM_POWER_OFF`, `ESXI_VM_SHUTDOWN`, `OPENSTACK_HOST_VM_SHUTDOWN`, `ESXI_VM_START`, `ESXI_HOST_VM_STARTED`, `OPENSTACK_HOST_VM_STARTED`
+                                            items:
+                                              type: string
+                                            type: array
+                                            x-kubernetes-list-type: set
+                                        type: object
+                                      type: array
+                                    davisProblem:
+                                      description: |-
+                                        (Block List, Max: 1) Contains trigger configuration based on Davis Problems. Either davis_event, davis_problem, davis_event or config need to set (see below for nested schema)
+                                        Contains trigger configuration based on Davis Problems. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          analysisReady:
+                                            description: |-
+                                              (Boolean) If set to true, the workflow will only be triggered after the initial root cause analysis run is completed
+                                              If set to `true`, the workflow will only be triggered after the initial root cause analysis run is completed
+                                            type: boolean
+                                          categories:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                availability:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                custom:
+                                                  description: (String) A custom condition
+                                                    that needs to be met for the current
+                                                    task to get executed
+                                                  type: boolean
+                                                error:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                info:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                monitoringUnavailable:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                resource:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                slowdown:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          customFilter:
+                                            description: |-
+                                              (String) Additional DQL matcher expression to further filter events to match
+                                              Additional DQL matcher expression to further filter events to match
+                                            type: string
+                                          entityTags:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              (Map of String) key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                              key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          entityTagsMatch:
+                                            description: |-
+                                              (String) Specifies whether all or just any of the configured entity tags need to match. Possible values: all and any. Omit this attribute if all entities should match
+                                              Specifies whether all or just any of the configured entity tags need to match. Possible values: `all` and `any`. Omit this attribute if all entities should match
+                                            type: string
+                                          onProblemClose:
+                                            description: |-
+                                              (Boolean) If set to true closing a problem also is considered an event that triggers the execution
+                                              If set to `true` closing a problem also is considered an event that triggers the execution
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    event:
+                                      description: |-
+                                        (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                                        Contains trigger configuration based on Davis Problems. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          eventType:
+                                            description: |-
+                                              (String) Possible values: events or bizevents. Default: events
+                                              Possible values: `events` or `bizevents`. Default: `events`
+                                            type: string
+                                          query:
+                                            description: |-
+                                              (String) A query based on DQL for events that trigger executions
+                                              A query based on DQL for events that trigger executions
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: |-
+                                        (String) The type of the workflow. Possible values are STANDARD and SIMPLE. Defaults to STANDARD. Workflows of type SIMPLE are allowed to contain only one action
+                                        The type of the trigger configuration to expect within attribute `value`. Only required if `config` is set. Must not be set if `davis_event`, `davis_problem` or `event` are present
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) Contains JSON encoded trigger configuration if the trigger type is neither davis_event, davis_problem or event. It requires the attribute type to be set in combination
+                                        Contains JSON encoded trigger configuration if the trigger type is neither `davis_event`, `davis_problem` or `event`. It requires the attribute `type` to be set in combination
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        schedule:
+                          description: |-
+                            (Block List, Max: 1) If specified the workflow is getting triggered based on a schedule (see below for nested schema)
+                            If specified the workflow is getting triggered based on a schedule
+                          items:
+                            properties:
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  The trigger is enabled (`true`) or not (`false`). Default is `false`
+                                type: boolean
+                              filterParameters:
+                                description: |-
+                                  (Block List, Max: 1) Advanced restrictions for the schedule to trigger executions (see below for nested schema)
+                                  Advanced restrictions for the schedule to trigger executions
+                                items:
+                                  properties:
+                                    count:
+                                      description: |-
+                                        (String) Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression ({{}}). Default: 1
+                                        If specified, the schedule will end triggering executions af the given amount of executions. Minimum: 1, Maximum: 10
+                                      type: number
+                                    earliestStart:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule won't trigger executions before the given date. Format: `yyyy-MM-dd`
+                                      type: string
+                                    earliestStartTime:
+                                      description: |-
+                                        (String) If specified, the schedule won't trigger executions before the given time. Format: HH:mm
+                                        If specified, the schedule won't trigger executions before the given time. Format: `HH:mm`
+                                      type: string
+                                    excludeDates:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule won't trigger exeuctions on the given dates. Format: `yyyy-MM-dd`
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    includeDates:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule will trigger executions on the given dates, even if the main configuration prohibits it. Format: `yyyy-MM-dd`
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    until:
+                                      description: |-
+                                        (String) If specified, the schedule won't trigger executions after the given date
+                                        If specified, the schedule won't trigger executions after the given date
+                                      type: string
+                                  type: object
+                                type: array
+                              rule:
+                                description: |-
+                                  (String) Refers to a configured rule that determines at which days the schedule should be active. If not specified it implies that the schedule is valid every day
+                                  Refers to a configured rule that determines at which days the schedule should be active. If not specified it implies that the schedule is valid every day
+                                type: string
+                              timeZone:
+                                description: |-
+                                  (String) A time zone the scheduled times to align with. If not specified it will be chosen automatically based on the location of the Dynatrace Server
+                                  A time zone the scheduled times to align with. If not specified it will be chosen automatically based on the location of the Dynatrace Server
+                                type: string
+                              trigger:
+                                description: |-
+                                  (Block List, Max: 1) Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered (see below for nested schema)
+                                  Detailed configuration about the timing constraints that trigger the execution
+                                items:
+                                  properties:
+                                    betweenEnd:
+                                      description: |-
+                                        specifying the end time on any valid day in 24h format (e.g. 14:22). Conflicts with cron and time. Required with interval_minutes and between_start
+                                        Triggers the schedule every n minutes within a given time frame - specifying the end time on any valid day in 24h format (e.g. 14:22). Conflicts with `cron` and `time`. Required with `interval_minutes` and `between_start`
+                                      type: string
+                                    betweenStart:
+                                      description: |-
+                                        specifying the start time on any valid day in 24h format (e.g. 13:22). Conflicts with cron and time. Required with interval_minutes and between_end
+                                        Triggers the schedule every n minutes within a given time frame - specifying the start time on any valid day in 24h format (e.g. 13:22). Conflicts with `cron` and `time`. Required with `interval_minutes` and `between_end`
+                                      type: string
+                                    cron:
+                                      description: |-
+                                        (String) Configures using cron syntax. Conflicts with time, interval_minutes, between_start and between_end
+                                        Configures using cron syntax. Conflicts with `time`, `interval_minutes`, `between_start` and `between_end`
+                                      type: string
+                                    intervalMinutes:
+                                      description: |-
+                                        (Number) Triggers the schedule every n minutes within a given time frame. Minimum: 1, Maximum: 720. Required with between_start and between_end. Conflicts with cron and time
+                                        Triggers the schedule every n minutes within a given time frame. Minimum: 1, Maximum: 720. Required with `between_start` and `between_end`. Conflicts with `cron` and `time`
+                                      type: number
+                                    time:
+                                      description: |-
+                                        (String) Specifies a fixed time the schedule will trigger at in 24h format (e.g. 14:23). Conflicts with cron, interval_minutes, between_start and between_end
+                                        Specifies a fixed time the schedule will trigger at in 24h format (e.g. `14:23`). Conflicts with `cron`, `interval_minutes`, `between_start` and `between_end`
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  type:
+                    description: |-
+                      (String) The type of the workflow. Possible values are STANDARD and SIMPLE. Defaults to STANDARD. Workflows of type SIMPLE are allowed to contain only one action
+                      The type of the workflow. Possible values are `STANDARD` and `SIMPLE`. Defaults to `STANDARD`. Workflows of type `SIMPLE` are allowed to contain only one action
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  actor:
+                    description: |-
+                      (String) The user context the executions of the workflow will happen with
+                      The user context the executions of the workflow will happen with
+                    type: string
+                  description:
+                    description: |-
+                      (String) An optional description for the workflow
+                      An optional description for the workflow
+                    type: string
+                  guide:
+                    description: |-
+                      (String) Informational guide text for the workflow
+                      Informational guide text for the workflow
+                    type: string
+                  hourlyExecutionLimit:
+                    description: |-
+                      (Number) Maximum number of executions per hour. Default is 1000
+                      Maximum number of executions per hour. Default is `1000`
+                    type: number
+                  input:
+                    description: |-
+                      level input parameters as JSON. These parameters are available to all tasks in the workflow
+                      Workflow-level input parameters as JSON. These parameters are available to all tasks in the workflow
+                    type: string
+                  isDeployed:
+                    description: |-
+                      (Boolean) Defines whether this workflow is deployed and active, or kept as a draft. An undeployed workflow is not billed and its automatic trigger will not be running. Default is true
+                      Defines whether this workflow is deployed and active, or kept as a draft. An undeployed workflow is not billed and its automatic trigger will not be running. Default is `true`
+                    type: boolean
+                  owner:
+                    description: |-
+                      (String) The ID of the owner of this workflow
+                      The ID of the owner of this workflow
+                    type: string
+                  ownerType:
+                    description: |-
+                      (String) The type of the owner. Possible values are USER and GROUP
+                      The type of the owner. Possible values are `USER` and `GROUP`
+                    type: string
+                  private:
+                    description: |-
+                      (Boolean) Defines whether this workflow is private to the owner or not. Default is true
+                      Defines whether this workflow is private to the owner or not. Default is `true`
+                    type: boolean
+                  result:
+                    description: |-
+                      (String) The result of the workflow
+                      The result of the workflow
+                    type: string
+                  tasks:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) The tasks to run for every execution of this workflow (see below for nested schema)
+                      The tasks to run for every execution of this workflow
+                    items:
+                      properties:
+                        task:
+                          description: '(Block Set) TODO: No documentation available
+                            (see below for nested schema)'
+                          items:
+                            properties:
+                              action:
+                                description: |-
+                                  function, dynatrace.automations:run-javascript, and dynatrace.automations:execute-dql-query. Additional action types are also supported.
+                                  Specifies the action type for the task. Examples include `dynatrace.automations:http-function`, `dynatrace.automations:run-javascript`, and `dynatrace.automations:execute-dql-query`. Additional action types are also supported.
+                                type: string
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  Specifies whether a task should be skipped as a no operation or not
+                                type: boolean
+                              concurrency:
+                                description: |-
+                                  (String) Required if with_items is specified. By default loops execute sequentially with concurrency set to 1. You can increase how often it runs in parallel
+                                  Required if `with_items` is specified. By default loops execute sequentially with concurrency set to 1. You can increase how often it runs in parallel
+                                type: string
+                              conditions:
+                                description: |-
+                                  (Block List, Max: 1) Conditions that have to be met in order to execute that task (see below for nested schema)
+                                  Conditions that have to be met in order to execute that task
+                                items:
+                                  properties:
+                                    custom:
+                                      description: |-
+                                        (String) A custom condition that needs to be met for the current task to get executed
+                                        A custom condition that needs to be met for the current task to get executed
+                                      type: string
+                                    else:
+                                      description: |-
+                                        (String) Possible values are SKIP and STOP
+                                        Possible values are `SKIP` and `STOP`
+                                      type: string
+                                    states:
+                                      additionalProperties:
+                                        type: string
+                                      description: |-
+                                        (Map of String) key/value pairs where the key is the name of another task and the value the status it needs to be for the current task to get executed. Possible values are SUCCESS, ERROR, ANY, OK (Success or Skipped) and NOK (Error or Cancelled)
+                                        key/value pairs where the `key` is the name of another task and the value the status it needs to be for the current task to get executed. Possible values are `SUCCESS`, `ERROR`, `ANY`, `OK` (Success or Skipped) and `NOK` (Error or Cancelled)
+                                      type: object
+                                      x-kubernetes-map-type: granular
+                                  type: object
+                                type: array
+                              description:
+                                description: |-
+                                  (String) An optional description for the workflow
+                                  A description for this task
+                                type: string
+                              input:
+                                description: |-
+                                  level input parameters as JSON. These parameters are available to all tasks in the workflow
+                                  Parameters and values for this task as JSON code. Contents depend on the kind of task - determined by the attribute `action`
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the task
+                                  The name of the task
+                                type: string
+                              position:
+                                description: |-
+                                  (Block List, Max: 1) Layouting information about the task tile when visualized. If not specified Dynatrace will position the task tiles automatically (see below for nested schema)
+                                  Layouting information about the task tile when visualized. If not specified Dynatrace will position the task tiles automatically
+                                items:
+                                  properties:
+                                    x:
+                                      description: |-
+                                        coordinate for layouting
+                                        x-coordinate for layouting
+                                      type: number
+                                    "y":
+                                      description: |-
+                                        coordinate for layouting
+                                        y-coordinate for layouting
+                                      type: number
+                                  type: object
+                                type: array
+                              retry:
+                                description: |-
+                                  (Block List, Max: 1) Configure whether to automatically rerun the task on failure. If not specified no retries will be attempted (see below for nested schema)
+                                  Configure whether to automatically rerun the task on failure. If not specified no retries will be attempted
+                                items:
+                                  properties:
+                                    count:
+                                      description: |-
+                                        (String) Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression ({{}}). Default: 1
+                                        Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression (`{{}}`). Default: 1
+                                      type: string
+                                    delay:
+                                      description: |-
+                                        (String) Specifies a delay in seconds between subsequent task retries. You can specify either a number between 1 and 3600 here or an expression ({{...}}). Default: 1
+                                        Specifies a delay in seconds between subsequent task retries. You can specify either a number between 1 and 3600 here or an expression (`{{...}}`). Default: 1
+                                      type: string
+                                    failedLoopIterationsOnly:
+                                      description: |-
+                                        (Boolean) Specifies whether retrying the failed iterations or the whole loop. Default: true
+                                        Specifies whether retrying the failed iterations or the whole loop. Default: true
+                                      type: boolean
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Specifies a default task timeout in seconds. 15 * 60 (15min) is used when not set. Minimum 1. Maximum 604800
+                                  Specifies a default task timeout in seconds. 15 * 60 (15min) is used when not set. Minimum 1. Maximum 604800
+                                type: string
+                              waitBefore:
+                                description: |-
+                                  (String) Specifies a default task wait before in seconds. 0 is used when not set
+                                  Specifies a default task wait before in seconds. 0 is used when not set
+                                type: string
+                              withItems:
+                                description: |-
+                                  with the current number available for scripting using the expression {{ _.item }}
+                                  Iterates over items in a list, allowing actions to be executed repeatedly. Example: Specifying `item in [1, 2, 3]` here will execute the task three times for the numbers 1, 2 and 3 - with the current number available for scripting using the expression `{{ _.item }}`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  title:
+                    description: |-
+                      (String) The title / name of the workflow
+                      The title / name of the workflow
+                    type: string
+                  trigger:
+                    description: |-
+                      (Block List, Max: 1) Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered (see below for nested schema)
+                      Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered
+                    items:
+                      properties:
+                        event:
+                          description: |-
+                            (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                            If specified the workflow is getting triggered based on events
+                          items:
+                            properties:
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  If specified the workflow is getting triggered based on a schedule
+                                type: boolean
+                              config:
+                                description: |-
+                                  (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                                  If specified the workflow is getting triggered based on events
+                                items:
+                                  properties:
+                                    davisEvent:
+                                      description: |-
+                                        (Block List, Max: 1) Contains trigger configuration based on Davis Events. Either davis_event, davis_problem, davis_event or config need to set (see below for nested schema)
+                                        Contains trigger configuration based on Davis Events. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          customFilter:
+                                            description: |-
+                                              (String) Additional DQL matcher expression to further filter events to match
+                                              Additional DQL matcher expression to further filter events to match
+                                            type: string
+                                          entityTags:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              (Map of String) key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                              key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          entityTagsMatch:
+                                            description: |-
+                                              (String) Specifies whether all or just any of the configured entity tags need to match. Possible values: all and any. Omit this attribute if all entities should match
+                                              Specifies whether all or just any of the configured entity tags need to match. Possible values: `all` and `any`. Omit this attribute if all entities should match
+                                            type: string
+                                          names:
+                                            description: |-
+                                              (Block List, Max: 1) The Davis Events to match on (see below for nested schema)
+                                              The Davis Events to match on
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: |-
+                                                    (String) The name of the task
+                                                    A combination of name and match
+                                                  items:
+                                                    properties:
+                                                      match:
+                                                        description: |-
+                                                          (String) Possible values: equals and contains. The Davis event name must equal or contain the string provided in attribute name
+                                                          Possible values: `equals` and `contains`. The Davis event name must equal or contain the string provided in attribute `name`
+                                                        type: string
+                                                      name:
+                                                        description: |-
+                                                          (String) The name of the task
+                                                          The event name
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          onProblemClose:
+                                            description: |-
+                                              (Boolean) If set to true closing a problem also is considered an event that triggers the execution
+                                              If set to `true` closing a problem also is considered an event that triggers the execution
+                                            type: boolean
+                                          types:
+                                            description: |-
+                                              (Set of String, Deprecated) The types of davis events to trigger an execution. Possible values are CUSTOM_ANNOTATION, APPLICATION_UNEXPECTED_HIGH_LOAD, APPLICATION_UNEXPECTED_LOW_LOAD, APPLICATION_OVERLOAD_PREVENTION, APPLICATION_SLOWDOWN, AVAILABILITY_EVENT, LOG_AVAILABILITY, EC2_HIGH_CPU, RDS_BACKUP_COMPLETED, RDS_BACKUP_STARTED, SYNTHETIC_GLOBAL_OUTAGE, SYNTHETIC_LOCAL_OUTAGE, SYNTHETIC_TEST_LOCATION_SLOWDOWN, CUSTOM_CONFIGURATION, PROCESS_NA_HIGH_CONN_FAIL_RATE, OSI_HIGH_CPU, CUSTOM_ALERT, CUSTOM_APP_CRASH_RATE_INCREASED, CUSTOM_APPLICATION_ERROR_RATE_INCREASED, CUSTOM_APPLICATION_UNEXPECTED_HIGH_LOAD, CUSTOM_APPLICATION_UNEXPECTED_LOW_LOAD, CUSTOM_APPLICATION_OVERLOAD_PREVENTION, CUSTOM_APPLICATION_SLOWDOWN, PGI_CUSTOM_AVAILABILITY, PGI_CUSTOM_ERROR, CUSTOM_INFO, PGI_CUSTOM_PERFORMANCE, CUSTOM_DEPLOYMENT, DEPLOYMENT_CHANGED_CHANGE, DEPLOYMENT_CHANGED_NEW, DEPLOYMENT_CHANGED_REMOVED, EBS_VOLUME_HIGH_LATENCY, ERROR_EVENT, LOG_ERROR, ESXI_HOST_CONNECTION_FAILED, ESXI_HOST_CONNECTION_LOST, ESXI_GUEST_CPU_LIMIT_REACHED, ESXI_GUEST_ACTIVE_SWAP_WAIT, ESXI_HOST_CPU_SATURATION, ESXI_HOST_MEMORY_SATURATION, ESXI_HOST_MAINTENANCE, ESXI_HOST_NETWORK_PROBLEMS, ESXI_HOST_NO_CONNECTION, ESXI_HOST_SHUTDOWN, ESXI_HOST_DISK_SLOW, ESXI_HOST_UP, ESXI_HOST_TIMEOUT, ESXI_VM_IMPACT_HOST_CPU_SATURATION, ESXI_VM_IMPACT_HOST_MEMORY_SATURATION, DATABASE_CONNECTION_FAILURE, RDS_AZ_FAILOVER_COMPLETED, RDS_AZ_FAILOVER_STARTED, SERVICE_ERROR_RATE_INCREASED, RDS_HIGH_LATENCY, OSI_NIC_UTILIZATION_HIGH, OSI_NIC_ERRORS_HIGH, PGI_HAPROXY_QUEUED_REQUESTS_HIGH, PGI_RMQ_HIGH_FILE_DESC_USAGE, PGI_RMQ_HIGH_MEM_USAGE, PGI_RMQ_HIGH_PROCESS_USAGE, PGI_RMQ_HIGH_SOCKETS_USAGE, OSI_NIC_DROPPED_PACKETS_HIGH, PGI_MYSQL_SLOW_QUERIES_RATE_HIGH, PGI_KEYSTONE_SLOW, PGI_HAPROXY_SESSION_USAGE_HIGH, HOST_LOG_AVAILABILITY, HOST_LOG_ERROR, OSI_GRACEFULLY_SHUTDOWN, HOST_LOG_MATCHED, OSI_UNEXPECTEDLY_UNAVAILABLE, HOST_LOG_PERFORMANCE, HOST_OF_SERVICE_UNAVAILABLE, HTTP_CHECK_GLOBAL_OUTAGE, HTTP_CHECK_LOCAL_OUTAGE, HTTP_CHECK_TEST_LOCATION_SLOWDOWN, ESXI_HOST_DISK_QUEUE_SLOW, LOG_MATCHED, APPLICATION_ERROR_RATE_INCREASED, APPLICATION_JS_FRAMEWORK_DETECTED, AWS_LAMBDA_HIGH_ERROR_RATE, ELB_HIGH_BACKEND_ERROR_RATE, ELB_HIGH_FRONTEND_ERROR_RATE, ELB_HIGH_UNHEALTHY_HOST_RATE, PROCESS_HIGH_GC_ACTIVITY, ESXI_HOST_DATASTORE_LOW_DISK_SPACE, OSI_DOCKER_DEVICEMAPPER_LOW_DATA_SPACE, OSI_LOW_DISK_SPACE, OSI_DOCKER_DEVICEMAPPER_LOW_METADATA_SPACE, OSI_DISK_LOW_INODES, PGI_RMQ_LOW_DISK_SPACE, RDS_LOW_STORAGE_SPACE, MARKED_FOR_TERMINATION, PROCESS_MEMORY_RESOURCE_EXHAUSTED, OSI_HIGH_MEMORY, MOBILE_APP_CRASH_RATE_INCREASED, MOBILE_APPLICATION_ERROR_RATE_INCREASED, MOBILE_APPLICATION_OVERLOAD_PREVENTION, MOBILE_APPLICATION_SLOWDOWN, MOBILE_APPLICATION_UNEXPECTED_HIGH_LOAD, MOBILE_APPLICATION_UNEXPECTED_LOW_LOAD, MONITORING_UNAVAILABLE, PROCESS_NA_HIGH_LOSS_RATE, PGI_KEYSTONE_UNHEALTHY, ESXI_HOST_OVERLOADED_STORAGE, PERFORMANCE_EVENT, LOG_PERFORMANCE, PGI_LOG_AVAILABILITY, PGI_CRASHED_INFO, PROCESS_CRASHED, PGI_LOG_ERROR, PG_LOW_INSTANCE_COUNT, PGI_LOG_MATCHED, PGI_MEMDUMP, PGI_LOG_PERFORMANCE, PROCESS_RESTART, PGI_UNAVAILABLE, RDS_HIGH_CPU, RDS_LOW_MEMORY, RDS_OF_SERVICE_UNAVAILABLE, RESOURCE_CONTENTION_EVENT, SERVICE_SLOWDOWN, RDS_RESTART, RDS_RESTART_SEQUENCE, PGI_OF_SERVICE_UNAVAILABLE, OSI_SLOW_DISK, SYNTHETIC_NODE_OUTAGE, SYNTHETIC_PRIVATE_LOCATION_OUTAGE, EXTERNAL_SYNTHETIC_TEST_OUTAGE, EXTERNAL_SYNTHETIC_TEST_SLOWDOWN, PROCESS_THREADS_RESOURCE_EXHAUSTED, SERVICE_UNEXPECTED_HIGH_LOAD, SERVICE_UNEXPECTED_LOW_LOAD, ESXI_VM_DISCONNECTED, OPENSTACK_VM_LAUNCH_FAILED, ESXI_HOST_VM_MOTION_LEFT, ESXI_HOST_VM_MOTION_ARRIVED, ESXI_VM_MOTION, OPENSTACK_VM_MOTION, ESXI_VM_POWER_OFF, ESXI_VM_SHUTDOWN, OPENSTACK_HOST_VM_SHUTDOWN, ESXI_VM_START, ESXI_HOST_VM_STARTED, OPENSTACK_HOST_VM_STARTED
+                                              The types of davis events to trigger an execution. Possible values are `CUSTOM_ANNOTATION`, `APPLICATION_UNEXPECTED_HIGH_LOAD`, `APPLICATION_UNEXPECTED_LOW_LOAD`, `APPLICATION_OVERLOAD_PREVENTION`, `APPLICATION_SLOWDOWN`, `AVAILABILITY_EVENT`, `LOG_AVAILABILITY`, `EC2_HIGH_CPU`, `RDS_BACKUP_COMPLETED`, `RDS_BACKUP_STARTED`, `SYNTHETIC_GLOBAL_OUTAGE`, `SYNTHETIC_LOCAL_OUTAGE`, `SYNTHETIC_TEST_LOCATION_SLOWDOWN`, `CUSTOM_CONFIGURATION`, `PROCESS_NA_HIGH_CONN_FAIL_RATE`, `OSI_HIGH_CPU`, `CUSTOM_ALERT`, `CUSTOM_APP_CRASH_RATE_INCREASED`, `CUSTOM_APPLICATION_ERROR_RATE_INCREASED`, `CUSTOM_APPLICATION_UNEXPECTED_HIGH_LOAD`, `CUSTOM_APPLICATION_UNEXPECTED_LOW_LOAD`, `CUSTOM_APPLICATION_OVERLOAD_PREVENTION`, `CUSTOM_APPLICATION_SLOWDOWN`, `PGI_CUSTOM_AVAILABILITY`, `PGI_CUSTOM_ERROR`, `CUSTOM_INFO`, `PGI_CUSTOM_PERFORMANCE`, `CUSTOM_DEPLOYMENT`, `DEPLOYMENT_CHANGED_CHANGE`, `DEPLOYMENT_CHANGED_NEW`, `DEPLOYMENT_CHANGED_REMOVED`, `EBS_VOLUME_HIGH_LATENCY`, `ERROR_EVENT`, `LOG_ERROR`, `ESXI_HOST_CONNECTION_FAILED`, `ESXI_HOST_CONNECTION_LOST`, `ESXI_GUEST_CPU_LIMIT_REACHED`, `ESXI_GUEST_ACTIVE_SWAP_WAIT`, `ESXI_HOST_CPU_SATURATION`, `ESXI_HOST_MEMORY_SATURATION`, `ESXI_HOST_MAINTENANCE`, `ESXI_HOST_NETWORK_PROBLEMS`, `ESXI_HOST_NO_CONNECTION`, `ESXI_HOST_SHUTDOWN`, `ESXI_HOST_DISK_SLOW`, `ESXI_HOST_UP`, `ESXI_HOST_TIMEOUT`, `ESXI_VM_IMPACT_HOST_CPU_SATURATION`, `ESXI_VM_IMPACT_HOST_MEMORY_SATURATION`, `DATABASE_CONNECTION_FAILURE`, `RDS_AZ_FAILOVER_COMPLETED`, `RDS_AZ_FAILOVER_STARTED`, `SERVICE_ERROR_RATE_INCREASED`, `RDS_HIGH_LATENCY`, `OSI_NIC_UTILIZATION_HIGH`, `OSI_NIC_ERRORS_HIGH`, `PGI_HAPROXY_QUEUED_REQUESTS_HIGH`, `PGI_RMQ_HIGH_FILE_DESC_USAGE`, `PGI_RMQ_HIGH_MEM_USAGE`, `PGI_RMQ_HIGH_PROCESS_USAGE`, `PGI_RMQ_HIGH_SOCKETS_USAGE`, `OSI_NIC_DROPPED_PACKETS_HIGH`, `PGI_MYSQL_SLOW_QUERIES_RATE_HIGH`, `PGI_KEYSTONE_SLOW`, `PGI_HAPROXY_SESSION_USAGE_HIGH`, `HOST_LOG_AVAILABILITY`, `HOST_LOG_ERROR`, `OSI_GRACEFULLY_SHUTDOWN`, `HOST_LOG_MATCHED`, `OSI_UNEXPECTEDLY_UNAVAILABLE`, `HOST_LOG_PERFORMANCE`, `HOST_OF_SERVICE_UNAVAILABLE`, `HTTP_CHECK_GLOBAL_OUTAGE`, `HTTP_CHECK_LOCAL_OUTAGE`, `HTTP_CHECK_TEST_LOCATION_SLOWDOWN`, `ESXI_HOST_DISK_QUEUE_SLOW`, `LOG_MATCHED`, `APPLICATION_ERROR_RATE_INCREASED`, `APPLICATION_JS_FRAMEWORK_DETECTED`, `AWS_LAMBDA_HIGH_ERROR_RATE`, `ELB_HIGH_BACKEND_ERROR_RATE`, `ELB_HIGH_FRONTEND_ERROR_RATE`, `ELB_HIGH_UNHEALTHY_HOST_RATE`, `PROCESS_HIGH_GC_ACTIVITY`, `ESXI_HOST_DATASTORE_LOW_DISK_SPACE`, `OSI_DOCKER_DEVICEMAPPER_LOW_DATA_SPACE`, `OSI_LOW_DISK_SPACE`, `OSI_DOCKER_DEVICEMAPPER_LOW_METADATA_SPACE`, `OSI_DISK_LOW_INODES`, `PGI_RMQ_LOW_DISK_SPACE`, `RDS_LOW_STORAGE_SPACE`, `MARKED_FOR_TERMINATION`, `PROCESS_MEMORY_RESOURCE_EXHAUSTED`, `OSI_HIGH_MEMORY`, `MOBILE_APP_CRASH_RATE_INCREASED`, `MOBILE_APPLICATION_ERROR_RATE_INCREASED`, `MOBILE_APPLICATION_OVERLOAD_PREVENTION`, `MOBILE_APPLICATION_SLOWDOWN`, `MOBILE_APPLICATION_UNEXPECTED_HIGH_LOAD`, `MOBILE_APPLICATION_UNEXPECTED_LOW_LOAD`, `MONITORING_UNAVAILABLE`, `PROCESS_NA_HIGH_LOSS_RATE`, `PGI_KEYSTONE_UNHEALTHY`, `ESXI_HOST_OVERLOADED_STORAGE`, `PERFORMANCE_EVENT`, `LOG_PERFORMANCE`, `PGI_LOG_AVAILABILITY`, `PGI_CRASHED_INFO`, `PROCESS_CRASHED`, `PGI_LOG_ERROR`, `PG_LOW_INSTANCE_COUNT`, `PGI_LOG_MATCHED`, `PGI_MEMDUMP`, `PGI_LOG_PERFORMANCE`, `PROCESS_RESTART`, `PGI_UNAVAILABLE`, `RDS_HIGH_CPU`, `RDS_LOW_MEMORY`, `RDS_OF_SERVICE_UNAVAILABLE`, `RESOURCE_CONTENTION_EVENT`, `SERVICE_SLOWDOWN`, `RDS_RESTART`, `RDS_RESTART_SEQUENCE`, `PGI_OF_SERVICE_UNAVAILABLE`, `OSI_SLOW_DISK`, `SYNTHETIC_NODE_OUTAGE`, `SYNTHETIC_PRIVATE_LOCATION_OUTAGE`, `EXTERNAL_SYNTHETIC_TEST_OUTAGE`, `EXTERNAL_SYNTHETIC_TEST_SLOWDOWN`, `PROCESS_THREADS_RESOURCE_EXHAUSTED`, `SERVICE_UNEXPECTED_HIGH_LOAD`, `SERVICE_UNEXPECTED_LOW_LOAD`, `ESXI_VM_DISCONNECTED`, `OPENSTACK_VM_LAUNCH_FAILED`, `ESXI_HOST_VM_MOTION_LEFT`, `ESXI_HOST_VM_MOTION_ARRIVED`, `ESXI_VM_MOTION`, `OPENSTACK_VM_MOTION`, `ESXI_VM_POWER_OFF`, `ESXI_VM_SHUTDOWN`, `OPENSTACK_HOST_VM_SHUTDOWN`, `ESXI_VM_START`, `ESXI_HOST_VM_STARTED`, `OPENSTACK_HOST_VM_STARTED`
+                                            items:
+                                              type: string
+                                            type: array
+                                            x-kubernetes-list-type: set
+                                        type: object
+                                      type: array
+                                    davisProblem:
+                                      description: |-
+                                        (Block List, Max: 1) Contains trigger configuration based on Davis Problems. Either davis_event, davis_problem, davis_event or config need to set (see below for nested schema)
+                                        Contains trigger configuration based on Davis Problems. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          analysisReady:
+                                            description: |-
+                                              (Boolean) If set to true, the workflow will only be triggered after the initial root cause analysis run is completed
+                                              If set to `true`, the workflow will only be triggered after the initial root cause analysis run is completed
+                                            type: boolean
+                                          categories:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                availability:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                custom:
+                                                  description: (String) A custom condition
+                                                    that needs to be met for the current
+                                                    task to get executed
+                                                  type: boolean
+                                                error:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                info:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                monitoringUnavailable:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                resource:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                slowdown:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          customFilter:
+                                            description: |-
+                                              (String) Additional DQL matcher expression to further filter events to match
+                                              Additional DQL matcher expression to further filter events to match
+                                            type: string
+                                          entityTags:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              (Map of String) key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                              key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          entityTagsMatch:
+                                            description: |-
+                                              (String) Specifies whether all or just any of the configured entity tags need to match. Possible values: all and any. Omit this attribute if all entities should match
+                                              Specifies whether all or just any of the configured entity tags need to match. Possible values: `all` and `any`. Omit this attribute if all entities should match
+                                            type: string
+                                          onProblemClose:
+                                            description: |-
+                                              (Boolean) If set to true closing a problem also is considered an event that triggers the execution
+                                              If set to `true` closing a problem also is considered an event that triggers the execution
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    event:
+                                      description: |-
+                                        (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                                        Contains trigger configuration based on Davis Problems. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          eventType:
+                                            description: |-
+                                              (String) Possible values: events or bizevents. Default: events
+                                              Possible values: `events` or `bizevents`. Default: `events`
+                                            type: string
+                                          query:
+                                            description: |-
+                                              (String) A query based on DQL for events that trigger executions
+                                              A query based on DQL for events that trigger executions
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: |-
+                                        (String) The type of the workflow. Possible values are STANDARD and SIMPLE. Defaults to STANDARD. Workflows of type SIMPLE are allowed to contain only one action
+                                        The type of the trigger configuration to expect within attribute `value`. Only required if `config` is set. Must not be set if `davis_event`, `davis_problem` or `event` are present
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) Contains JSON encoded trigger configuration if the trigger type is neither davis_event, davis_problem or event. It requires the attribute type to be set in combination
+                                        Contains JSON encoded trigger configuration if the trigger type is neither `davis_event`, `davis_problem` or `event`. It requires the attribute `type` to be set in combination
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        schedule:
+                          description: |-
+                            (Block List, Max: 1) If specified the workflow is getting triggered based on a schedule (see below for nested schema)
+                            If specified the workflow is getting triggered based on a schedule
+                          items:
+                            properties:
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  The trigger is enabled (`true`) or not (`false`). Default is `false`
+                                type: boolean
+                              filterParameters:
+                                description: |-
+                                  (Block List, Max: 1) Advanced restrictions for the schedule to trigger executions (see below for nested schema)
+                                  Advanced restrictions for the schedule to trigger executions
+                                items:
+                                  properties:
+                                    count:
+                                      description: |-
+                                        (String) Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression ({{}}). Default: 1
+                                        If specified, the schedule will end triggering executions af the given amount of executions. Minimum: 1, Maximum: 10
+                                      type: number
+                                    earliestStart:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule won't trigger executions before the given date. Format: `yyyy-MM-dd`
+                                      type: string
+                                    earliestStartTime:
+                                      description: |-
+                                        (String) If specified, the schedule won't trigger executions before the given time. Format: HH:mm
+                                        If specified, the schedule won't trigger executions before the given time. Format: `HH:mm`
+                                      type: string
+                                    excludeDates:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule won't trigger exeuctions on the given dates. Format: `yyyy-MM-dd`
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    includeDates:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule will trigger executions on the given dates, even if the main configuration prohibits it. Format: `yyyy-MM-dd`
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    until:
+                                      description: |-
+                                        (String) If specified, the schedule won't trigger executions after the given date
+                                        If specified, the schedule won't trigger executions after the given date
+                                      type: string
+                                  type: object
+                                type: array
+                              rule:
+                                description: |-
+                                  (String) Refers to a configured rule that determines at which days the schedule should be active. If not specified it implies that the schedule is valid every day
+                                  Refers to a configured rule that determines at which days the schedule should be active. If not specified it implies that the schedule is valid every day
+                                type: string
+                              timeZone:
+                                description: |-
+                                  (String) A time zone the scheduled times to align with. If not specified it will be chosen automatically based on the location of the Dynatrace Server
+                                  A time zone the scheduled times to align with. If not specified it will be chosen automatically based on the location of the Dynatrace Server
+                                type: string
+                              trigger:
+                                description: |-
+                                  (Block List, Max: 1) Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered (see below for nested schema)
+                                  Detailed configuration about the timing constraints that trigger the execution
+                                items:
+                                  properties:
+                                    betweenEnd:
+                                      description: |-
+                                        specifying the end time on any valid day in 24h format (e.g. 14:22). Conflicts with cron and time. Required with interval_minutes and between_start
+                                        Triggers the schedule every n minutes within a given time frame - specifying the end time on any valid day in 24h format (e.g. 14:22). Conflicts with `cron` and `time`. Required with `interval_minutes` and `between_start`
+                                      type: string
+                                    betweenStart:
+                                      description: |-
+                                        specifying the start time on any valid day in 24h format (e.g. 13:22). Conflicts with cron and time. Required with interval_minutes and between_end
+                                        Triggers the schedule every n minutes within a given time frame - specifying the start time on any valid day in 24h format (e.g. 13:22). Conflicts with `cron` and `time`. Required with `interval_minutes` and `between_end`
+                                      type: string
+                                    cron:
+                                      description: |-
+                                        (String) Configures using cron syntax. Conflicts with time, interval_minutes, between_start and between_end
+                                        Configures using cron syntax. Conflicts with `time`, `interval_minutes`, `between_start` and `between_end`
+                                      type: string
+                                    intervalMinutes:
+                                      description: |-
+                                        (Number) Triggers the schedule every n minutes within a given time frame. Minimum: 1, Maximum: 720. Required with between_start and between_end. Conflicts with cron and time
+                                        Triggers the schedule every n minutes within a given time frame. Minimum: 1, Maximum: 720. Required with `between_start` and `between_end`. Conflicts with `cron` and `time`
+                                      type: number
+                                    time:
+                                      description: |-
+                                        (String) Specifies a fixed time the schedule will trigger at in 24h format (e.g. 14:23). Conflicts with cron, interval_minutes, between_start and between_end
+                                        Specifies a fixed time the schedule will trigger at in 24h format (e.g. `14:23`). Conflicts with `cron`, `interval_minutes`, `between_start` and `between_end`
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  type:
+                    description: |-
+                      (String) The type of the workflow. Possible values are STANDARD and SIMPLE. Defaults to STANDARD. Workflows of type SIMPLE are allowed to contain only one action
+                      The type of the workflow. Possible values are `STANDARD` and `SIMPLE`. Defaults to `STANDARD`. Workflows of type `SIMPLE` are allowed to contain only one action
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.tasks is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.tasks)
+                || (has(self.initProvider) && has(self.initProvider.tasks))'
+            - message: spec.forProvider.title is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.title)
+                || (has(self.initProvider) && has(self.initProvider.title))'
+          status:
+            description: WorkflowStatus defines the observed state of Workflow.
+            properties:
+              atProvider:
+                properties:
+                  actor:
+                    description: |-
+                      (String) The user context the executions of the workflow will happen with
+                      The user context the executions of the workflow will happen with
+                    type: string
+                  description:
+                    description: |-
+                      (String) An optional description for the workflow
+                      An optional description for the workflow
+                    type: string
+                  guide:
+                    description: |-
+                      (String) Informational guide text for the workflow
+                      Informational guide text for the workflow
+                    type: string
+                  hourlyExecutionLimit:
+                    description: |-
+                      (Number) Maximum number of executions per hour. Default is 1000
+                      Maximum number of executions per hour. Default is `1000`
+                    type: number
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  input:
+                    description: |-
+                      level input parameters as JSON. These parameters are available to all tasks in the workflow
+                      Workflow-level input parameters as JSON. These parameters are available to all tasks in the workflow
+                    type: string
+                  isDeployed:
+                    description: |-
+                      (Boolean) Defines whether this workflow is deployed and active, or kept as a draft. An undeployed workflow is not billed and its automatic trigger will not be running. Default is true
+                      Defines whether this workflow is deployed and active, or kept as a draft. An undeployed workflow is not billed and its automatic trigger will not be running. Default is `true`
+                    type: boolean
+                  owner:
+                    description: |-
+                      (String) The ID of the owner of this workflow
+                      The ID of the owner of this workflow
+                    type: string
+                  ownerType:
+                    description: |-
+                      (String) The type of the owner. Possible values are USER and GROUP
+                      The type of the owner. Possible values are `USER` and `GROUP`
+                    type: string
+                  private:
+                    description: |-
+                      (Boolean) Defines whether this workflow is private to the owner or not. Default is true
+                      Defines whether this workflow is private to the owner or not. Default is `true`
+                    type: boolean
+                  result:
+                    description: |-
+                      (String) The result of the workflow
+                      The result of the workflow
+                    type: string
+                  tasks:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) The tasks to run for every execution of this workflow (see below for nested schema)
+                      The tasks to run for every execution of this workflow
+                    items:
+                      properties:
+                        task:
+                          description: '(Block Set) TODO: No documentation available
+                            (see below for nested schema)'
+                          items:
+                            properties:
+                              action:
+                                description: |-
+                                  function, dynatrace.automations:run-javascript, and dynatrace.automations:execute-dql-query. Additional action types are also supported.
+                                  Specifies the action type for the task. Examples include `dynatrace.automations:http-function`, `dynatrace.automations:run-javascript`, and `dynatrace.automations:execute-dql-query`. Additional action types are also supported.
+                                type: string
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  Specifies whether a task should be skipped as a no operation or not
+                                type: boolean
+                              concurrency:
+                                description: |-
+                                  (String) Required if with_items is specified. By default loops execute sequentially with concurrency set to 1. You can increase how often it runs in parallel
+                                  Required if `with_items` is specified. By default loops execute sequentially with concurrency set to 1. You can increase how often it runs in parallel
+                                type: string
+                              conditions:
+                                description: |-
+                                  (Block List, Max: 1) Conditions that have to be met in order to execute that task (see below for nested schema)
+                                  Conditions that have to be met in order to execute that task
+                                items:
+                                  properties:
+                                    custom:
+                                      description: |-
+                                        (String) A custom condition that needs to be met for the current task to get executed
+                                        A custom condition that needs to be met for the current task to get executed
+                                      type: string
+                                    else:
+                                      description: |-
+                                        (String) Possible values are SKIP and STOP
+                                        Possible values are `SKIP` and `STOP`
+                                      type: string
+                                    states:
+                                      additionalProperties:
+                                        type: string
+                                      description: |-
+                                        (Map of String) key/value pairs where the key is the name of another task and the value the status it needs to be for the current task to get executed. Possible values are SUCCESS, ERROR, ANY, OK (Success or Skipped) and NOK (Error or Cancelled)
+                                        key/value pairs where the `key` is the name of another task and the value the status it needs to be for the current task to get executed. Possible values are `SUCCESS`, `ERROR`, `ANY`, `OK` (Success or Skipped) and `NOK` (Error or Cancelled)
+                                      type: object
+                                      x-kubernetes-map-type: granular
+                                  type: object
+                                type: array
+                              description:
+                                description: |-
+                                  (String) An optional description for the workflow
+                                  A description for this task
+                                type: string
+                              input:
+                                description: |-
+                                  level input parameters as JSON. These parameters are available to all tasks in the workflow
+                                  Parameters and values for this task as JSON code. Contents depend on the kind of task - determined by the attribute `action`
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the task
+                                  The name of the task
+                                type: string
+                              position:
+                                description: |-
+                                  (Block List, Max: 1) Layouting information about the task tile when visualized. If not specified Dynatrace will position the task tiles automatically (see below for nested schema)
+                                  Layouting information about the task tile when visualized. If not specified Dynatrace will position the task tiles automatically
+                                items:
+                                  properties:
+                                    x:
+                                      description: |-
+                                        coordinate for layouting
+                                        x-coordinate for layouting
+                                      type: number
+                                    "y":
+                                      description: |-
+                                        coordinate for layouting
+                                        y-coordinate for layouting
+                                      type: number
+                                  type: object
+                                type: array
+                              retry:
+                                description: |-
+                                  (Block List, Max: 1) Configure whether to automatically rerun the task on failure. If not specified no retries will be attempted (see below for nested schema)
+                                  Configure whether to automatically rerun the task on failure. If not specified no retries will be attempted
+                                items:
+                                  properties:
+                                    count:
+                                      description: |-
+                                        (String) Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression ({{}}). Default: 1
+                                        Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression (`{{}}`). Default: 1
+                                      type: string
+                                    delay:
+                                      description: |-
+                                        (String) Specifies a delay in seconds between subsequent task retries. You can specify either a number between 1 and 3600 here or an expression ({{...}}). Default: 1
+                                        Specifies a delay in seconds between subsequent task retries. You can specify either a number between 1 and 3600 here or an expression (`{{...}}`). Default: 1
+                                      type: string
+                                    failedLoopIterationsOnly:
+                                      description: |-
+                                        (Boolean) Specifies whether retrying the failed iterations or the whole loop. Default: true
+                                        Specifies whether retrying the failed iterations or the whole loop. Default: true
+                                      type: boolean
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Specifies a default task timeout in seconds. 15 * 60 (15min) is used when not set. Minimum 1. Maximum 604800
+                                  Specifies a default task timeout in seconds. 15 * 60 (15min) is used when not set. Minimum 1. Maximum 604800
+                                type: string
+                              waitBefore:
+                                description: |-
+                                  (String) Specifies a default task wait before in seconds. 0 is used when not set
+                                  Specifies a default task wait before in seconds. 0 is used when not set
+                                type: string
+                              withItems:
+                                description: |-
+                                  with the current number available for scripting using the expression {{ _.item }}
+                                  Iterates over items in a list, allowing actions to be executed repeatedly. Example: Specifying `item in [1, 2, 3]` here will execute the task three times for the numbers 1, 2 and 3 - with the current number available for scripting using the expression `{{ _.item }}`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  title:
+                    description: |-
+                      (String) The title / name of the workflow
+                      The title / name of the workflow
+                    type: string
+                  trigger:
+                    description: |-
+                      (Block List, Max: 1) Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered (see below for nested schema)
+                      Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered
+                    items:
+                      properties:
+                        event:
+                          description: |-
+                            (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                            If specified the workflow is getting triggered based on events
+                          items:
+                            properties:
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  If specified the workflow is getting triggered based on a schedule
+                                type: boolean
+                              config:
+                                description: |-
+                                  (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                                  If specified the workflow is getting triggered based on events
+                                items:
+                                  properties:
+                                    davisEvent:
+                                      description: |-
+                                        (Block List, Max: 1) Contains trigger configuration based on Davis Events. Either davis_event, davis_problem, davis_event or config need to set (see below for nested schema)
+                                        Contains trigger configuration based on Davis Events. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          customFilter:
+                                            description: |-
+                                              (String) Additional DQL matcher expression to further filter events to match
+                                              Additional DQL matcher expression to further filter events to match
+                                            type: string
+                                          entityTags:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              (Map of String) key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                              key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          entityTagsMatch:
+                                            description: |-
+                                              (String) Specifies whether all or just any of the configured entity tags need to match. Possible values: all and any. Omit this attribute if all entities should match
+                                              Specifies whether all or just any of the configured entity tags need to match. Possible values: `all` and `any`. Omit this attribute if all entities should match
+                                            type: string
+                                          names:
+                                            description: |-
+                                              (Block List, Max: 1) The Davis Events to match on (see below for nested schema)
+                                              The Davis Events to match on
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: |-
+                                                    (String) The name of the task
+                                                    A combination of name and match
+                                                  items:
+                                                    properties:
+                                                      match:
+                                                        description: |-
+                                                          (String) Possible values: equals and contains. The Davis event name must equal or contain the string provided in attribute name
+                                                          Possible values: `equals` and `contains`. The Davis event name must equal or contain the string provided in attribute `name`
+                                                        type: string
+                                                      name:
+                                                        description: |-
+                                                          (String) The name of the task
+                                                          The event name
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          onProblemClose:
+                                            description: |-
+                                              (Boolean) If set to true closing a problem also is considered an event that triggers the execution
+                                              If set to `true` closing a problem also is considered an event that triggers the execution
+                                            type: boolean
+                                          types:
+                                            description: |-
+                                              (Set of String, Deprecated) The types of davis events to trigger an execution. Possible values are CUSTOM_ANNOTATION, APPLICATION_UNEXPECTED_HIGH_LOAD, APPLICATION_UNEXPECTED_LOW_LOAD, APPLICATION_OVERLOAD_PREVENTION, APPLICATION_SLOWDOWN, AVAILABILITY_EVENT, LOG_AVAILABILITY, EC2_HIGH_CPU, RDS_BACKUP_COMPLETED, RDS_BACKUP_STARTED, SYNTHETIC_GLOBAL_OUTAGE, SYNTHETIC_LOCAL_OUTAGE, SYNTHETIC_TEST_LOCATION_SLOWDOWN, CUSTOM_CONFIGURATION, PROCESS_NA_HIGH_CONN_FAIL_RATE, OSI_HIGH_CPU, CUSTOM_ALERT, CUSTOM_APP_CRASH_RATE_INCREASED, CUSTOM_APPLICATION_ERROR_RATE_INCREASED, CUSTOM_APPLICATION_UNEXPECTED_HIGH_LOAD, CUSTOM_APPLICATION_UNEXPECTED_LOW_LOAD, CUSTOM_APPLICATION_OVERLOAD_PREVENTION, CUSTOM_APPLICATION_SLOWDOWN, PGI_CUSTOM_AVAILABILITY, PGI_CUSTOM_ERROR, CUSTOM_INFO, PGI_CUSTOM_PERFORMANCE, CUSTOM_DEPLOYMENT, DEPLOYMENT_CHANGED_CHANGE, DEPLOYMENT_CHANGED_NEW, DEPLOYMENT_CHANGED_REMOVED, EBS_VOLUME_HIGH_LATENCY, ERROR_EVENT, LOG_ERROR, ESXI_HOST_CONNECTION_FAILED, ESXI_HOST_CONNECTION_LOST, ESXI_GUEST_CPU_LIMIT_REACHED, ESXI_GUEST_ACTIVE_SWAP_WAIT, ESXI_HOST_CPU_SATURATION, ESXI_HOST_MEMORY_SATURATION, ESXI_HOST_MAINTENANCE, ESXI_HOST_NETWORK_PROBLEMS, ESXI_HOST_NO_CONNECTION, ESXI_HOST_SHUTDOWN, ESXI_HOST_DISK_SLOW, ESXI_HOST_UP, ESXI_HOST_TIMEOUT, ESXI_VM_IMPACT_HOST_CPU_SATURATION, ESXI_VM_IMPACT_HOST_MEMORY_SATURATION, DATABASE_CONNECTION_FAILURE, RDS_AZ_FAILOVER_COMPLETED, RDS_AZ_FAILOVER_STARTED, SERVICE_ERROR_RATE_INCREASED, RDS_HIGH_LATENCY, OSI_NIC_UTILIZATION_HIGH, OSI_NIC_ERRORS_HIGH, PGI_HAPROXY_QUEUED_REQUESTS_HIGH, PGI_RMQ_HIGH_FILE_DESC_USAGE, PGI_RMQ_HIGH_MEM_USAGE, PGI_RMQ_HIGH_PROCESS_USAGE, PGI_RMQ_HIGH_SOCKETS_USAGE, OSI_NIC_DROPPED_PACKETS_HIGH, PGI_MYSQL_SLOW_QUERIES_RATE_HIGH, PGI_KEYSTONE_SLOW, PGI_HAPROXY_SESSION_USAGE_HIGH, HOST_LOG_AVAILABILITY, HOST_LOG_ERROR, OSI_GRACEFULLY_SHUTDOWN, HOST_LOG_MATCHED, OSI_UNEXPECTEDLY_UNAVAILABLE, HOST_LOG_PERFORMANCE, HOST_OF_SERVICE_UNAVAILABLE, HTTP_CHECK_GLOBAL_OUTAGE, HTTP_CHECK_LOCAL_OUTAGE, HTTP_CHECK_TEST_LOCATION_SLOWDOWN, ESXI_HOST_DISK_QUEUE_SLOW, LOG_MATCHED, APPLICATION_ERROR_RATE_INCREASED, APPLICATION_JS_FRAMEWORK_DETECTED, AWS_LAMBDA_HIGH_ERROR_RATE, ELB_HIGH_BACKEND_ERROR_RATE, ELB_HIGH_FRONTEND_ERROR_RATE, ELB_HIGH_UNHEALTHY_HOST_RATE, PROCESS_HIGH_GC_ACTIVITY, ESXI_HOST_DATASTORE_LOW_DISK_SPACE, OSI_DOCKER_DEVICEMAPPER_LOW_DATA_SPACE, OSI_LOW_DISK_SPACE, OSI_DOCKER_DEVICEMAPPER_LOW_METADATA_SPACE, OSI_DISK_LOW_INODES, PGI_RMQ_LOW_DISK_SPACE, RDS_LOW_STORAGE_SPACE, MARKED_FOR_TERMINATION, PROCESS_MEMORY_RESOURCE_EXHAUSTED, OSI_HIGH_MEMORY, MOBILE_APP_CRASH_RATE_INCREASED, MOBILE_APPLICATION_ERROR_RATE_INCREASED, MOBILE_APPLICATION_OVERLOAD_PREVENTION, MOBILE_APPLICATION_SLOWDOWN, MOBILE_APPLICATION_UNEXPECTED_HIGH_LOAD, MOBILE_APPLICATION_UNEXPECTED_LOW_LOAD, MONITORING_UNAVAILABLE, PROCESS_NA_HIGH_LOSS_RATE, PGI_KEYSTONE_UNHEALTHY, ESXI_HOST_OVERLOADED_STORAGE, PERFORMANCE_EVENT, LOG_PERFORMANCE, PGI_LOG_AVAILABILITY, PGI_CRASHED_INFO, PROCESS_CRASHED, PGI_LOG_ERROR, PG_LOW_INSTANCE_COUNT, PGI_LOG_MATCHED, PGI_MEMDUMP, PGI_LOG_PERFORMANCE, PROCESS_RESTART, PGI_UNAVAILABLE, RDS_HIGH_CPU, RDS_LOW_MEMORY, RDS_OF_SERVICE_UNAVAILABLE, RESOURCE_CONTENTION_EVENT, SERVICE_SLOWDOWN, RDS_RESTART, RDS_RESTART_SEQUENCE, PGI_OF_SERVICE_UNAVAILABLE, OSI_SLOW_DISK, SYNTHETIC_NODE_OUTAGE, SYNTHETIC_PRIVATE_LOCATION_OUTAGE, EXTERNAL_SYNTHETIC_TEST_OUTAGE, EXTERNAL_SYNTHETIC_TEST_SLOWDOWN, PROCESS_THREADS_RESOURCE_EXHAUSTED, SERVICE_UNEXPECTED_HIGH_LOAD, SERVICE_UNEXPECTED_LOW_LOAD, ESXI_VM_DISCONNECTED, OPENSTACK_VM_LAUNCH_FAILED, ESXI_HOST_VM_MOTION_LEFT, ESXI_HOST_VM_MOTION_ARRIVED, ESXI_VM_MOTION, OPENSTACK_VM_MOTION, ESXI_VM_POWER_OFF, ESXI_VM_SHUTDOWN, OPENSTACK_HOST_VM_SHUTDOWN, ESXI_VM_START, ESXI_HOST_VM_STARTED, OPENSTACK_HOST_VM_STARTED
+                                              The types of davis events to trigger an execution. Possible values are `CUSTOM_ANNOTATION`, `APPLICATION_UNEXPECTED_HIGH_LOAD`, `APPLICATION_UNEXPECTED_LOW_LOAD`, `APPLICATION_OVERLOAD_PREVENTION`, `APPLICATION_SLOWDOWN`, `AVAILABILITY_EVENT`, `LOG_AVAILABILITY`, `EC2_HIGH_CPU`, `RDS_BACKUP_COMPLETED`, `RDS_BACKUP_STARTED`, `SYNTHETIC_GLOBAL_OUTAGE`, `SYNTHETIC_LOCAL_OUTAGE`, `SYNTHETIC_TEST_LOCATION_SLOWDOWN`, `CUSTOM_CONFIGURATION`, `PROCESS_NA_HIGH_CONN_FAIL_RATE`, `OSI_HIGH_CPU`, `CUSTOM_ALERT`, `CUSTOM_APP_CRASH_RATE_INCREASED`, `CUSTOM_APPLICATION_ERROR_RATE_INCREASED`, `CUSTOM_APPLICATION_UNEXPECTED_HIGH_LOAD`, `CUSTOM_APPLICATION_UNEXPECTED_LOW_LOAD`, `CUSTOM_APPLICATION_OVERLOAD_PREVENTION`, `CUSTOM_APPLICATION_SLOWDOWN`, `PGI_CUSTOM_AVAILABILITY`, `PGI_CUSTOM_ERROR`, `CUSTOM_INFO`, `PGI_CUSTOM_PERFORMANCE`, `CUSTOM_DEPLOYMENT`, `DEPLOYMENT_CHANGED_CHANGE`, `DEPLOYMENT_CHANGED_NEW`, `DEPLOYMENT_CHANGED_REMOVED`, `EBS_VOLUME_HIGH_LATENCY`, `ERROR_EVENT`, `LOG_ERROR`, `ESXI_HOST_CONNECTION_FAILED`, `ESXI_HOST_CONNECTION_LOST`, `ESXI_GUEST_CPU_LIMIT_REACHED`, `ESXI_GUEST_ACTIVE_SWAP_WAIT`, `ESXI_HOST_CPU_SATURATION`, `ESXI_HOST_MEMORY_SATURATION`, `ESXI_HOST_MAINTENANCE`, `ESXI_HOST_NETWORK_PROBLEMS`, `ESXI_HOST_NO_CONNECTION`, `ESXI_HOST_SHUTDOWN`, `ESXI_HOST_DISK_SLOW`, `ESXI_HOST_UP`, `ESXI_HOST_TIMEOUT`, `ESXI_VM_IMPACT_HOST_CPU_SATURATION`, `ESXI_VM_IMPACT_HOST_MEMORY_SATURATION`, `DATABASE_CONNECTION_FAILURE`, `RDS_AZ_FAILOVER_COMPLETED`, `RDS_AZ_FAILOVER_STARTED`, `SERVICE_ERROR_RATE_INCREASED`, `RDS_HIGH_LATENCY`, `OSI_NIC_UTILIZATION_HIGH`, `OSI_NIC_ERRORS_HIGH`, `PGI_HAPROXY_QUEUED_REQUESTS_HIGH`, `PGI_RMQ_HIGH_FILE_DESC_USAGE`, `PGI_RMQ_HIGH_MEM_USAGE`, `PGI_RMQ_HIGH_PROCESS_USAGE`, `PGI_RMQ_HIGH_SOCKETS_USAGE`, `OSI_NIC_DROPPED_PACKETS_HIGH`, `PGI_MYSQL_SLOW_QUERIES_RATE_HIGH`, `PGI_KEYSTONE_SLOW`, `PGI_HAPROXY_SESSION_USAGE_HIGH`, `HOST_LOG_AVAILABILITY`, `HOST_LOG_ERROR`, `OSI_GRACEFULLY_SHUTDOWN`, `HOST_LOG_MATCHED`, `OSI_UNEXPECTEDLY_UNAVAILABLE`, `HOST_LOG_PERFORMANCE`, `HOST_OF_SERVICE_UNAVAILABLE`, `HTTP_CHECK_GLOBAL_OUTAGE`, `HTTP_CHECK_LOCAL_OUTAGE`, `HTTP_CHECK_TEST_LOCATION_SLOWDOWN`, `ESXI_HOST_DISK_QUEUE_SLOW`, `LOG_MATCHED`, `APPLICATION_ERROR_RATE_INCREASED`, `APPLICATION_JS_FRAMEWORK_DETECTED`, `AWS_LAMBDA_HIGH_ERROR_RATE`, `ELB_HIGH_BACKEND_ERROR_RATE`, `ELB_HIGH_FRONTEND_ERROR_RATE`, `ELB_HIGH_UNHEALTHY_HOST_RATE`, `PROCESS_HIGH_GC_ACTIVITY`, `ESXI_HOST_DATASTORE_LOW_DISK_SPACE`, `OSI_DOCKER_DEVICEMAPPER_LOW_DATA_SPACE`, `OSI_LOW_DISK_SPACE`, `OSI_DOCKER_DEVICEMAPPER_LOW_METADATA_SPACE`, `OSI_DISK_LOW_INODES`, `PGI_RMQ_LOW_DISK_SPACE`, `RDS_LOW_STORAGE_SPACE`, `MARKED_FOR_TERMINATION`, `PROCESS_MEMORY_RESOURCE_EXHAUSTED`, `OSI_HIGH_MEMORY`, `MOBILE_APP_CRASH_RATE_INCREASED`, `MOBILE_APPLICATION_ERROR_RATE_INCREASED`, `MOBILE_APPLICATION_OVERLOAD_PREVENTION`, `MOBILE_APPLICATION_SLOWDOWN`, `MOBILE_APPLICATION_UNEXPECTED_HIGH_LOAD`, `MOBILE_APPLICATION_UNEXPECTED_LOW_LOAD`, `MONITORING_UNAVAILABLE`, `PROCESS_NA_HIGH_LOSS_RATE`, `PGI_KEYSTONE_UNHEALTHY`, `ESXI_HOST_OVERLOADED_STORAGE`, `PERFORMANCE_EVENT`, `LOG_PERFORMANCE`, `PGI_LOG_AVAILABILITY`, `PGI_CRASHED_INFO`, `PROCESS_CRASHED`, `PGI_LOG_ERROR`, `PG_LOW_INSTANCE_COUNT`, `PGI_LOG_MATCHED`, `PGI_MEMDUMP`, `PGI_LOG_PERFORMANCE`, `PROCESS_RESTART`, `PGI_UNAVAILABLE`, `RDS_HIGH_CPU`, `RDS_LOW_MEMORY`, `RDS_OF_SERVICE_UNAVAILABLE`, `RESOURCE_CONTENTION_EVENT`, `SERVICE_SLOWDOWN`, `RDS_RESTART`, `RDS_RESTART_SEQUENCE`, `PGI_OF_SERVICE_UNAVAILABLE`, `OSI_SLOW_DISK`, `SYNTHETIC_NODE_OUTAGE`, `SYNTHETIC_PRIVATE_LOCATION_OUTAGE`, `EXTERNAL_SYNTHETIC_TEST_OUTAGE`, `EXTERNAL_SYNTHETIC_TEST_SLOWDOWN`, `PROCESS_THREADS_RESOURCE_EXHAUSTED`, `SERVICE_UNEXPECTED_HIGH_LOAD`, `SERVICE_UNEXPECTED_LOW_LOAD`, `ESXI_VM_DISCONNECTED`, `OPENSTACK_VM_LAUNCH_FAILED`, `ESXI_HOST_VM_MOTION_LEFT`, `ESXI_HOST_VM_MOTION_ARRIVED`, `ESXI_VM_MOTION`, `OPENSTACK_VM_MOTION`, `ESXI_VM_POWER_OFF`, `ESXI_VM_SHUTDOWN`, `OPENSTACK_HOST_VM_SHUTDOWN`, `ESXI_VM_START`, `ESXI_HOST_VM_STARTED`, `OPENSTACK_HOST_VM_STARTED`
+                                            items:
+                                              type: string
+                                            type: array
+                                            x-kubernetes-list-type: set
+                                        type: object
+                                      type: array
+                                    davisProblem:
+                                      description: |-
+                                        (Block List, Max: 1) Contains trigger configuration based on Davis Problems. Either davis_event, davis_problem, davis_event or config need to set (see below for nested schema)
+                                        Contains trigger configuration based on Davis Problems. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          analysisReady:
+                                            description: |-
+                                              (Boolean) If set to true, the workflow will only be triggered after the initial root cause analysis run is completed
+                                              If set to `true`, the workflow will only be triggered after the initial root cause analysis run is completed
+                                            type: boolean
+                                          categories:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                availability:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                custom:
+                                                  description: (String) A custom condition
+                                                    that needs to be met for the current
+                                                    task to get executed
+                                                  type: boolean
+                                                error:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                info:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                monitoringUnavailable:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                resource:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                slowdown:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          customFilter:
+                                            description: |-
+                                              (String) Additional DQL matcher expression to further filter events to match
+                                              Additional DQL matcher expression to further filter events to match
+                                            type: string
+                                          entityTags:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              (Map of String) key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                              key/value pairs for entity tags to match for. For tags that don't require a value, just specify an empty string as value. Multiple values can be provided separated by whitespace (e.g. "val1 val2") and will be parsed as multiple tag values. Omit this attribute if all entities should match
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          entityTagsMatch:
+                                            description: |-
+                                              (String) Specifies whether all or just any of the configured entity tags need to match. Possible values: all and any. Omit this attribute if all entities should match
+                                              Specifies whether all or just any of the configured entity tags need to match. Possible values: `all` and `any`. Omit this attribute if all entities should match
+                                            type: string
+                                          onProblemClose:
+                                            description: |-
+                                              (Boolean) If set to true closing a problem also is considered an event that triggers the execution
+                                              If set to `true` closing a problem also is considered an event that triggers the execution
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    event:
+                                      description: |-
+                                        (Block List, Max: 1) If specified the workflow is getting triggered based on events (see below for nested schema)
+                                        Contains trigger configuration based on Davis Problems. Either `davis_event`, `davis_problem`, `davis_event` or `config` need to set
+                                      items:
+                                        properties:
+                                          eventType:
+                                            description: |-
+                                              (String) Possible values: events or bizevents. Default: events
+                                              Possible values: `events` or `bizevents`. Default: `events`
+                                            type: string
+                                          query:
+                                            description: |-
+                                              (String) A query based on DQL for events that trigger executions
+                                              A query based on DQL for events that trigger executions
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: |-
+                                        (String) The type of the workflow. Possible values are STANDARD and SIMPLE. Defaults to STANDARD. Workflows of type SIMPLE are allowed to contain only one action
+                                        The type of the trigger configuration to expect within attribute `value`. Only required if `config` is set. Must not be set if `davis_event`, `davis_problem` or `event` are present
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) Contains JSON encoded trigger configuration if the trigger type is neither davis_event, davis_problem or event. It requires the attribute type to be set in combination
+                                        Contains JSON encoded trigger configuration if the trigger type is neither `davis_event`, `davis_problem` or `event`. It requires the attribute `type` to be set in combination
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        schedule:
+                          description: |-
+                            (Block List, Max: 1) If specified the workflow is getting triggered based on a schedule (see below for nested schema)
+                            If specified the workflow is getting triggered based on a schedule
+                          items:
+                            properties:
+                              active:
+                                description: |-
+                                  (Boolean) Specifies whether a task should be skipped as a no operation or not
+                                  The trigger is enabled (`true`) or not (`false`). Default is `false`
+                                type: boolean
+                              filterParameters:
+                                description: |-
+                                  (Block List, Max: 1) Advanced restrictions for the schedule to trigger executions (see below for nested schema)
+                                  Advanced restrictions for the schedule to trigger executions
+                                items:
+                                  properties:
+                                    count:
+                                      description: |-
+                                        (String) Specifies a maximum number of times that a task can be repeated in case it fails on execution. You can specify either a number between 1 and 99 here or use an expression ({{}}). Default: 1
+                                        If specified, the schedule will end triggering executions af the given amount of executions. Minimum: 1, Maximum: 10
+                                      type: number
+                                    earliestStart:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule won't trigger executions before the given date. Format: `yyyy-MM-dd`
+                                      type: string
+                                    earliestStartTime:
+                                      description: |-
+                                        (String) If specified, the schedule won't trigger executions before the given time. Format: HH:mm
+                                        If specified, the schedule won't trigger executions before the given time. Format: `HH:mm`
+                                      type: string
+                                    excludeDates:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule won't trigger exeuctions on the given dates. Format: `yyyy-MM-dd`
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    includeDates:
+                                      description: |-
+                                        MM-dd
+                                        If specified, the schedule will trigger executions on the given dates, even if the main configuration prohibits it. Format: `yyyy-MM-dd`
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    until:
+                                      description: |-
+                                        (String) If specified, the schedule won't trigger executions after the given date
+                                        If specified, the schedule won't trigger executions after the given date
+                                      type: string
+                                  type: object
+                                type: array
+                              rule:
+                                description: |-
+                                  (String) Refers to a configured rule that determines at which days the schedule should be active. If not specified it implies that the schedule is valid every day
+                                  Refers to a configured rule that determines at which days the schedule should be active. If not specified it implies that the schedule is valid every day
+                                type: string
+                              timeZone:
+                                description: |-
+                                  (String) A time zone the scheduled times to align with. If not specified it will be chosen automatically based on the location of the Dynatrace Server
+                                  A time zone the scheduled times to align with. If not specified it will be chosen automatically based on the location of the Dynatrace Server
+                                type: string
+                              trigger:
+                                description: |-
+                                  (Block List, Max: 1) Configures how executions of the workflows are getting triggered. If no trigger is specified it means the workflow is getting manually triggered (see below for nested schema)
+                                  Detailed configuration about the timing constraints that trigger the execution
+                                items:
+                                  properties:
+                                    betweenEnd:
+                                      description: |-
+                                        specifying the end time on any valid day in 24h format (e.g. 14:22). Conflicts with cron and time. Required with interval_minutes and between_start
+                                        Triggers the schedule every n minutes within a given time frame - specifying the end time on any valid day in 24h format (e.g. 14:22). Conflicts with `cron` and `time`. Required with `interval_minutes` and `between_start`
+                                      type: string
+                                    betweenStart:
+                                      description: |-
+                                        specifying the start time on any valid day in 24h format (e.g. 13:22). Conflicts with cron and time. Required with interval_minutes and between_end
+                                        Triggers the schedule every n minutes within a given time frame - specifying the start time on any valid day in 24h format (e.g. 13:22). Conflicts with `cron` and `time`. Required with `interval_minutes` and `between_end`
+                                      type: string
+                                    cron:
+                                      description: |-
+                                        (String) Configures using cron syntax. Conflicts with time, interval_minutes, between_start and between_end
+                                        Configures using cron syntax. Conflicts with `time`, `interval_minutes`, `between_start` and `between_end`
+                                      type: string
+                                    intervalMinutes:
+                                      description: |-
+                                        (Number) Triggers the schedule every n minutes within a given time frame. Minimum: 1, Maximum: 720. Required with between_start and between_end. Conflicts with cron and time
+                                        Triggers the schedule every n minutes within a given time frame. Minimum: 1, Maximum: 720. Required with `between_start` and `between_end`. Conflicts with `cron` and `time`
+                                      type: number
+                                    time:
+                                      description: |-
+                                        (String) Specifies a fixed time the schedule will trigger at in 24h format (e.g. 14:23). Conflicts with cron, interval_minutes, between_start and between_end
+                                        Specifies a fixed time the schedule will trigger at in 24h format (e.g. `14:23`). Conflicts with `cron`, `interval_minutes`, `between_start` and `between_end`
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  type:
+                    description: |-
+                      (String) The type of the workflow. Possible values are STANDARD and SIMPLE. Defaults to STANDARD. Workflows of type SIMPLE are allowed to contain only one action
+                      The type of the workflow. Possible values are `STANDARD` and `SIMPLE`. Defaults to `STANDARD`. Workflows of type `SIMPLE` are allowed to contain only one action
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

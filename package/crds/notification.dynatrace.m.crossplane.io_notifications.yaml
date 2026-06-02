@@ -1,0 +1,2126 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: notifications.notification.dynatrace.m.crossplane.io
+spec:
+  group: notification.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Notification
+    listKind: NotificationList
+    plural: notifications
+    singular: notification
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Notification is the Schema for the Notifications API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NotificationSpec defines the desired state of Notification
+            properties:
+              forProvider:
+                properties:
+                  ansibleTower:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Ansible Tower Notification (see below for nested schema)
+                      Configuration for Ansible Tower Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        customMessage:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The custom message of the notification.   This message will be displayed in the extra variables **Message** field of your job template.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        jobTemplateId:
+                          description: |-
+                            (Number) The ID of the target Ansible Tower job template
+                            The ID of the target Ansible Tower job template
+                          type: number
+                        jobTemplateUrl:
+                          description: |-
+                            (String) The URL of the target Ansible Tower job template
+                            The URL of the target Ansible Tower job template
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The password for the Ansible Tower account
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the Ansible Tower account
+                          type: string
+                      type: object
+                    type: array
+                  config:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Generic Notification (see below for nested schema)
+                      Configuration for Generic Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        type:
+                          description: |-
+                            > EmailNotificationConfig  * PAGER_DUTY -> PagerDutyNotificationConfig  * WEBHOOK -> WebHookNotificationConfig  * SLACK -> SlackNotificationConfig  * HIPCHAT -> HipChatNotificationConfig  * VICTOROPS -> VictorOpsNotificationConfig  * SERVICE_NOW -> ServiceNowNotificationConfig  * XMATTERS -> XMattersNotificationConfig  * ANSIBLETOWER -> AnsibleTowerNotificationConfig  * OPS_GENIE -> OpsGenieNotificationConfig  * JIRA -> JiraNotificationConfig  * TRELLO -> TrelloNotificationConfig
+                            Defines the actual set of fields depending on the value. See one of the following objects:  * `EMAIL` -> EmailNotificationConfig  * `PAGER_DUTY` -> PagerDutyNotificationConfig  * `WEBHOOK` -> WebHookNotificationConfig  * `SLACK` -> SlackNotificationConfig  * `HIPCHAT` -> HipChatNotificationConfig  * `VICTOROPS` -> VictorOpsNotificationConfig  * `SERVICE_NOW` -> ServiceNowNotificationConfig  * `XMATTERS` -> XMattersNotificationConfig  * `ANSIBLETOWER` -> AnsibleTowerNotificationConfig  * `OPS_GENIE` -> OpsGenieNotificationConfig  * `JIRA` -> JiraNotificationConfig  * `TRELLO` -> TrelloNotificationConfig
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  email:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Email Notification (see below for nested schema)
+                      Configuration for Email Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        bccReceivers:
+                          description: |-
+                            recipients
+                            The list of the email BCC-recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        body:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The template of the email notification.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        ccReceivers:
+                          description: |-
+                            recipients
+                            The list of the email CC-recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        receivers:
+                          description: |-
+                            (Set of String) The list of the email recipients
+                            The list of the email recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        subject:
+                          description: |-
+                            (String) The subject of the email notifications
+                            The subject of the email notifications
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  jira:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Jira Notification (see below for nested schema)
+                      Configuration for Jira Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                            The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                          type: string
+                        issueType:
+                          description: |-
+                            (String) The type of the Jira issue to be created by this notification
+                            The type of the Jira issue to be created by this notification
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The password for the Jira profile
+                          type: string
+                        projectKey:
+                          description: |-
+                            (String) The project key of the Jira issue to be created by this notification
+                            The project key of the Jira issue to be created by this notification
+                          type: string
+                        summary:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The summary of the Jira issue to be created by this notification.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the Jira API endpoint
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the Jira profile
+                          type: string
+                      type: object
+                    type: array
+                  opsGenie:
+                    description: |-
+                      (Block List, Max: 1) Configuration for OpsGenie Notification (see below for nested schema)
+                      Configuration for OpsGenie Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        apiKey:
+                          description: |-
+                            (String) The API key to access OpsGenie
+                            The API key to access OpsGenie
+                          type: string
+                        domain:
+                          description: |-
+                            (String) The region domain of the OpsGenie
+                            The region domain of the OpsGenie
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the message.  You can use the following placeholders:  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  pagerDuty:
+                    description: |-
+                      (Block List, Max: 1) Configuration for PagerDuty Notification (see below for nested schema)
+                      Configuration for PagerDuty Notification
+                    items:
+                      properties:
+                        account:
+                          description: |-
+                            (String) The name of the PagerDuty account
+                            The name of the PagerDuty account
+                          type: string
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        serviceApiKey:
+                          description: |-
+                            (String) The API key to access PagerDuty
+                            The API key to access PagerDuty
+                          type: string
+                        serviceName:
+                          description: |-
+                            (String) The name of the service
+                            The name of the service
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  serviceNow:
+                    description: |-
+                      (Block List, Max: 1) Configuration for ServiceNow Notification (see below for nested schema)
+                      Configuration for ServiceNow Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        instanceName:
+                          description: |-
+                            (String) The ServiceNow instance identifier. It refers to the first part of your own ServiceNow URL.   This field is mutually exclusive with the url field. You can only use one of them
+                            The ServiceNow instance identifier. It refers to the first part of your own ServiceNow URL.   This field is mutually exclusive with the **url** field. You can only use one of them
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the ServiceNow description.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The username to the ServiceNow account
+                          type: string
+                        sendEvents:
+                          description: |-
+                            (Boolean) Send events into ServiceNow ITOM (true)
+                            Send events into ServiceNow ITOM (`true`)
+                          type: boolean
+                        sendIncidents:
+                          description: |-
+                            (Boolean) Send incidents into ServiceNow ITSM (true)
+                            Send incidents into ServiceNow ITSM (`true`)
+                          type: boolean
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the on-premise ServiceNow installation.   This field is mutually exclusive with the **instanceName** field. You can only use one of them
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the ServiceNow account.   Make sure that your user account has the `rest_service`, `web_request_admin`, and `x_dynat_ruxit.Integration` roles
+                          type: string
+                      type: object
+                    type: array
+                  slack:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Slack Notification (see below for nested schema)
+                      Configuration for Slack Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        channel:
+                          description: |-
+                            (String) The channel (for example, #general) or the user (for example, @john.smith) to send the message to
+                            The channel (for example, `#general`) or the user (for example, `@john.smith`) to send the message to
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        title:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the message.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the Slack WebHook.  This is confidential information, therefore GET requests return this field with the `null` value, and it is optional for PUT requests
+                          type: string
+                      type: object
+                    type: array
+                  trello:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Trello Notification (see below for nested schema)
+                      Configuration for Trello Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        applicationKey:
+                          description: |-
+                            (String) The application key for the Trello account
+                            The application key for the Trello account
+                          type: string
+                        authorizationToken:
+                          description: |-
+                            (String) The application token for the Trello account
+                            The application token for the Trello account
+                          type: string
+                        boardId:
+                          description: |-
+                            (String) The Trello board to which the card should be assigned
+                            The Trello board to which the card should be assigned
+                          type: string
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                            The description of the Trello card.   You can use same placeholders as in card text
+                          type: string
+                        listId:
+                          description: |-
+                            (String) The Trello list to which the card should be assigned
+                            The Trello list to which the card should be assigned
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        resolvedListId:
+                          description: |-
+                            (String) The Trello list to which the card of the resolved problem should be assigned
+                            The Trello list to which the card of the resolved problem should be assigned
+                          type: string
+                        text:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The text of the generated Trello card.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  victorOps:
+                    description: |-
+                      (Block List, Max: 1) Configuration for VictorOps Notification (see below for nested schema)
+                      Configuration for VictorOps Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        apiKey:
+                          description: |-
+                            (String) The API key to access OpsGenie
+                            The API key for the target VictorOps account
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the message.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        routingKey:
+                          description: |-
+                            (String) The routing key, defining the group to be notified
+                            The routing key, defining the group to be notified
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  webHook:
+                    description: |-
+                      (Block List, Max: 1) Configuration for WebHook Notification (see below for nested schema)
+                      Configuration for WebHook Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        header:
+                          description: |-
+                            (Block Set) A list of the additional HTTP headers (see below for nested schema)
+                            A list of the additional HTTP headers
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The name of the notification configuration
+                                  The name of the HTTP header
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the Authorization header, GET requests return the null value.  If you want update a notification configuration with an Authorization header which you want to remain intact, set the Authorization header with the null value
+                                  The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the **Authorization** header, GET requests return the `null` value.  If you want update a notification configuration with an **Authorization** header which you want to remain intact, set the **Authorization** header with the `null` value
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        notifyEventMerges:
+                          description: |-
+                            (Boolean) Call webhook if new events merge into existing problems
+                            Call webhook if new events merge into existing problems
+                          type: boolean
+                        payload:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the notification message.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the WebHook endpoint
+                          type: string
+                      type: object
+                    type: array
+                  xmatters:
+                    description: |-
+                      (Block List, Max: 1) Configuration for XMatters Notification (see below for nested schema)
+                      Configuration for XMatters Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        header:
+                          description: |-
+                            (Block Set) A list of the additional HTTP headers (see below for nested schema)
+                            A list of the additional HTTP headers
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The name of the notification configuration
+                                  The name of the HTTP header
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the Authorization header, GET requests return the null value.  If you want update a notification configuration with an Authorization header which you want to remain intact, set the Authorization header with the null value
+                                  The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the **Authorization** header, GET requests return the `null` value.  If you want update a notification configuration with an **Authorization** header which you want to remain intact, set the **Authorization** header with the `null` value
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        payload:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the notification message.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the xMatters WebHook
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  ansibleTower:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Ansible Tower Notification (see below for nested schema)
+                      Configuration for Ansible Tower Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        customMessage:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The custom message of the notification.   This message will be displayed in the extra variables **Message** field of your job template.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        jobTemplateId:
+                          description: |-
+                            (Number) The ID of the target Ansible Tower job template
+                            The ID of the target Ansible Tower job template
+                          type: number
+                        jobTemplateUrl:
+                          description: |-
+                            (String) The URL of the target Ansible Tower job template
+                            The URL of the target Ansible Tower job template
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The password for the Ansible Tower account
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the Ansible Tower account
+                          type: string
+                      type: object
+                    type: array
+                  config:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Generic Notification (see below for nested schema)
+                      Configuration for Generic Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        type:
+                          description: |-
+                            > EmailNotificationConfig  * PAGER_DUTY -> PagerDutyNotificationConfig  * WEBHOOK -> WebHookNotificationConfig  * SLACK -> SlackNotificationConfig  * HIPCHAT -> HipChatNotificationConfig  * VICTOROPS -> VictorOpsNotificationConfig  * SERVICE_NOW -> ServiceNowNotificationConfig  * XMATTERS -> XMattersNotificationConfig  * ANSIBLETOWER -> AnsibleTowerNotificationConfig  * OPS_GENIE -> OpsGenieNotificationConfig  * JIRA -> JiraNotificationConfig  * TRELLO -> TrelloNotificationConfig
+                            Defines the actual set of fields depending on the value. See one of the following objects:  * `EMAIL` -> EmailNotificationConfig  * `PAGER_DUTY` -> PagerDutyNotificationConfig  * `WEBHOOK` -> WebHookNotificationConfig  * `SLACK` -> SlackNotificationConfig  * `HIPCHAT` -> HipChatNotificationConfig  * `VICTOROPS` -> VictorOpsNotificationConfig  * `SERVICE_NOW` -> ServiceNowNotificationConfig  * `XMATTERS` -> XMattersNotificationConfig  * `ANSIBLETOWER` -> AnsibleTowerNotificationConfig  * `OPS_GENIE` -> OpsGenieNotificationConfig  * `JIRA` -> JiraNotificationConfig  * `TRELLO` -> TrelloNotificationConfig
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  email:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Email Notification (see below for nested schema)
+                      Configuration for Email Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        bccReceivers:
+                          description: |-
+                            recipients
+                            The list of the email BCC-recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        body:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The template of the email notification.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        ccReceivers:
+                          description: |-
+                            recipients
+                            The list of the email CC-recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        receivers:
+                          description: |-
+                            (Set of String) The list of the email recipients
+                            The list of the email recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        subject:
+                          description: |-
+                            (String) The subject of the email notifications
+                            The subject of the email notifications
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  jira:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Jira Notification (see below for nested schema)
+                      Configuration for Jira Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                            The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                          type: string
+                        issueType:
+                          description: |-
+                            (String) The type of the Jira issue to be created by this notification
+                            The type of the Jira issue to be created by this notification
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The password for the Jira profile
+                          type: string
+                        projectKey:
+                          description: |-
+                            (String) The project key of the Jira issue to be created by this notification
+                            The project key of the Jira issue to be created by this notification
+                          type: string
+                        summary:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The summary of the Jira issue to be created by this notification.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the Jira API endpoint
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the Jira profile
+                          type: string
+                      type: object
+                    type: array
+                  opsGenie:
+                    description: |-
+                      (Block List, Max: 1) Configuration for OpsGenie Notification (see below for nested schema)
+                      Configuration for OpsGenie Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        apiKey:
+                          description: |-
+                            (String) The API key to access OpsGenie
+                            The API key to access OpsGenie
+                          type: string
+                        domain:
+                          description: |-
+                            (String) The region domain of the OpsGenie
+                            The region domain of the OpsGenie
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the message.  You can use the following placeholders:  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  pagerDuty:
+                    description: |-
+                      (Block List, Max: 1) Configuration for PagerDuty Notification (see below for nested schema)
+                      Configuration for PagerDuty Notification
+                    items:
+                      properties:
+                        account:
+                          description: |-
+                            (String) The name of the PagerDuty account
+                            The name of the PagerDuty account
+                          type: string
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        serviceApiKey:
+                          description: |-
+                            (String) The API key to access PagerDuty
+                            The API key to access PagerDuty
+                          type: string
+                        serviceName:
+                          description: |-
+                            (String) The name of the service
+                            The name of the service
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  serviceNow:
+                    description: |-
+                      (Block List, Max: 1) Configuration for ServiceNow Notification (see below for nested schema)
+                      Configuration for ServiceNow Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        instanceName:
+                          description: |-
+                            (String) The ServiceNow instance identifier. It refers to the first part of your own ServiceNow URL.   This field is mutually exclusive with the url field. You can only use one of them
+                            The ServiceNow instance identifier. It refers to the first part of your own ServiceNow URL.   This field is mutually exclusive with the **url** field. You can only use one of them
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the ServiceNow description.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The username to the ServiceNow account
+                          type: string
+                        sendEvents:
+                          description: |-
+                            (Boolean) Send events into ServiceNow ITOM (true)
+                            Send events into ServiceNow ITOM (`true`)
+                          type: boolean
+                        sendIncidents:
+                          description: |-
+                            (Boolean) Send incidents into ServiceNow ITSM (true)
+                            Send incidents into ServiceNow ITSM (`true`)
+                          type: boolean
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the on-premise ServiceNow installation.   This field is mutually exclusive with the **instanceName** field. You can only use one of them
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the ServiceNow account.   Make sure that your user account has the `rest_service`, `web_request_admin`, and `x_dynat_ruxit.Integration` roles
+                          type: string
+                      type: object
+                    type: array
+                  slack:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Slack Notification (see below for nested schema)
+                      Configuration for Slack Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        channel:
+                          description: |-
+                            (String) The channel (for example, #general) or the user (for example, @john.smith) to send the message to
+                            The channel (for example, `#general`) or the user (for example, `@john.smith`) to send the message to
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        title:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the message.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the Slack WebHook.  This is confidential information, therefore GET requests return this field with the `null` value, and it is optional for PUT requests
+                          type: string
+                      type: object
+                    type: array
+                  trello:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Trello Notification (see below for nested schema)
+                      Configuration for Trello Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        applicationKey:
+                          description: |-
+                            (String) The application key for the Trello account
+                            The application key for the Trello account
+                          type: string
+                        authorizationToken:
+                          description: |-
+                            (String) The application token for the Trello account
+                            The application token for the Trello account
+                          type: string
+                        boardId:
+                          description: |-
+                            (String) The Trello board to which the card should be assigned
+                            The Trello board to which the card should be assigned
+                          type: string
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                            The description of the Trello card.   You can use same placeholders as in card text
+                          type: string
+                        listId:
+                          description: |-
+                            (String) The Trello list to which the card should be assigned
+                            The Trello list to which the card should be assigned
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        resolvedListId:
+                          description: |-
+                            (String) The Trello list to which the card of the resolved problem should be assigned
+                            The Trello list to which the card of the resolved problem should be assigned
+                          type: string
+                        text:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The text of the generated Trello card.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  victorOps:
+                    description: |-
+                      (Block List, Max: 1) Configuration for VictorOps Notification (see below for nested schema)
+                      Configuration for VictorOps Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        apiKey:
+                          description: |-
+                            (String) The API key to access OpsGenie
+                            The API key for the target VictorOps account
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the message.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        routingKey:
+                          description: |-
+                            (String) The routing key, defining the group to be notified
+                            The routing key, defining the group to be notified
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  webHook:
+                    description: |-
+                      (Block List, Max: 1) Configuration for WebHook Notification (see below for nested schema)
+                      Configuration for WebHook Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        header:
+                          description: |-
+                            (Block Set) A list of the additional HTTP headers (see below for nested schema)
+                            A list of the additional HTTP headers
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The name of the notification configuration
+                                  The name of the HTTP header
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the Authorization header, GET requests return the null value.  If you want update a notification configuration with an Authorization header which you want to remain intact, set the Authorization header with the null value
+                                  The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the **Authorization** header, GET requests return the `null` value.  If you want update a notification configuration with an **Authorization** header which you want to remain intact, set the **Authorization** header with the `null` value
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        notifyEventMerges:
+                          description: |-
+                            (Boolean) Call webhook if new events merge into existing problems
+                            Call webhook if new events merge into existing problems
+                          type: boolean
+                        payload:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the notification message.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the WebHook endpoint
+                          type: string
+                      type: object
+                    type: array
+                  xmatters:
+                    description: |-
+                      (Block List, Max: 1) Configuration for XMatters Notification (see below for nested schema)
+                      Configuration for XMatters Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        header:
+                          description: |-
+                            (Block Set) A list of the additional HTTP headers (see below for nested schema)
+                            A list of the additional HTTP headers
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The name of the notification configuration
+                                  The name of the HTTP header
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the Authorization header, GET requests return the null value.  If you want update a notification configuration with an Authorization header which you want to remain intact, set the Authorization header with the null value
+                                  The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the **Authorization** header, GET requests return the `null` value.  If you want update a notification configuration with an **Authorization** header which you want to remain intact, set the **Authorization** header with the `null` value
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        payload:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the notification message.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the xMatters WebHook
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: NotificationStatus defines the observed state of Notification.
+            properties:
+              atProvider:
+                properties:
+                  ansibleTower:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Ansible Tower Notification (see below for nested schema)
+                      Configuration for Ansible Tower Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        customMessage:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The custom message of the notification.   This message will be displayed in the extra variables **Message** field of your job template.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        jobTemplateId:
+                          description: |-
+                            (Number) The ID of the target Ansible Tower job template
+                            The ID of the target Ansible Tower job template
+                          type: number
+                        jobTemplateUrl:
+                          description: |-
+                            (String) The URL of the target Ansible Tower job template
+                            The URL of the target Ansible Tower job template
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The password for the Ansible Tower account
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the Ansible Tower account
+                          type: string
+                      type: object
+                    type: array
+                  config:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Generic Notification (see below for nested schema)
+                      Configuration for Generic Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        type:
+                          description: |-
+                            > EmailNotificationConfig  * PAGER_DUTY -> PagerDutyNotificationConfig  * WEBHOOK -> WebHookNotificationConfig  * SLACK -> SlackNotificationConfig  * HIPCHAT -> HipChatNotificationConfig  * VICTOROPS -> VictorOpsNotificationConfig  * SERVICE_NOW -> ServiceNowNotificationConfig  * XMATTERS -> XMattersNotificationConfig  * ANSIBLETOWER -> AnsibleTowerNotificationConfig  * OPS_GENIE -> OpsGenieNotificationConfig  * JIRA -> JiraNotificationConfig  * TRELLO -> TrelloNotificationConfig
+                            Defines the actual set of fields depending on the value. See one of the following objects:  * `EMAIL` -> EmailNotificationConfig  * `PAGER_DUTY` -> PagerDutyNotificationConfig  * `WEBHOOK` -> WebHookNotificationConfig  * `SLACK` -> SlackNotificationConfig  * `HIPCHAT` -> HipChatNotificationConfig  * `VICTOROPS` -> VictorOpsNotificationConfig  * `SERVICE_NOW` -> ServiceNowNotificationConfig  * `XMATTERS` -> XMattersNotificationConfig  * `ANSIBLETOWER` -> AnsibleTowerNotificationConfig  * `OPS_GENIE` -> OpsGenieNotificationConfig  * `JIRA` -> JiraNotificationConfig  * `TRELLO` -> TrelloNotificationConfig
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  email:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Email Notification (see below for nested schema)
+                      Configuration for Email Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        bccReceivers:
+                          description: |-
+                            recipients
+                            The list of the email BCC-recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        body:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The template of the email notification.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        ccReceivers:
+                          description: |-
+                            recipients
+                            The list of the email CC-recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        receivers:
+                          description: |-
+                            (Set of String) The list of the email recipients
+                            The list of the email recipients
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        subject:
+                          description: |-
+                            (String) The subject of the email notifications
+                            The subject of the email notifications
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  jira:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Jira Notification (see below for nested schema)
+                      Configuration for Jira Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                            The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                          type: string
+                        issueType:
+                          description: |-
+                            (String) The type of the Jira issue to be created by this notification
+                            The type of the Jira issue to be created by this notification
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The password for the Jira profile
+                          type: string
+                        projectKey:
+                          description: |-
+                            (String) The project key of the Jira issue to be created by this notification
+                            The project key of the Jira issue to be created by this notification
+                          type: string
+                        summary:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The summary of the Jira issue to be created by this notification.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the Jira API endpoint
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the Jira profile
+                          type: string
+                      type: object
+                    type: array
+                  opsGenie:
+                    description: |-
+                      (Block List, Max: 1) Configuration for OpsGenie Notification (see below for nested schema)
+                      Configuration for OpsGenie Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        apiKey:
+                          description: |-
+                            (String) The API key to access OpsGenie
+                            The API key to access OpsGenie
+                          type: string
+                        domain:
+                          description: |-
+                            (String) The region domain of the OpsGenie
+                            The region domain of the OpsGenie
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the message.  You can use the following placeholders:  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  pagerDuty:
+                    description: |-
+                      (Block List, Max: 1) Configuration for PagerDuty Notification (see below for nested schema)
+                      Configuration for PagerDuty Notification
+                    items:
+                      properties:
+                        account:
+                          description: |-
+                            (String) The name of the PagerDuty account
+                            The name of the PagerDuty account
+                          type: string
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        serviceApiKey:
+                          description: |-
+                            (String) The API key to access PagerDuty
+                            The API key to access PagerDuty
+                          type: string
+                        serviceName:
+                          description: |-
+                            (String) The name of the service
+                            The name of the service
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  serviceNow:
+                    description: |-
+                      (Block List, Max: 1) Configuration for ServiceNow Notification (see below for nested schema)
+                      Configuration for ServiceNow Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        instanceName:
+                          description: |-
+                            (String) The ServiceNow instance identifier. It refers to the first part of your own ServiceNow URL.   This field is mutually exclusive with the url field. You can only use one of them
+                            The ServiceNow instance identifier. It refers to the first part of your own ServiceNow URL.   This field is mutually exclusive with the **url** field. You can only use one of them
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the ServiceNow description.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        password:
+                          description: |-
+                            (String) The password for the Ansible Tower account
+                            The username to the ServiceNow account
+                          type: string
+                        sendEvents:
+                          description: |-
+                            (Boolean) Send events into ServiceNow ITOM (true)
+                            Send events into ServiceNow ITOM (`true`)
+                          type: boolean
+                        sendIncidents:
+                          description: |-
+                            (Boolean) Send incidents into ServiceNow ITSM (true)
+                            Send incidents into ServiceNow ITSM (`true`)
+                          type: boolean
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the on-premise ServiceNow installation.   This field is mutually exclusive with the **instanceName** field. You can only use one of them
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Ansible Tower account
+                            The username of the ServiceNow account.   Make sure that your user account has the `rest_service`, `web_request_admin`, and `x_dynat_ruxit.Integration` roles
+                          type: string
+                      type: object
+                    type: array
+                  slack:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Slack Notification (see below for nested schema)
+                      Configuration for Slack Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        channel:
+                          description: |-
+                            (String) The channel (for example, #general) or the user (for example, @john.smith) to send the message to
+                            The channel (for example, `#general`) or the user (for example, `@john.smith`) to send the message to
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        title:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the message.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the Slack WebHook.  This is confidential information, therefore GET requests return this field with the `null` value, and it is optional for PUT requests
+                          type: string
+                      type: object
+                    type: array
+                  trello:
+                    description: |-
+                      (Block List, Max: 1) Configuration for Trello Notification (see below for nested schema)
+                      Configuration for Trello Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        applicationKey:
+                          description: |-
+                            (String) The application key for the Trello account
+                            The application key for the Trello account
+                          type: string
+                        authorizationToken:
+                          description: |-
+                            (String) The application token for the Trello account
+                            The application token for the Trello account
+                          type: string
+                        boardId:
+                          description: |-
+                            (String) The Trello board to which the card should be assigned
+                            The Trello board to which the card should be assigned
+                          type: string
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.   You can use same placeholders as in issue summary
+                            The description of the Trello card.   You can use same placeholders as in card text
+                          type: string
+                        listId:
+                          description: |-
+                            (String) The Trello list to which the card should be assigned
+                            The Trello list to which the card should be assigned
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        resolvedListId:
+                          description: |-
+                            (String) The Trello list to which the card of the resolved problem should be assigned
+                            The Trello list to which the card of the resolved problem should be assigned
+                          type: string
+                        text:
+                          description: |-
+                            formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The text of the generated Trello card.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  victorOps:
+                    description: |-
+                      (Block List, Max: 1) Configuration for VictorOps Notification (see below for nested schema)
+                      Configuration for VictorOps Notification
+                    items:
+                      properties:
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        apiKey:
+                          description: |-
+                            (String) The API key to access OpsGenie
+                            The API key for the target VictorOps account
+                          type: string
+                        message:
+                          description: |-
+                            (String) The content of the message.  You can use the following placeholders:  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem
+                            The content of the message.  You can use the following placeholders:  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`
+                          type: string
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        routingKey:
+                          description: |-
+                            (String) The routing key, defining the group to be notified
+                            The routing key, defining the group to be notified
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                      type: object
+                    type: array
+                  webHook:
+                    description: |-
+                      (Block List, Max: 1) Configuration for WebHook Notification (see below for nested schema)
+                      Configuration for WebHook Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        header:
+                          description: |-
+                            (Block Set) A list of the additional HTTP headers (see below for nested schema)
+                            A list of the additional HTTP headers
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The name of the notification configuration
+                                  The name of the HTTP header
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the Authorization header, GET requests return the null value.  If you want update a notification configuration with an Authorization header which you want to remain intact, set the Authorization header with the null value
+                                  The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the **Authorization** header, GET requests return the `null` value.  If you want update a notification configuration with an **Authorization** header which you want to remain intact, set the **Authorization** header with the `null` value
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        notifyEventMerges:
+                          description: |-
+                            (Boolean) Call webhook if new events merge into existing problems
+                            Call webhook if new events merge into existing problems
+                          type: boolean
+                        payload:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the notification message.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the WebHook endpoint
+                          type: string
+                      type: object
+                    type: array
+                  xmatters:
+                    description: |-
+                      (Block List, Max: 1) Configuration for XMatters Notification (see below for nested schema)
+                      Configuration for XMatters Notification
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid, SSL certificate (true) or only trusted (false) certificates
+                            Accept any, including self-signed and invalid, SSL certificate (`true`) or only trusted (`false`) certificates
+                          type: boolean
+                        active:
+                          description: |-
+                            (Boolean) The configuration is enabled (true) or disabled (false)
+                            The configuration is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        alertingProfile:
+                          description: |-
+                            (String) The ID of the associated alerting profile
+                            The ID of the associated alerting profile
+                          type: string
+                        header:
+                          description: |-
+                            (Block Set) A list of the additional HTTP headers (see below for nested schema)
+                            A list of the additional HTTP headers
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The name of the notification configuration
+                                  The name of the HTTP header
+                                type: string
+                              value:
+                                description: |-
+                                  (String) The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the Authorization header, GET requests return the null value.  If you want update a notification configuration with an Authorization header which you want to remain intact, set the Authorization header with the null value
+                                  The value of the HTTP header. May contain an empty value.   Required when creating a new notification.  For the **Authorization** header, GET requests return the `null` value.  If you want update a notification configuration with an **Authorization** header which you want to remain intact, set the **Authorization** header with the `null` value
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the notification configuration
+                            The name of the notification configuration
+                          type: string
+                        payload:
+                          description: |-
+                            formatted string.  * {ProblemDetailsJSON}: All problem event details, including root cause, as a JSON object.  * {ProblemDetailsMarkdown}: All problem event details, including root cause, as a Markdown-formatted string.  * {ProblemDetailsText}: All problem event details, including root cause, as a text-formatted string.  * {ProblemID}: The display number of the reported problem.  * {ProblemImpact}: The impact level of the problem. Possible values are APPLICATION, SERVICE, and INFRASTRUCTURE.  * {ProblemSeverity}: The severity level of the problem. Possible values are AVAILABILITY, ERROR, PERFORMANCE, RESOURCE_CONTENTION, and CUSTOM_ALERT.  * {ProblemTitle}: A short description of the problem.  * {ProblemURL}: The URL of the problem within Dynatrace.  * {State}: The state of the problem. Possible values are OPEN and RESOLVED.  * {Tags}: The list of tags that are defined for all impacted entities, separated by commas
+                            The content of the notification message.  You can use the following placeholders:  * `{ImpactedEntities}`: Details about the entities impacted by the problem in form of a JSON array.  * `{ImpactedEntity}`: The entity impacted by the problem or *X* impacted entities.  * `{PID}`: The ID of the reported problem.  * `{ProblemDetailsHTML}`: All problem event details, including root cause, as an HTML-formatted string.  * `{ProblemDetailsJSON}`: All problem event details, including root cause, as a JSON object.  * `{ProblemDetailsMarkdown}`: All problem event details, including root cause, as a [Markdown-formatted](https://www.markdownguide.org/cheat-sheet/) string.  * `{ProblemDetailsText}`: All problem event details, including root cause, as a text-formatted string.  * `{ProblemID}`: The display number of the reported problem.  * `{ProblemImpact}`: The [impact level](https://www.dynatrace.com/support/help/shortlink/impact-analysis) of the problem. Possible values are `APPLICATION`, `SERVICE`, and `INFRASTRUCTURE`.  * `{ProblemSeverity}`: The [severity level](https://www.dynatrace.com/support/help/shortlink/event-types) of the problem. Possible values are `AVAILABILITY`, `ERROR`, `PERFORMANCE`, `RESOURCE_CONTENTION`, and `CUSTOM_ALERT`.  * `{ProblemTitle}`: A short description of the problem.  * `{ProblemURL}`: The URL of the problem within Dynatrace.  * `{State}`: The state of the problem. Possible values are `OPEN` and `RESOLVED`.  * `{Tags}`: The list of tags that are defined for all impacted entities, separated by commas
+                          type: string
+                        unknowns:
+                          description: |-
+                            (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                            allows for configuring properties that are not explicitly supported by the current version of this provider
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint
+                            The URL of the xMatters WebHook
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

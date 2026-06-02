@@ -1,0 +1,403 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: monitoringrules.process.dynatrace.crossplane.io
+spec:
+  group: process.dynatrace.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: MonitoringRule
+    listKind: MonitoringRuleList
+    plural: monitoringrules
+    singular: monitoringrule
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: MonitoringRule is the Schema for the MonitoringRules API. The
+          resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: MonitoringRuleSpec defines the desired state of MonitoringRule
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  condition:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Condition (see below for nested schema)
+                      Condition
+                    items:
+                      properties:
+                        envVar:
+                          description: |-
+                            (String) supported only with OneAgent 1.167+
+                            supported only with OneAgent 1.167+
+                          type: string
+                        item:
+                          description: |-
+                            (String) Possible Values: APACHE_CONFIG_PATH, APACHE_SPARK_MASTER_IP_ADDRESS, ASP_NET_CORE_APPLICATION_PATH, AWS_ECR_ACCOUNT_ID, AWS_ECR_REGION, AWS_ECS_CLUSTER, AWS_ECS_CONTAINERNAME, AWS_ECS_FAMILY, AWS_ECS_REVISION, AWS_LAMBDA_FUNCTION_NAME, AWS_REGION, AZURE_CONTAINER_APP_ENV_DNS_SUFFIX, AZURE_CONTAINER_APP_NAME, CATALINA_BASE, CATALINA_HOME, CLOUD_FOUNDRY_APPLICATION_ID, CLOUD_FOUNDRY_APP_NAME, CLOUD_FOUNDRY_INSTANCE_INDEX, CLOUD_FOUNDRY_SPACE_ID, CLOUD_FOUNDRY_SPACE_NAME, COLDFUSION_JVM_CONFIG_FILE, COMMAND_LINE_ARGS, CONTAINER_ID, CONTAINER_IMAGE_NAME, CONTAINER_IMAGE_VERSION, CONTAINER_NAME, DATASOURCE_MONITORING_CONFIG_ID, DECLARATIVE_ID, DOTNET_COMMAND, DOTNET_COMMAND_PATH, ELASTIC_SEARCH_CLUSTER_NAME, ELASTIC_SEARCH_NODE_NAME, EQUINOX_CONFIG_PATH, EXE_NAME, EXE_PATH, GAE_INSTANCE, GAE_SERVICE, GLASSFISH_DOMAIN_NAME, GLASSFISH_INSTANCE_NAME, GOOGLE_CLOUD_PROJECT, HYBRIS_BIN_DIR, HYBRIS_CONFIG_DIR, HYBRIS_DATA_DIR, IBM_APPLID, IBM_CICS_IMS_APPLID, IBM_CICS_IMS_JOBNAME, IBM_CICS_REGION, IBM_CTG_NAME, IBM_IMS_CONNECT, IBM_IMS_CONTROL, IBM_IMS_MPR, IBM_IMS_SOAP_GW_NAME, IBM_JOBNAME, IIB_BROKER_NAME, IIB_EXECUTION_GROUP_NAME, IIS_APP_POOL, IIS_ROLE_NAME, JAVA_JAR_FILE, JAVA_JAR_PATH, JAVA_MAIN_CLASS, JBOSS_HOME, JBOSS_MODE, JBOSS_SERVER_NAME, KUBERNETES_BASEPODNAME, KUBERNETES_CONTAINERNAME, KUBERNETES_FULLPODNAME, KUBERNETES_NAMESPACE, KUBERNETES_PODUID, MSSQL_INSTANCE_NAME, NODEJS_APP_BASE_DIR, NODEJS_APP_NAME, NODEJS_SCRIPT_NAME, ORACLE_SID, PG_ID_CALC_INPUT_KEY_LINKAGE, PHP_CLI_SCRIPT_PATH, PHP_CLI_WORKING_DIR, PYTHON_MODULE, PYTHON_SCRIPT, PYTHON_SCRIPT_PATH, RKE2_TYPE, RUXIT_CLUSTER_ID, RUXIT_NODE_ID, SERVICE_NAME, SOFTWAREAG_INSTALL_ROOT, SOFTWAREAG_PRODUCTPROPNAME, SPRINGBOOT_APP_NAME, SPRINGBOOT_PROFILE_NAME, SPRINGBOOT_STARTUP_CLASS, TIBCO_BUSINESSWORKS_APP_NODE_NAME, TIBCO_BUSINESSWORKS_APP_SPACE_NAME, TIBCO_BUSINESSWORKS_CE_APP_NAME, TIBCO_BUSINESSWORKS_CE_VERSION, TIBCO_BUSINESSWORKS_DOMAIN_NAME, TIBCO_BUSINESSWORKS_HOME, TIPCO_BUSINESSWORKS_PROPERTY_FILE, TIPCO_BUSINESSWORKS_PROPERTY_FILE_PATH, UNKNOWN, VARNISH_INSTANCE_NAME, WEBLOGIC_CLUSTER_NAME, WEBLOGIC_DOMAIN_NAME, WEBLOGIC_HOME, WEBLOGIC_NAME, WEBSPHERE_CELL_NAME, WEBSPHERE_CLUSTER_NAME, WEBSPHERE_LIBERTY_SERVER_NAME, WEBSPHERE_NODE_NAME, WEBSPHERE_SERVER_NAME, Z_CM_VERSION
+                            Possible Values: `APACHE_CONFIG_PATH`, `APACHE_SPARK_MASTER_IP_ADDRESS`, `ASP_NET_CORE_APPLICATION_PATH`, `AWS_ECR_ACCOUNT_ID`, `AWS_ECR_REGION`, `AWS_ECS_CLUSTER`, `AWS_ECS_CONTAINERNAME`, `AWS_ECS_FAMILY`, `AWS_ECS_REVISION`, `AWS_LAMBDA_FUNCTION_NAME`, `AWS_REGION`, `AZURE_CONTAINER_APP_ENV_DNS_SUFFIX`, `AZURE_CONTAINER_APP_NAME`, `CATALINA_BASE`, `CATALINA_HOME`, `CLOUD_FOUNDRY_APPLICATION_ID`, `CLOUD_FOUNDRY_APP_NAME`, `CLOUD_FOUNDRY_INSTANCE_INDEX`, `CLOUD_FOUNDRY_SPACE_ID`, `CLOUD_FOUNDRY_SPACE_NAME`, `COLDFUSION_JVM_CONFIG_FILE`, `COMMAND_LINE_ARGS`, `CONTAINER_ID`, `CONTAINER_IMAGE_NAME`, `CONTAINER_IMAGE_VERSION`, `CONTAINER_NAME`, `DATASOURCE_MONITORING_CONFIG_ID`, `DECLARATIVE_ID`, `DOTNET_COMMAND`, `DOTNET_COMMAND_PATH`, `ELASTIC_SEARCH_CLUSTER_NAME`, `ELASTIC_SEARCH_NODE_NAME`, `EQUINOX_CONFIG_PATH`, `EXE_NAME`, `EXE_PATH`, `GAE_INSTANCE`, `GAE_SERVICE`, `GLASSFISH_DOMAIN_NAME`, `GLASSFISH_INSTANCE_NAME`, `GOOGLE_CLOUD_PROJECT`, `HYBRIS_BIN_DIR`, `HYBRIS_CONFIG_DIR`, `HYBRIS_DATA_DIR`, `IBM_APPLID`, `IBM_CICS_IMS_APPLID`, `IBM_CICS_IMS_JOBNAME`, `IBM_CICS_REGION`, `IBM_CTG_NAME`, `IBM_IMS_CONNECT`, `IBM_IMS_CONTROL`, `IBM_IMS_MPR`, `IBM_IMS_SOAP_GW_NAME`, `IBM_JOBNAME`, `IIB_BROKER_NAME`, `IIB_EXECUTION_GROUP_NAME`, `IIS_APP_POOL`, `IIS_ROLE_NAME`, `JAVA_JAR_FILE`, `JAVA_JAR_PATH`, `JAVA_MAIN_CLASS`, `JBOSS_HOME`, `JBOSS_MODE`, `JBOSS_SERVER_NAME`, `KUBERNETES_BASEPODNAME`, `KUBERNETES_CONTAINERNAME`, `KUBERNETES_FULLPODNAME`, `KUBERNETES_NAMESPACE`, `KUBERNETES_PODUID`, `MSSQL_INSTANCE_NAME`, `NODEJS_APP_BASE_DIR`, `NODEJS_APP_NAME`, `NODEJS_SCRIPT_NAME`, `ORACLE_SID`, `PG_ID_CALC_INPUT_KEY_LINKAGE`, `PHP_CLI_SCRIPT_PATH`, `PHP_CLI_WORKING_DIR`, `PYTHON_MODULE`, `PYTHON_SCRIPT`, `PYTHON_SCRIPT_PATH`, `RKE2_TYPE`, `RUXIT_CLUSTER_ID`, `RUXIT_NODE_ID`, `SERVICE_NAME`, `SOFTWAREAG_INSTALL_ROOT`, `SOFTWAREAG_PRODUCTPROPNAME`, `SPRINGBOOT_APP_NAME`, `SPRINGBOOT_PROFILE_NAME`, `SPRINGBOOT_STARTUP_CLASS`, `TIBCO_BUSINESSWORKS_APP_NODE_NAME`, `TIBCO_BUSINESSWORKS_APP_SPACE_NAME`, `TIBCO_BUSINESSWORKS_CE_APP_NAME`, `TIBCO_BUSINESSWORKS_CE_VERSION`, `TIBCO_BUSINESSWORKS_DOMAIN_NAME`, `TIBCO_BUSINESSWORKS_HOME`, `TIPCO_BUSINESSWORKS_PROPERTY_FILE`, `TIPCO_BUSINESSWORKS_PROPERTY_FILE_PATH`, `UNKNOWN`, `VARNISH_INSTANCE_NAME`, `WEBLOGIC_CLUSTER_NAME`, `WEBLOGIC_DOMAIN_NAME`, `WEBLOGIC_HOME`, `WEBLOGIC_NAME`, `WEBSPHERE_CELL_NAME`, `WEBSPHERE_CLUSTER_NAME`, `WEBSPHERE_LIBERTY_SERVER_NAME`, `WEBSPHERE_NODE_NAME`, `WEBSPHERE_SERVER_NAME`, `Z_CM_VERSION`
+                          type: string
+                        operator:
+                          description: |-
+                            (String) Possible Values: CONTAINS, ENDS, EQUALS, EXISTS, NOT_CONTAINS, NOT_ENDS, NOT_EQUALS, NOT_EXISTS, NOT_STARTS, STARTS
+                            Possible Values: `CONTAINS`, `ENDS`, `EQUALS`, `EXISTS`, `NOT_CONTAINS`, `NOT_ENDS`, `NOT_EQUALS`, `NOT_EXISTS`, `NOT_STARTS`, `STARTS`
+                          type: string
+                        value:
+                          description: |-
+                            (String) Condition value
+                            Condition value
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  hostGroupId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  mode:
+                    description: |-
+                      (String) Possible Values: MONITORING_ON, MONITORING_OFF
+                      Possible Values: `MONITORING_ON`, `MONITORING_OFF`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  condition:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Condition (see below for nested schema)
+                      Condition
+                    items:
+                      properties:
+                        envVar:
+                          description: |-
+                            (String) supported only with OneAgent 1.167+
+                            supported only with OneAgent 1.167+
+                          type: string
+                        item:
+                          description: |-
+                            (String) Possible Values: APACHE_CONFIG_PATH, APACHE_SPARK_MASTER_IP_ADDRESS, ASP_NET_CORE_APPLICATION_PATH, AWS_ECR_ACCOUNT_ID, AWS_ECR_REGION, AWS_ECS_CLUSTER, AWS_ECS_CONTAINERNAME, AWS_ECS_FAMILY, AWS_ECS_REVISION, AWS_LAMBDA_FUNCTION_NAME, AWS_REGION, AZURE_CONTAINER_APP_ENV_DNS_SUFFIX, AZURE_CONTAINER_APP_NAME, CATALINA_BASE, CATALINA_HOME, CLOUD_FOUNDRY_APPLICATION_ID, CLOUD_FOUNDRY_APP_NAME, CLOUD_FOUNDRY_INSTANCE_INDEX, CLOUD_FOUNDRY_SPACE_ID, CLOUD_FOUNDRY_SPACE_NAME, COLDFUSION_JVM_CONFIG_FILE, COMMAND_LINE_ARGS, CONTAINER_ID, CONTAINER_IMAGE_NAME, CONTAINER_IMAGE_VERSION, CONTAINER_NAME, DATASOURCE_MONITORING_CONFIG_ID, DECLARATIVE_ID, DOTNET_COMMAND, DOTNET_COMMAND_PATH, ELASTIC_SEARCH_CLUSTER_NAME, ELASTIC_SEARCH_NODE_NAME, EQUINOX_CONFIG_PATH, EXE_NAME, EXE_PATH, GAE_INSTANCE, GAE_SERVICE, GLASSFISH_DOMAIN_NAME, GLASSFISH_INSTANCE_NAME, GOOGLE_CLOUD_PROJECT, HYBRIS_BIN_DIR, HYBRIS_CONFIG_DIR, HYBRIS_DATA_DIR, IBM_APPLID, IBM_CICS_IMS_APPLID, IBM_CICS_IMS_JOBNAME, IBM_CICS_REGION, IBM_CTG_NAME, IBM_IMS_CONNECT, IBM_IMS_CONTROL, IBM_IMS_MPR, IBM_IMS_SOAP_GW_NAME, IBM_JOBNAME, IIB_BROKER_NAME, IIB_EXECUTION_GROUP_NAME, IIS_APP_POOL, IIS_ROLE_NAME, JAVA_JAR_FILE, JAVA_JAR_PATH, JAVA_MAIN_CLASS, JBOSS_HOME, JBOSS_MODE, JBOSS_SERVER_NAME, KUBERNETES_BASEPODNAME, KUBERNETES_CONTAINERNAME, KUBERNETES_FULLPODNAME, KUBERNETES_NAMESPACE, KUBERNETES_PODUID, MSSQL_INSTANCE_NAME, NODEJS_APP_BASE_DIR, NODEJS_APP_NAME, NODEJS_SCRIPT_NAME, ORACLE_SID, PG_ID_CALC_INPUT_KEY_LINKAGE, PHP_CLI_SCRIPT_PATH, PHP_CLI_WORKING_DIR, PYTHON_MODULE, PYTHON_SCRIPT, PYTHON_SCRIPT_PATH, RKE2_TYPE, RUXIT_CLUSTER_ID, RUXIT_NODE_ID, SERVICE_NAME, SOFTWAREAG_INSTALL_ROOT, SOFTWAREAG_PRODUCTPROPNAME, SPRINGBOOT_APP_NAME, SPRINGBOOT_PROFILE_NAME, SPRINGBOOT_STARTUP_CLASS, TIBCO_BUSINESSWORKS_APP_NODE_NAME, TIBCO_BUSINESSWORKS_APP_SPACE_NAME, TIBCO_BUSINESSWORKS_CE_APP_NAME, TIBCO_BUSINESSWORKS_CE_VERSION, TIBCO_BUSINESSWORKS_DOMAIN_NAME, TIBCO_BUSINESSWORKS_HOME, TIPCO_BUSINESSWORKS_PROPERTY_FILE, TIPCO_BUSINESSWORKS_PROPERTY_FILE_PATH, UNKNOWN, VARNISH_INSTANCE_NAME, WEBLOGIC_CLUSTER_NAME, WEBLOGIC_DOMAIN_NAME, WEBLOGIC_HOME, WEBLOGIC_NAME, WEBSPHERE_CELL_NAME, WEBSPHERE_CLUSTER_NAME, WEBSPHERE_LIBERTY_SERVER_NAME, WEBSPHERE_NODE_NAME, WEBSPHERE_SERVER_NAME, Z_CM_VERSION
+                            Possible Values: `APACHE_CONFIG_PATH`, `APACHE_SPARK_MASTER_IP_ADDRESS`, `ASP_NET_CORE_APPLICATION_PATH`, `AWS_ECR_ACCOUNT_ID`, `AWS_ECR_REGION`, `AWS_ECS_CLUSTER`, `AWS_ECS_CONTAINERNAME`, `AWS_ECS_FAMILY`, `AWS_ECS_REVISION`, `AWS_LAMBDA_FUNCTION_NAME`, `AWS_REGION`, `AZURE_CONTAINER_APP_ENV_DNS_SUFFIX`, `AZURE_CONTAINER_APP_NAME`, `CATALINA_BASE`, `CATALINA_HOME`, `CLOUD_FOUNDRY_APPLICATION_ID`, `CLOUD_FOUNDRY_APP_NAME`, `CLOUD_FOUNDRY_INSTANCE_INDEX`, `CLOUD_FOUNDRY_SPACE_ID`, `CLOUD_FOUNDRY_SPACE_NAME`, `COLDFUSION_JVM_CONFIG_FILE`, `COMMAND_LINE_ARGS`, `CONTAINER_ID`, `CONTAINER_IMAGE_NAME`, `CONTAINER_IMAGE_VERSION`, `CONTAINER_NAME`, `DATASOURCE_MONITORING_CONFIG_ID`, `DECLARATIVE_ID`, `DOTNET_COMMAND`, `DOTNET_COMMAND_PATH`, `ELASTIC_SEARCH_CLUSTER_NAME`, `ELASTIC_SEARCH_NODE_NAME`, `EQUINOX_CONFIG_PATH`, `EXE_NAME`, `EXE_PATH`, `GAE_INSTANCE`, `GAE_SERVICE`, `GLASSFISH_DOMAIN_NAME`, `GLASSFISH_INSTANCE_NAME`, `GOOGLE_CLOUD_PROJECT`, `HYBRIS_BIN_DIR`, `HYBRIS_CONFIG_DIR`, `HYBRIS_DATA_DIR`, `IBM_APPLID`, `IBM_CICS_IMS_APPLID`, `IBM_CICS_IMS_JOBNAME`, `IBM_CICS_REGION`, `IBM_CTG_NAME`, `IBM_IMS_CONNECT`, `IBM_IMS_CONTROL`, `IBM_IMS_MPR`, `IBM_IMS_SOAP_GW_NAME`, `IBM_JOBNAME`, `IIB_BROKER_NAME`, `IIB_EXECUTION_GROUP_NAME`, `IIS_APP_POOL`, `IIS_ROLE_NAME`, `JAVA_JAR_FILE`, `JAVA_JAR_PATH`, `JAVA_MAIN_CLASS`, `JBOSS_HOME`, `JBOSS_MODE`, `JBOSS_SERVER_NAME`, `KUBERNETES_BASEPODNAME`, `KUBERNETES_CONTAINERNAME`, `KUBERNETES_FULLPODNAME`, `KUBERNETES_NAMESPACE`, `KUBERNETES_PODUID`, `MSSQL_INSTANCE_NAME`, `NODEJS_APP_BASE_DIR`, `NODEJS_APP_NAME`, `NODEJS_SCRIPT_NAME`, `ORACLE_SID`, `PG_ID_CALC_INPUT_KEY_LINKAGE`, `PHP_CLI_SCRIPT_PATH`, `PHP_CLI_WORKING_DIR`, `PYTHON_MODULE`, `PYTHON_SCRIPT`, `PYTHON_SCRIPT_PATH`, `RKE2_TYPE`, `RUXIT_CLUSTER_ID`, `RUXIT_NODE_ID`, `SERVICE_NAME`, `SOFTWAREAG_INSTALL_ROOT`, `SOFTWAREAG_PRODUCTPROPNAME`, `SPRINGBOOT_APP_NAME`, `SPRINGBOOT_PROFILE_NAME`, `SPRINGBOOT_STARTUP_CLASS`, `TIBCO_BUSINESSWORKS_APP_NODE_NAME`, `TIBCO_BUSINESSWORKS_APP_SPACE_NAME`, `TIBCO_BUSINESSWORKS_CE_APP_NAME`, `TIBCO_BUSINESSWORKS_CE_VERSION`, `TIBCO_BUSINESSWORKS_DOMAIN_NAME`, `TIBCO_BUSINESSWORKS_HOME`, `TIPCO_BUSINESSWORKS_PROPERTY_FILE`, `TIPCO_BUSINESSWORKS_PROPERTY_FILE_PATH`, `UNKNOWN`, `VARNISH_INSTANCE_NAME`, `WEBLOGIC_CLUSTER_NAME`, `WEBLOGIC_DOMAIN_NAME`, `WEBLOGIC_HOME`, `WEBLOGIC_NAME`, `WEBSPHERE_CELL_NAME`, `WEBSPHERE_CLUSTER_NAME`, `WEBSPHERE_LIBERTY_SERVER_NAME`, `WEBSPHERE_NODE_NAME`, `WEBSPHERE_SERVER_NAME`, `Z_CM_VERSION`
+                          type: string
+                        operator:
+                          description: |-
+                            (String) Possible Values: CONTAINS, ENDS, EQUALS, EXISTS, NOT_CONTAINS, NOT_ENDS, NOT_EQUALS, NOT_EXISTS, NOT_STARTS, STARTS
+                            Possible Values: `CONTAINS`, `ENDS`, `EQUALS`, `EXISTS`, `NOT_CONTAINS`, `NOT_ENDS`, `NOT_EQUALS`, `NOT_EXISTS`, `NOT_STARTS`, `STARTS`
+                          type: string
+                        value:
+                          description: |-
+                            (String) Condition value
+                            Condition value
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  hostGroupId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  mode:
+                    description: |-
+                      (String) Possible Values: MONITORING_ON, MONITORING_OFF
+                      Possible Values: `MONITORING_ON`, `MONITORING_OFF`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.condition is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.condition)
+                || (has(self.initProvider) && has(self.initProvider.condition))'
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.mode is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.mode)
+                || (has(self.initProvider) && has(self.initProvider.mode))'
+          status:
+            description: MonitoringRuleStatus defines the observed state of MonitoringRule.
+            properties:
+              atProvider:
+                properties:
+                  condition:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Condition (see below for nested schema)
+                      Condition
+                    items:
+                      properties:
+                        envVar:
+                          description: |-
+                            (String) supported only with OneAgent 1.167+
+                            supported only with OneAgent 1.167+
+                          type: string
+                        item:
+                          description: |-
+                            (String) Possible Values: APACHE_CONFIG_PATH, APACHE_SPARK_MASTER_IP_ADDRESS, ASP_NET_CORE_APPLICATION_PATH, AWS_ECR_ACCOUNT_ID, AWS_ECR_REGION, AWS_ECS_CLUSTER, AWS_ECS_CONTAINERNAME, AWS_ECS_FAMILY, AWS_ECS_REVISION, AWS_LAMBDA_FUNCTION_NAME, AWS_REGION, AZURE_CONTAINER_APP_ENV_DNS_SUFFIX, AZURE_CONTAINER_APP_NAME, CATALINA_BASE, CATALINA_HOME, CLOUD_FOUNDRY_APPLICATION_ID, CLOUD_FOUNDRY_APP_NAME, CLOUD_FOUNDRY_INSTANCE_INDEX, CLOUD_FOUNDRY_SPACE_ID, CLOUD_FOUNDRY_SPACE_NAME, COLDFUSION_JVM_CONFIG_FILE, COMMAND_LINE_ARGS, CONTAINER_ID, CONTAINER_IMAGE_NAME, CONTAINER_IMAGE_VERSION, CONTAINER_NAME, DATASOURCE_MONITORING_CONFIG_ID, DECLARATIVE_ID, DOTNET_COMMAND, DOTNET_COMMAND_PATH, ELASTIC_SEARCH_CLUSTER_NAME, ELASTIC_SEARCH_NODE_NAME, EQUINOX_CONFIG_PATH, EXE_NAME, EXE_PATH, GAE_INSTANCE, GAE_SERVICE, GLASSFISH_DOMAIN_NAME, GLASSFISH_INSTANCE_NAME, GOOGLE_CLOUD_PROJECT, HYBRIS_BIN_DIR, HYBRIS_CONFIG_DIR, HYBRIS_DATA_DIR, IBM_APPLID, IBM_CICS_IMS_APPLID, IBM_CICS_IMS_JOBNAME, IBM_CICS_REGION, IBM_CTG_NAME, IBM_IMS_CONNECT, IBM_IMS_CONTROL, IBM_IMS_MPR, IBM_IMS_SOAP_GW_NAME, IBM_JOBNAME, IIB_BROKER_NAME, IIB_EXECUTION_GROUP_NAME, IIS_APP_POOL, IIS_ROLE_NAME, JAVA_JAR_FILE, JAVA_JAR_PATH, JAVA_MAIN_CLASS, JBOSS_HOME, JBOSS_MODE, JBOSS_SERVER_NAME, KUBERNETES_BASEPODNAME, KUBERNETES_CONTAINERNAME, KUBERNETES_FULLPODNAME, KUBERNETES_NAMESPACE, KUBERNETES_PODUID, MSSQL_INSTANCE_NAME, NODEJS_APP_BASE_DIR, NODEJS_APP_NAME, NODEJS_SCRIPT_NAME, ORACLE_SID, PG_ID_CALC_INPUT_KEY_LINKAGE, PHP_CLI_SCRIPT_PATH, PHP_CLI_WORKING_DIR, PYTHON_MODULE, PYTHON_SCRIPT, PYTHON_SCRIPT_PATH, RKE2_TYPE, RUXIT_CLUSTER_ID, RUXIT_NODE_ID, SERVICE_NAME, SOFTWAREAG_INSTALL_ROOT, SOFTWAREAG_PRODUCTPROPNAME, SPRINGBOOT_APP_NAME, SPRINGBOOT_PROFILE_NAME, SPRINGBOOT_STARTUP_CLASS, TIBCO_BUSINESSWORKS_APP_NODE_NAME, TIBCO_BUSINESSWORKS_APP_SPACE_NAME, TIBCO_BUSINESSWORKS_CE_APP_NAME, TIBCO_BUSINESSWORKS_CE_VERSION, TIBCO_BUSINESSWORKS_DOMAIN_NAME, TIBCO_BUSINESSWORKS_HOME, TIPCO_BUSINESSWORKS_PROPERTY_FILE, TIPCO_BUSINESSWORKS_PROPERTY_FILE_PATH, UNKNOWN, VARNISH_INSTANCE_NAME, WEBLOGIC_CLUSTER_NAME, WEBLOGIC_DOMAIN_NAME, WEBLOGIC_HOME, WEBLOGIC_NAME, WEBSPHERE_CELL_NAME, WEBSPHERE_CLUSTER_NAME, WEBSPHERE_LIBERTY_SERVER_NAME, WEBSPHERE_NODE_NAME, WEBSPHERE_SERVER_NAME, Z_CM_VERSION
+                            Possible Values: `APACHE_CONFIG_PATH`, `APACHE_SPARK_MASTER_IP_ADDRESS`, `ASP_NET_CORE_APPLICATION_PATH`, `AWS_ECR_ACCOUNT_ID`, `AWS_ECR_REGION`, `AWS_ECS_CLUSTER`, `AWS_ECS_CONTAINERNAME`, `AWS_ECS_FAMILY`, `AWS_ECS_REVISION`, `AWS_LAMBDA_FUNCTION_NAME`, `AWS_REGION`, `AZURE_CONTAINER_APP_ENV_DNS_SUFFIX`, `AZURE_CONTAINER_APP_NAME`, `CATALINA_BASE`, `CATALINA_HOME`, `CLOUD_FOUNDRY_APPLICATION_ID`, `CLOUD_FOUNDRY_APP_NAME`, `CLOUD_FOUNDRY_INSTANCE_INDEX`, `CLOUD_FOUNDRY_SPACE_ID`, `CLOUD_FOUNDRY_SPACE_NAME`, `COLDFUSION_JVM_CONFIG_FILE`, `COMMAND_LINE_ARGS`, `CONTAINER_ID`, `CONTAINER_IMAGE_NAME`, `CONTAINER_IMAGE_VERSION`, `CONTAINER_NAME`, `DATASOURCE_MONITORING_CONFIG_ID`, `DECLARATIVE_ID`, `DOTNET_COMMAND`, `DOTNET_COMMAND_PATH`, `ELASTIC_SEARCH_CLUSTER_NAME`, `ELASTIC_SEARCH_NODE_NAME`, `EQUINOX_CONFIG_PATH`, `EXE_NAME`, `EXE_PATH`, `GAE_INSTANCE`, `GAE_SERVICE`, `GLASSFISH_DOMAIN_NAME`, `GLASSFISH_INSTANCE_NAME`, `GOOGLE_CLOUD_PROJECT`, `HYBRIS_BIN_DIR`, `HYBRIS_CONFIG_DIR`, `HYBRIS_DATA_DIR`, `IBM_APPLID`, `IBM_CICS_IMS_APPLID`, `IBM_CICS_IMS_JOBNAME`, `IBM_CICS_REGION`, `IBM_CTG_NAME`, `IBM_IMS_CONNECT`, `IBM_IMS_CONTROL`, `IBM_IMS_MPR`, `IBM_IMS_SOAP_GW_NAME`, `IBM_JOBNAME`, `IIB_BROKER_NAME`, `IIB_EXECUTION_GROUP_NAME`, `IIS_APP_POOL`, `IIS_ROLE_NAME`, `JAVA_JAR_FILE`, `JAVA_JAR_PATH`, `JAVA_MAIN_CLASS`, `JBOSS_HOME`, `JBOSS_MODE`, `JBOSS_SERVER_NAME`, `KUBERNETES_BASEPODNAME`, `KUBERNETES_CONTAINERNAME`, `KUBERNETES_FULLPODNAME`, `KUBERNETES_NAMESPACE`, `KUBERNETES_PODUID`, `MSSQL_INSTANCE_NAME`, `NODEJS_APP_BASE_DIR`, `NODEJS_APP_NAME`, `NODEJS_SCRIPT_NAME`, `ORACLE_SID`, `PG_ID_CALC_INPUT_KEY_LINKAGE`, `PHP_CLI_SCRIPT_PATH`, `PHP_CLI_WORKING_DIR`, `PYTHON_MODULE`, `PYTHON_SCRIPT`, `PYTHON_SCRIPT_PATH`, `RKE2_TYPE`, `RUXIT_CLUSTER_ID`, `RUXIT_NODE_ID`, `SERVICE_NAME`, `SOFTWAREAG_INSTALL_ROOT`, `SOFTWAREAG_PRODUCTPROPNAME`, `SPRINGBOOT_APP_NAME`, `SPRINGBOOT_PROFILE_NAME`, `SPRINGBOOT_STARTUP_CLASS`, `TIBCO_BUSINESSWORKS_APP_NODE_NAME`, `TIBCO_BUSINESSWORKS_APP_SPACE_NAME`, `TIBCO_BUSINESSWORKS_CE_APP_NAME`, `TIBCO_BUSINESSWORKS_CE_VERSION`, `TIBCO_BUSINESSWORKS_DOMAIN_NAME`, `TIBCO_BUSINESSWORKS_HOME`, `TIPCO_BUSINESSWORKS_PROPERTY_FILE`, `TIPCO_BUSINESSWORKS_PROPERTY_FILE_PATH`, `UNKNOWN`, `VARNISH_INSTANCE_NAME`, `WEBLOGIC_CLUSTER_NAME`, `WEBLOGIC_DOMAIN_NAME`, `WEBLOGIC_HOME`, `WEBLOGIC_NAME`, `WEBSPHERE_CELL_NAME`, `WEBSPHERE_CLUSTER_NAME`, `WEBSPHERE_LIBERTY_SERVER_NAME`, `WEBSPHERE_NODE_NAME`, `WEBSPHERE_SERVER_NAME`, `Z_CM_VERSION`
+                          type: string
+                        operator:
+                          description: |-
+                            (String) Possible Values: CONTAINS, ENDS, EQUALS, EXISTS, NOT_CONTAINS, NOT_ENDS, NOT_EQUALS, NOT_EXISTS, NOT_STARTS, STARTS
+                            Possible Values: `CONTAINS`, `ENDS`, `EQUALS`, `EXISTS`, `NOT_CONTAINS`, `NOT_ENDS`, `NOT_EQUALS`, `NOT_EXISTS`, `NOT_STARTS`, `STARTS`
+                          type: string
+                        value:
+                          description: |-
+                            (String) Condition value
+                            Condition value
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  hostGroupId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  mode:
+                    description: |-
+                      (String) Possible Values: MONITORING_ON, MONITORING_OFF
+                      Possible Values: `MONITORING_ON`, `MONITORING_OFF`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

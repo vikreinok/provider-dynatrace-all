@@ -1,0 +1,1419 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: processmonitorings.builtin.dynatrace.m.crossplane.io
+spec:
+  group: builtin.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: ProcessMonitoring
+    listKind: ProcessMonitoringList
+    plural: processmonitorings
+    singular: processmonitoring
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ProcessMonitoring is the Schema for the ProcessMonitorings API.
+          The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ProcessMonitoringSpec defines the desired state of ProcessMonitoring
+            properties:
+              forProvider:
+                properties:
+                  aspnetcore:
+                    description: |-
+                      Do monitor processes if ASP.NET Core application path exists
+                      Rule id: 3 - Do monitor processes if ASP.NET Core application path exists
+                    type: boolean
+                  aspnetcoreAgentlistener:
+                    description: |-
+                      Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Listener'
+                      Rule id: 64 - Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Listener'
+                    type: boolean
+                  aspnetcoreAgentworker:
+                    description: |-
+                      Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Worker'
+                      Rule id: 62 - Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Worker'
+                    type: boolean
+                  cf:
+                    description: |-
+                      Do monitor processes if Cloud Foundry application exists
+                      Rule id: 37 - Do monitor processes if Cloud Foundry application exists
+                    type: boolean
+                  cfAppsmanagerjs:
+                    description: |-
+                      manager-js'
+                      Do not monitor processes if Cloud Foundry application begins with 'apps-manager-js'
+                    type: boolean
+                  cmdForeverbinmonitor:
+                    description: |-
+                      Do not monitor processes if command line arguments contain 'forever/bin/monitor'
+                      Rule id: 84 - Do not monitor processes if command line arguments contain 'forever/bin/monitor'
+                    type: boolean
+                  container:
+                    description: |-
+                      Do monitor processes if container name exists
+                      Rule id: 41 - Do monitor processes if container name exists
+                    type: boolean
+                  dockerPauseamd64:
+                    description: |-
+                      Do not monitor processes if Docker stripped image contains 'pause-amd64'
+                      Rule id: 39 - Do not monitor processes if Docker stripped image contains 'pause-amd64'
+                    type: boolean
+                  exeAdapter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'adapter'
+                      Rule id: 7 - Do monitor processes if EXE name equals 'adapter'
+                    type: boolean
+                  exeAgentlistener:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'Agent.Listener'
+                      Rule id: 63 - Do not monitor processes if EXE name contains 'Agent.Listener'
+                    type: boolean
+                  exeAgentworker:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'Agent.Worker'
+                      Rule id: 61 - Do not monitor processes if EXE name contains 'Agent.Worker'
+                    type: boolean
+                  exeAnsible:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'ansible'
+                      Rule id: 79 - Do not monitor processes if EXE name equals 'ansible'
+                    type: boolean
+                  exeAuctioneer:
+                    description: |-
+                      Do monitor processes if EXE name equals 'auctioneer'
+                      Rule id: 8 - Do monitor processes if EXE name equals 'auctioneer'
+                    type: boolean
+                  exeAuditbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'auditbeat'
+                      Rule id: 52 - Do not monitor processes if EXE name equals 'auditbeat'
+                    type: boolean
+                  exeAws:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'aws'
+                      Rule id: 81 - Do not monitor processes if EXE name equals 'aws'
+                    type: boolean
+                  exeAz:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'az'
+                      Rule id: 82 - Do not monitor processes if EXE name equals 'az'
+                    type: boolean
+                  exeBbs:
+                    description: |-
+                      Do monitor processes if EXE name equals 'bbs'
+                      Rule id: 9 - Do monitor processes if EXE name equals 'bbs'
+                    type: boolean
+                  exeCaddy:
+                    description: |-
+                      Do monitor processes if EXE name equals 'caddy'
+                      Rule id: 5 - Do monitor processes if EXE name equals 'caddy'
+                    type: boolean
+                  exeCaliconode:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'calico-node'
+                      Rule id: 58 - Do not monitor processes if EXE name equals 'calico-node'
+                    type: boolean
+                  exeCasclient:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'casclient.exe'
+                      Rule id: 59 - Do not monitor processes if EXE name equals 'casclient.exe'
+                    type: boolean
+                  exeCcuploader:
+                    description: |-
+                      Do monitor processes if EXE name equals 'cc-uploader'
+                      Rule id: 10 - Do monitor processes if EXE name equals 'cc-uploader'
+                    type: boolean
+                  exeConda:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'conda'
+                      Rule id: 78 - Do not monitor processes if EXE name equals 'conda'
+                    type: boolean
+                  exeDoppler:
+                    description: |-
+                      Do monitor processes if EXE name equals 'doppler'
+                      Rule id: 11 - Do monitor processes if EXE name equals 'doppler'
+                    type: boolean
+                  exeFilebeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'filebeat'
+                      Rule id: 49 - Do not monitor processes if EXE name equals 'filebeat'
+                    type: boolean
+                  exeFlexnetjobexecutorservice:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'FlexNetJobExecutorService'
+                      Rule id: 65 - Do not monitor processes if EXE name equals 'FlexNetJobExecutorService'
+                    type: boolean
+                  exeFlexnetmaintenanceremotingservice:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'FlexNetMaintenanceRemotingService'
+                      Rule id: 66 - Do not monitor processes if EXE name equals 'FlexNetMaintenanceRemotingService'
+                    type: boolean
+                  exeFunctionbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'functionbeat'
+                      Rule id: 54 - Do not monitor processes if EXE name equals 'functionbeat'
+                    type: boolean
+                  exeGcloud:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'gcloud'
+                      Rule id: 83 - Do not monitor processes if EXE name equals 'gcloud'
+                    type: boolean
+                  exeGorouter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'gorouter'
+                      Rule id: 12 - Do monitor processes if EXE name equals 'gorouter'
+                    type: boolean
+                  exeGrootfs:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'grootfs'
+                      Rule id: 55 - Do not monitor processes if EXE name equals 'grootfs'
+                    type: boolean
+                  exeHatch:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'hatch'
+                      Rule id: 74 - Do not monitor processes if EXE name equals 'hatch'
+                    type: boolean
+                  exeHeartbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'heartbeat'
+                      Rule id: 53 - Do not monitor processes if EXE name equals 'heartbeat'
+                    type: boolean
+                  exeInfluxd:
+                    description: |-
+                      Do monitor processes if EXE name equals 'influxd'
+                      Rule id: 6 - Do monitor processes if EXE name equals 'influxd'
+                    type: boolean
+                  exeJupyter:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'jupyter'
+                      Rule id: 77 - Do not monitor processes if EXE name equals 'jupyter'
+                    type: boolean
+                  exeLocket:
+                    description: |-
+                      Do monitor processes if EXE name equals 'locket'
+                      Rule id: 13 - Do monitor processes if EXE name equals 'locket'
+                    type: boolean
+                  exeMetricbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'metricbeat'
+                      Rule id: 50 - Do not monitor processes if EXE name equals 'metricbeat'
+                    type: boolean
+                  exeMetron:
+                    description: |-
+                      Do monitor processes if EXE name equals 'metron'
+                      Rule id: 14 - Do monitor processes if EXE name equals 'metron'
+                    type: boolean
+                  exeMqsi:
+                    description: |-
+                      Do not monitor processes if EXE name begins with 'mqsi'
+                      Rule id: 48 - Do not monitor processes if EXE name begins with 'mqsi'
+                    type: boolean
+                  exeOc:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'oc'
+                      Rule id: 44 - Do not monitor processes if EXE name equals 'oc'
+                    type: boolean
+                  exeOpenhandlecollector:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'openhandlecollector.exe'
+                      Rule id: 71 - Do not monitor processes if EXE name equals 'openhandlecollector.exe'
+                    type: boolean
+                  exeOpenstack:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'openstack'
+                      Rule id: 80 - Do not monitor processes if EXE name equals 'openstack'
+                    type: boolean
+                  exeOptcnibinhostlocal:
+                    description: |-
+                      Do not monitor processes if EXE path equals '/opt/cni/bin/host-local'
+                      Rule id: 46 - Do not monitor processes if EXE path equals '/opt/cni/bin/host-local'
+                    type: boolean
+                  exePacketbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'packetbeat'
+                      Rule id: 51 - Do not monitor processes if EXE name equals 'packetbeat'
+                    type: boolean
+                  exePhpcgi:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'php-cgi'
+                      Rule id: 2 - Do not monitor processes if EXE name equals 'php-cgi'
+                    type: boolean
+                  exePip:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'pip'
+                      Rule id: 73 - Do not monitor processes if EXE name equals 'pip'
+                    type: boolean
+                  exeRep:
+                    description: |-
+                      Do monitor processes if EXE name equals 'rep'
+                      Rule id: 16 - Do monitor processes if EXE name equals 'rep'
+                    type: boolean
+                  exeRouteemitter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'route-emitter'
+                      Rule id: 17 - Do monitor processes if EXE name equals 'route-emitter'
+                    type: boolean
+                  exeRouteregistrar:
+                    description: |-
+                      Do monitor processes if EXE name equals 'route-registrar'
+                      Rule id: 18 - Do monitor processes if EXE name equals 'route-registrar'
+                    type: boolean
+                  exeRoutingapi:
+                    description: |-
+                      Do monitor processes if EXE name equals 'routing-api'
+                      Rule id: 19 - Do monitor processes if EXE name equals 'routing-api'
+                    type: boolean
+                  exeSchedular:
+                    description: |-
+                      Do monitor processes if EXE name equals 'scheduler'
+                      Rule id: 20 - Do monitor processes if EXE name equals 'scheduler'
+                    type: boolean
+                  exeSilkdaemon:
+                    description: |-
+                      Do monitor processes if EXE name equals 'silk-daemon'
+                      Rule id: 21 - Do monitor processes if EXE name equals 'silk-daemon'
+                    type: boolean
+                  exeSwitchboard:
+                    description: |-
+                      Do monitor processes if EXE name equals 'switchboard'
+                      Rule id: 22 - Do monitor processes if EXE name equals 'switchboard'
+                    type: boolean
+                  exeSyslogdrainbinder:
+                    description: |-
+                      Do monitor processes if EXE name equals 'syslog_drain_binder'
+                      Rule id: 23 - Do monitor processes if EXE name equals 'syslog_drain_binder'
+                    type: boolean
+                  exeTardis:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'tardis'
+                      Rule id: 56 - Do not monitor processes if EXE name equals 'tardis'
+                    type: boolean
+                  exeTmpbuildpacks:
+                    description: |-
+                      Do not monitor processes if EXE path begins with '/tmp/buildpacks/'
+                      Rule id: 43 - Do not monitor processes if EXE path begins with '/tmp/buildpacks/'
+                    type: boolean
+                  exeTpswatcher:
+                    description: |-
+                      Do monitor processes if EXE name equals 'tps-watcher'
+                      Rule id: 24 - Do monitor processes if EXE name equals 'tps-watcher'
+                    type: boolean
+                  exeTrafficcontroller:
+                    description: |-
+                      Do monitor processes if EXE name equals 'trafficcontroller'
+                      Rule id: 25 - Do monitor processes if EXE name equals 'trafficcontroller'
+                    type: boolean
+                  exeUipath:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'UiPath'
+                      Rule id: 70 - Do not monitor processes if EXE name contains 'UiPath'
+                    type: boolean
+                  exeUserbinpiper:
+                    description: |-
+                      Do not monitor processes if EXE path equals '/usr/bin/piper'
+                      Rule id: 67 - Do not monitor processes if EXE path equals '/usr/bin/piper'
+                    type: boolean
+                  exeW3Wp:
+                    description: |-
+                      Do monitor processes if EXE name equals 'w3wp.exe'
+                      Rule id: 4 - Do monitor processes if EXE name equals 'w3wp.exe'
+                    type: boolean
+                  exeWheel:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'wheel'
+                      Rule id: 75 - Do not monitor processes if EXE name equals 'wheel'
+                    type: boolean
+                  exeYq:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'yq'
+                      Rule id: 72 - Do not monitor processes if EXE name equals 'yq'
+                    type: boolean
+                  exeYum:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'yum'
+                      Rule id: 76 - Do not monitor processes if EXE name equals 'yum'
+                    type: boolean
+                  goStatic:
+                    description: |-
+                      Do not monitor processes if Go Binary Linkage equals 'static'
+                      Rule id: 47 - Do not monitor processes if Go Binary Linkage equals 'static'
+                    type: boolean
+                  hostGroupId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                    type: string
+                  jarDtibmmqconnector:
+                    description: |-
+                      Do not monitor processes if JAR file name equals 'dynatrace_ibm_mq_connector.jar'
+                      Rule id: 60 - Do not monitor processes if JAR file name equals 'dynatrace_ibm_mq_connector.jar'
+                    type: boolean
+                  jarEclipseequinox:
+                    description: |-
+                      Do not monitor processes if Java JAR file begins with 'org.eclipse.equinox.launcher'
+                      Rule id: 57 - Do not monitor processes if Java JAR file begins with 'org.eclipse.equinox.launcher'
+                    type: boolean
+                  k8sCassandraoperator:
+                    description: |-
+                      Do not monitor processes if Kubernetes container name equals 'cassandra-operator'
+                      Rule id: 69 - Do not monitor processes if Kubernetes container name equals 'cassandra-operator'
+                    type: boolean
+                  k8sContainerpod:
+                    description: |-
+                      Do not monitor processes if Kubernetes container name equals 'POD'
+                      Rule id: 38 - Do not monitor processes if Kubernetes container name equals 'POD'
+                    type: boolean
+                  k8sNamespace:
+                    description: |-
+                      Do monitor processes if Kubernetes namespace exists
+                      Rule id: 40 - Do monitor processes if Kubernetes namespace exists
+                    type: boolean
+                  nodeBinpm2:
+                    description: |-
+                      (Boolean) Do not monitor processes if Node.js script equals 'bin/pm2'
+                      Do not monitor processes if Node.js script equals 'bin/pm2'
+                    type: boolean
+                  nodeCorepack:
+                    description: |-
+                      Do not monitor processes if Node.js application equals 'corepack'
+                      Rule id: 68 - Do not monitor processes if Node.js application equals 'corepack'
+                    type: boolean
+                  nodeGrunt:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/grunt'
+                      Rule id: 28 - Do not monitor processes if Node.js application base directory ends with '/node_modules/grunt'
+                    type: boolean
+                  nodeGulpcli:
+                    description: |-
+                      cli'
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/gulp-cli'
+                    type: boolean
+                  nodeNodegyp:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/node-gyp'
+                      Rule id: 33 - Do not monitor processes if Node.js application base directory ends with '/node_modules/node-gyp'
+                    type: boolean
+                  nodeNodepregyp:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/node-pre-gyp'
+                      Rule id: 32 - Do not monitor processes if Node.js application base directory ends with '/node_modules/node-pre-gyp'
+                    type: boolean
+                  nodeNpm:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/npm'
+                      Rule id: 27 - Do not monitor processes if Node.js application base directory ends with '/node_modules/npm'
+                    type: boolean
+                  nodePrebuildinstall:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/prebuild-install'
+                      Rule id: 26 - Do not monitor processes if Node.js application base directory ends with '/node_modules/prebuild-install'
+                    type: boolean
+                  nodeTypescript:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/typescript'
+                      Rule id: 29 - Do not monitor processes if Node.js application base directory ends with '/node_modules/typescript'
+                    type: boolean
+                  nodeYarn:
+                    description: |-
+                      Do not monitor processes if Node.js application equals 'yarn'
+                      Rule id: 45 - Do not monitor processes if Node.js application equals 'yarn'
+                    type: boolean
+                  phpScript:
+                    description: |-
+                      Do not monitor processes if PHP script exists
+                      (v1.274) Rule id: 1 - Do not monitor processes if PHP script exists
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  aspnetcore:
+                    description: |-
+                      Do monitor processes if ASP.NET Core application path exists
+                      Rule id: 3 - Do monitor processes if ASP.NET Core application path exists
+                    type: boolean
+                  aspnetcoreAgentlistener:
+                    description: |-
+                      Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Listener'
+                      Rule id: 64 - Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Listener'
+                    type: boolean
+                  aspnetcoreAgentworker:
+                    description: |-
+                      Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Worker'
+                      Rule id: 62 - Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Worker'
+                    type: boolean
+                  cf:
+                    description: |-
+                      Do monitor processes if Cloud Foundry application exists
+                      Rule id: 37 - Do monitor processes if Cloud Foundry application exists
+                    type: boolean
+                  cfAppsmanagerjs:
+                    description: |-
+                      manager-js'
+                      Do not monitor processes if Cloud Foundry application begins with 'apps-manager-js'
+                    type: boolean
+                  cmdForeverbinmonitor:
+                    description: |-
+                      Do not monitor processes if command line arguments contain 'forever/bin/monitor'
+                      Rule id: 84 - Do not monitor processes if command line arguments contain 'forever/bin/monitor'
+                    type: boolean
+                  container:
+                    description: |-
+                      Do monitor processes if container name exists
+                      Rule id: 41 - Do monitor processes if container name exists
+                    type: boolean
+                  dockerPauseamd64:
+                    description: |-
+                      Do not monitor processes if Docker stripped image contains 'pause-amd64'
+                      Rule id: 39 - Do not monitor processes if Docker stripped image contains 'pause-amd64'
+                    type: boolean
+                  exeAdapter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'adapter'
+                      Rule id: 7 - Do monitor processes if EXE name equals 'adapter'
+                    type: boolean
+                  exeAgentlistener:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'Agent.Listener'
+                      Rule id: 63 - Do not monitor processes if EXE name contains 'Agent.Listener'
+                    type: boolean
+                  exeAgentworker:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'Agent.Worker'
+                      Rule id: 61 - Do not monitor processes if EXE name contains 'Agent.Worker'
+                    type: boolean
+                  exeAnsible:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'ansible'
+                      Rule id: 79 - Do not monitor processes if EXE name equals 'ansible'
+                    type: boolean
+                  exeAuctioneer:
+                    description: |-
+                      Do monitor processes if EXE name equals 'auctioneer'
+                      Rule id: 8 - Do monitor processes if EXE name equals 'auctioneer'
+                    type: boolean
+                  exeAuditbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'auditbeat'
+                      Rule id: 52 - Do not monitor processes if EXE name equals 'auditbeat'
+                    type: boolean
+                  exeAws:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'aws'
+                      Rule id: 81 - Do not monitor processes if EXE name equals 'aws'
+                    type: boolean
+                  exeAz:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'az'
+                      Rule id: 82 - Do not monitor processes if EXE name equals 'az'
+                    type: boolean
+                  exeBbs:
+                    description: |-
+                      Do monitor processes if EXE name equals 'bbs'
+                      Rule id: 9 - Do monitor processes if EXE name equals 'bbs'
+                    type: boolean
+                  exeCaddy:
+                    description: |-
+                      Do monitor processes if EXE name equals 'caddy'
+                      Rule id: 5 - Do monitor processes if EXE name equals 'caddy'
+                    type: boolean
+                  exeCaliconode:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'calico-node'
+                      Rule id: 58 - Do not monitor processes if EXE name equals 'calico-node'
+                    type: boolean
+                  exeCasclient:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'casclient.exe'
+                      Rule id: 59 - Do not monitor processes if EXE name equals 'casclient.exe'
+                    type: boolean
+                  exeCcuploader:
+                    description: |-
+                      Do monitor processes if EXE name equals 'cc-uploader'
+                      Rule id: 10 - Do monitor processes if EXE name equals 'cc-uploader'
+                    type: boolean
+                  exeConda:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'conda'
+                      Rule id: 78 - Do not monitor processes if EXE name equals 'conda'
+                    type: boolean
+                  exeDoppler:
+                    description: |-
+                      Do monitor processes if EXE name equals 'doppler'
+                      Rule id: 11 - Do monitor processes if EXE name equals 'doppler'
+                    type: boolean
+                  exeFilebeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'filebeat'
+                      Rule id: 49 - Do not monitor processes if EXE name equals 'filebeat'
+                    type: boolean
+                  exeFlexnetjobexecutorservice:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'FlexNetJobExecutorService'
+                      Rule id: 65 - Do not monitor processes if EXE name equals 'FlexNetJobExecutorService'
+                    type: boolean
+                  exeFlexnetmaintenanceremotingservice:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'FlexNetMaintenanceRemotingService'
+                      Rule id: 66 - Do not monitor processes if EXE name equals 'FlexNetMaintenanceRemotingService'
+                    type: boolean
+                  exeFunctionbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'functionbeat'
+                      Rule id: 54 - Do not monitor processes if EXE name equals 'functionbeat'
+                    type: boolean
+                  exeGcloud:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'gcloud'
+                      Rule id: 83 - Do not monitor processes if EXE name equals 'gcloud'
+                    type: boolean
+                  exeGorouter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'gorouter'
+                      Rule id: 12 - Do monitor processes if EXE name equals 'gorouter'
+                    type: boolean
+                  exeGrootfs:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'grootfs'
+                      Rule id: 55 - Do not monitor processes if EXE name equals 'grootfs'
+                    type: boolean
+                  exeHatch:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'hatch'
+                      Rule id: 74 - Do not monitor processes if EXE name equals 'hatch'
+                    type: boolean
+                  exeHeartbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'heartbeat'
+                      Rule id: 53 - Do not monitor processes if EXE name equals 'heartbeat'
+                    type: boolean
+                  exeInfluxd:
+                    description: |-
+                      Do monitor processes if EXE name equals 'influxd'
+                      Rule id: 6 - Do monitor processes if EXE name equals 'influxd'
+                    type: boolean
+                  exeJupyter:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'jupyter'
+                      Rule id: 77 - Do not monitor processes if EXE name equals 'jupyter'
+                    type: boolean
+                  exeLocket:
+                    description: |-
+                      Do monitor processes if EXE name equals 'locket'
+                      Rule id: 13 - Do monitor processes if EXE name equals 'locket'
+                    type: boolean
+                  exeMetricbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'metricbeat'
+                      Rule id: 50 - Do not monitor processes if EXE name equals 'metricbeat'
+                    type: boolean
+                  exeMetron:
+                    description: |-
+                      Do monitor processes if EXE name equals 'metron'
+                      Rule id: 14 - Do monitor processes if EXE name equals 'metron'
+                    type: boolean
+                  exeMqsi:
+                    description: |-
+                      Do not monitor processes if EXE name begins with 'mqsi'
+                      Rule id: 48 - Do not monitor processes if EXE name begins with 'mqsi'
+                    type: boolean
+                  exeOc:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'oc'
+                      Rule id: 44 - Do not monitor processes if EXE name equals 'oc'
+                    type: boolean
+                  exeOpenhandlecollector:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'openhandlecollector.exe'
+                      Rule id: 71 - Do not monitor processes if EXE name equals 'openhandlecollector.exe'
+                    type: boolean
+                  exeOpenstack:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'openstack'
+                      Rule id: 80 - Do not monitor processes if EXE name equals 'openstack'
+                    type: boolean
+                  exeOptcnibinhostlocal:
+                    description: |-
+                      Do not monitor processes if EXE path equals '/opt/cni/bin/host-local'
+                      Rule id: 46 - Do not monitor processes if EXE path equals '/opt/cni/bin/host-local'
+                    type: boolean
+                  exePacketbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'packetbeat'
+                      Rule id: 51 - Do not monitor processes if EXE name equals 'packetbeat'
+                    type: boolean
+                  exePhpcgi:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'php-cgi'
+                      Rule id: 2 - Do not monitor processes if EXE name equals 'php-cgi'
+                    type: boolean
+                  exePip:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'pip'
+                      Rule id: 73 - Do not monitor processes if EXE name equals 'pip'
+                    type: boolean
+                  exeRep:
+                    description: |-
+                      Do monitor processes if EXE name equals 'rep'
+                      Rule id: 16 - Do monitor processes if EXE name equals 'rep'
+                    type: boolean
+                  exeRouteemitter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'route-emitter'
+                      Rule id: 17 - Do monitor processes if EXE name equals 'route-emitter'
+                    type: boolean
+                  exeRouteregistrar:
+                    description: |-
+                      Do monitor processes if EXE name equals 'route-registrar'
+                      Rule id: 18 - Do monitor processes if EXE name equals 'route-registrar'
+                    type: boolean
+                  exeRoutingapi:
+                    description: |-
+                      Do monitor processes if EXE name equals 'routing-api'
+                      Rule id: 19 - Do monitor processes if EXE name equals 'routing-api'
+                    type: boolean
+                  exeSchedular:
+                    description: |-
+                      Do monitor processes if EXE name equals 'scheduler'
+                      Rule id: 20 - Do monitor processes if EXE name equals 'scheduler'
+                    type: boolean
+                  exeSilkdaemon:
+                    description: |-
+                      Do monitor processes if EXE name equals 'silk-daemon'
+                      Rule id: 21 - Do monitor processes if EXE name equals 'silk-daemon'
+                    type: boolean
+                  exeSwitchboard:
+                    description: |-
+                      Do monitor processes if EXE name equals 'switchboard'
+                      Rule id: 22 - Do monitor processes if EXE name equals 'switchboard'
+                    type: boolean
+                  exeSyslogdrainbinder:
+                    description: |-
+                      Do monitor processes if EXE name equals 'syslog_drain_binder'
+                      Rule id: 23 - Do monitor processes if EXE name equals 'syslog_drain_binder'
+                    type: boolean
+                  exeTardis:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'tardis'
+                      Rule id: 56 - Do not monitor processes if EXE name equals 'tardis'
+                    type: boolean
+                  exeTmpbuildpacks:
+                    description: |-
+                      Do not monitor processes if EXE path begins with '/tmp/buildpacks/'
+                      Rule id: 43 - Do not monitor processes if EXE path begins with '/tmp/buildpacks/'
+                    type: boolean
+                  exeTpswatcher:
+                    description: |-
+                      Do monitor processes if EXE name equals 'tps-watcher'
+                      Rule id: 24 - Do monitor processes if EXE name equals 'tps-watcher'
+                    type: boolean
+                  exeTrafficcontroller:
+                    description: |-
+                      Do monitor processes if EXE name equals 'trafficcontroller'
+                      Rule id: 25 - Do monitor processes if EXE name equals 'trafficcontroller'
+                    type: boolean
+                  exeUipath:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'UiPath'
+                      Rule id: 70 - Do not monitor processes if EXE name contains 'UiPath'
+                    type: boolean
+                  exeUserbinpiper:
+                    description: |-
+                      Do not monitor processes if EXE path equals '/usr/bin/piper'
+                      Rule id: 67 - Do not monitor processes if EXE path equals '/usr/bin/piper'
+                    type: boolean
+                  exeW3Wp:
+                    description: |-
+                      Do monitor processes if EXE name equals 'w3wp.exe'
+                      Rule id: 4 - Do monitor processes if EXE name equals 'w3wp.exe'
+                    type: boolean
+                  exeWheel:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'wheel'
+                      Rule id: 75 - Do not monitor processes if EXE name equals 'wheel'
+                    type: boolean
+                  exeYq:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'yq'
+                      Rule id: 72 - Do not monitor processes if EXE name equals 'yq'
+                    type: boolean
+                  exeYum:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'yum'
+                      Rule id: 76 - Do not monitor processes if EXE name equals 'yum'
+                    type: boolean
+                  goStatic:
+                    description: |-
+                      Do not monitor processes if Go Binary Linkage equals 'static'
+                      Rule id: 47 - Do not monitor processes if Go Binary Linkage equals 'static'
+                    type: boolean
+                  hostGroupId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                    type: string
+                  jarDtibmmqconnector:
+                    description: |-
+                      Do not monitor processes if JAR file name equals 'dynatrace_ibm_mq_connector.jar'
+                      Rule id: 60 - Do not monitor processes if JAR file name equals 'dynatrace_ibm_mq_connector.jar'
+                    type: boolean
+                  jarEclipseequinox:
+                    description: |-
+                      Do not monitor processes if Java JAR file begins with 'org.eclipse.equinox.launcher'
+                      Rule id: 57 - Do not monitor processes if Java JAR file begins with 'org.eclipse.equinox.launcher'
+                    type: boolean
+                  k8sCassandraoperator:
+                    description: |-
+                      Do not monitor processes if Kubernetes container name equals 'cassandra-operator'
+                      Rule id: 69 - Do not monitor processes if Kubernetes container name equals 'cassandra-operator'
+                    type: boolean
+                  k8sContainerpod:
+                    description: |-
+                      Do not monitor processes if Kubernetes container name equals 'POD'
+                      Rule id: 38 - Do not monitor processes if Kubernetes container name equals 'POD'
+                    type: boolean
+                  k8sNamespace:
+                    description: |-
+                      Do monitor processes if Kubernetes namespace exists
+                      Rule id: 40 - Do monitor processes if Kubernetes namespace exists
+                    type: boolean
+                  nodeBinpm2:
+                    description: |-
+                      (Boolean) Do not monitor processes if Node.js script equals 'bin/pm2'
+                      Do not monitor processes if Node.js script equals 'bin/pm2'
+                    type: boolean
+                  nodeCorepack:
+                    description: |-
+                      Do not monitor processes if Node.js application equals 'corepack'
+                      Rule id: 68 - Do not monitor processes if Node.js application equals 'corepack'
+                    type: boolean
+                  nodeGrunt:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/grunt'
+                      Rule id: 28 - Do not monitor processes if Node.js application base directory ends with '/node_modules/grunt'
+                    type: boolean
+                  nodeGulpcli:
+                    description: |-
+                      cli'
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/gulp-cli'
+                    type: boolean
+                  nodeNodegyp:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/node-gyp'
+                      Rule id: 33 - Do not monitor processes if Node.js application base directory ends with '/node_modules/node-gyp'
+                    type: boolean
+                  nodeNodepregyp:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/node-pre-gyp'
+                      Rule id: 32 - Do not monitor processes if Node.js application base directory ends with '/node_modules/node-pre-gyp'
+                    type: boolean
+                  nodeNpm:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/npm'
+                      Rule id: 27 - Do not monitor processes if Node.js application base directory ends with '/node_modules/npm'
+                    type: boolean
+                  nodePrebuildinstall:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/prebuild-install'
+                      Rule id: 26 - Do not monitor processes if Node.js application base directory ends with '/node_modules/prebuild-install'
+                    type: boolean
+                  nodeTypescript:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/typescript'
+                      Rule id: 29 - Do not monitor processes if Node.js application base directory ends with '/node_modules/typescript'
+                    type: boolean
+                  nodeYarn:
+                    description: |-
+                      Do not monitor processes if Node.js application equals 'yarn'
+                      Rule id: 45 - Do not monitor processes if Node.js application equals 'yarn'
+                    type: boolean
+                  phpScript:
+                    description: |-
+                      Do not monitor processes if PHP script exists
+                      (v1.274) Rule id: 1 - Do not monitor processes if PHP script exists
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ProcessMonitoringStatus defines the observed state of ProcessMonitoring.
+            properties:
+              atProvider:
+                properties:
+                  aspnetcore:
+                    description: |-
+                      Do monitor processes if ASP.NET Core application path exists
+                      Rule id: 3 - Do monitor processes if ASP.NET Core application path exists
+                    type: boolean
+                  aspnetcoreAgentlistener:
+                    description: |-
+                      Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Listener'
+                      Rule id: 64 - Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Listener'
+                    type: boolean
+                  aspnetcoreAgentworker:
+                    description: |-
+                      Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Worker'
+                      Rule id: 62 - Do not monitor processes if ASP.NET Core application DLL contains 'Agent.Worker'
+                    type: boolean
+                  cf:
+                    description: |-
+                      Do monitor processes if Cloud Foundry application exists
+                      Rule id: 37 - Do monitor processes if Cloud Foundry application exists
+                    type: boolean
+                  cfAppsmanagerjs:
+                    description: |-
+                      manager-js'
+                      Do not monitor processes if Cloud Foundry application begins with 'apps-manager-js'
+                    type: boolean
+                  cmdForeverbinmonitor:
+                    description: |-
+                      Do not monitor processes if command line arguments contain 'forever/bin/monitor'
+                      Rule id: 84 - Do not monitor processes if command line arguments contain 'forever/bin/monitor'
+                    type: boolean
+                  container:
+                    description: |-
+                      Do monitor processes if container name exists
+                      Rule id: 41 - Do monitor processes if container name exists
+                    type: boolean
+                  dockerPauseamd64:
+                    description: |-
+                      Do not monitor processes if Docker stripped image contains 'pause-amd64'
+                      Rule id: 39 - Do not monitor processes if Docker stripped image contains 'pause-amd64'
+                    type: boolean
+                  exeAdapter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'adapter'
+                      Rule id: 7 - Do monitor processes if EXE name equals 'adapter'
+                    type: boolean
+                  exeAgentlistener:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'Agent.Listener'
+                      Rule id: 63 - Do not monitor processes if EXE name contains 'Agent.Listener'
+                    type: boolean
+                  exeAgentworker:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'Agent.Worker'
+                      Rule id: 61 - Do not monitor processes if EXE name contains 'Agent.Worker'
+                    type: boolean
+                  exeAnsible:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'ansible'
+                      Rule id: 79 - Do not monitor processes if EXE name equals 'ansible'
+                    type: boolean
+                  exeAuctioneer:
+                    description: |-
+                      Do monitor processes if EXE name equals 'auctioneer'
+                      Rule id: 8 - Do monitor processes if EXE name equals 'auctioneer'
+                    type: boolean
+                  exeAuditbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'auditbeat'
+                      Rule id: 52 - Do not monitor processes if EXE name equals 'auditbeat'
+                    type: boolean
+                  exeAws:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'aws'
+                      Rule id: 81 - Do not monitor processes if EXE name equals 'aws'
+                    type: boolean
+                  exeAz:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'az'
+                      Rule id: 82 - Do not monitor processes if EXE name equals 'az'
+                    type: boolean
+                  exeBbs:
+                    description: |-
+                      Do monitor processes if EXE name equals 'bbs'
+                      Rule id: 9 - Do monitor processes if EXE name equals 'bbs'
+                    type: boolean
+                  exeCaddy:
+                    description: |-
+                      Do monitor processes if EXE name equals 'caddy'
+                      Rule id: 5 - Do monitor processes if EXE name equals 'caddy'
+                    type: boolean
+                  exeCaliconode:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'calico-node'
+                      Rule id: 58 - Do not monitor processes if EXE name equals 'calico-node'
+                    type: boolean
+                  exeCasclient:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'casclient.exe'
+                      Rule id: 59 - Do not monitor processes if EXE name equals 'casclient.exe'
+                    type: boolean
+                  exeCcuploader:
+                    description: |-
+                      Do monitor processes if EXE name equals 'cc-uploader'
+                      Rule id: 10 - Do monitor processes if EXE name equals 'cc-uploader'
+                    type: boolean
+                  exeConda:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'conda'
+                      Rule id: 78 - Do not monitor processes if EXE name equals 'conda'
+                    type: boolean
+                  exeDoppler:
+                    description: |-
+                      Do monitor processes if EXE name equals 'doppler'
+                      Rule id: 11 - Do monitor processes if EXE name equals 'doppler'
+                    type: boolean
+                  exeFilebeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'filebeat'
+                      Rule id: 49 - Do not monitor processes if EXE name equals 'filebeat'
+                    type: boolean
+                  exeFlexnetjobexecutorservice:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'FlexNetJobExecutorService'
+                      Rule id: 65 - Do not monitor processes if EXE name equals 'FlexNetJobExecutorService'
+                    type: boolean
+                  exeFlexnetmaintenanceremotingservice:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'FlexNetMaintenanceRemotingService'
+                      Rule id: 66 - Do not monitor processes if EXE name equals 'FlexNetMaintenanceRemotingService'
+                    type: boolean
+                  exeFunctionbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'functionbeat'
+                      Rule id: 54 - Do not monitor processes if EXE name equals 'functionbeat'
+                    type: boolean
+                  exeGcloud:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'gcloud'
+                      Rule id: 83 - Do not monitor processes if EXE name equals 'gcloud'
+                    type: boolean
+                  exeGorouter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'gorouter'
+                      Rule id: 12 - Do monitor processes if EXE name equals 'gorouter'
+                    type: boolean
+                  exeGrootfs:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'grootfs'
+                      Rule id: 55 - Do not monitor processes if EXE name equals 'grootfs'
+                    type: boolean
+                  exeHatch:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'hatch'
+                      Rule id: 74 - Do not monitor processes if EXE name equals 'hatch'
+                    type: boolean
+                  exeHeartbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'heartbeat'
+                      Rule id: 53 - Do not monitor processes if EXE name equals 'heartbeat'
+                    type: boolean
+                  exeInfluxd:
+                    description: |-
+                      Do monitor processes if EXE name equals 'influxd'
+                      Rule id: 6 - Do monitor processes if EXE name equals 'influxd'
+                    type: boolean
+                  exeJupyter:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'jupyter'
+                      Rule id: 77 - Do not monitor processes if EXE name equals 'jupyter'
+                    type: boolean
+                  exeLocket:
+                    description: |-
+                      Do monitor processes if EXE name equals 'locket'
+                      Rule id: 13 - Do monitor processes if EXE name equals 'locket'
+                    type: boolean
+                  exeMetricbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'metricbeat'
+                      Rule id: 50 - Do not monitor processes if EXE name equals 'metricbeat'
+                    type: boolean
+                  exeMetron:
+                    description: |-
+                      Do monitor processes if EXE name equals 'metron'
+                      Rule id: 14 - Do monitor processes if EXE name equals 'metron'
+                    type: boolean
+                  exeMqsi:
+                    description: |-
+                      Do not monitor processes if EXE name begins with 'mqsi'
+                      Rule id: 48 - Do not monitor processes if EXE name begins with 'mqsi'
+                    type: boolean
+                  exeOc:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'oc'
+                      Rule id: 44 - Do not monitor processes if EXE name equals 'oc'
+                    type: boolean
+                  exeOpenhandlecollector:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'openhandlecollector.exe'
+                      Rule id: 71 - Do not monitor processes if EXE name equals 'openhandlecollector.exe'
+                    type: boolean
+                  exeOpenstack:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'openstack'
+                      Rule id: 80 - Do not monitor processes if EXE name equals 'openstack'
+                    type: boolean
+                  exeOptcnibinhostlocal:
+                    description: |-
+                      Do not monitor processes if EXE path equals '/opt/cni/bin/host-local'
+                      Rule id: 46 - Do not monitor processes if EXE path equals '/opt/cni/bin/host-local'
+                    type: boolean
+                  exePacketbeat:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'packetbeat'
+                      Rule id: 51 - Do not monitor processes if EXE name equals 'packetbeat'
+                    type: boolean
+                  exePhpcgi:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'php-cgi'
+                      Rule id: 2 - Do not monitor processes if EXE name equals 'php-cgi'
+                    type: boolean
+                  exePip:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'pip'
+                      Rule id: 73 - Do not monitor processes if EXE name equals 'pip'
+                    type: boolean
+                  exeRep:
+                    description: |-
+                      Do monitor processes if EXE name equals 'rep'
+                      Rule id: 16 - Do monitor processes if EXE name equals 'rep'
+                    type: boolean
+                  exeRouteemitter:
+                    description: |-
+                      Do monitor processes if EXE name equals 'route-emitter'
+                      Rule id: 17 - Do monitor processes if EXE name equals 'route-emitter'
+                    type: boolean
+                  exeRouteregistrar:
+                    description: |-
+                      Do monitor processes if EXE name equals 'route-registrar'
+                      Rule id: 18 - Do monitor processes if EXE name equals 'route-registrar'
+                    type: boolean
+                  exeRoutingapi:
+                    description: |-
+                      Do monitor processes if EXE name equals 'routing-api'
+                      Rule id: 19 - Do monitor processes if EXE name equals 'routing-api'
+                    type: boolean
+                  exeSchedular:
+                    description: |-
+                      Do monitor processes if EXE name equals 'scheduler'
+                      Rule id: 20 - Do monitor processes if EXE name equals 'scheduler'
+                    type: boolean
+                  exeSilkdaemon:
+                    description: |-
+                      Do monitor processes if EXE name equals 'silk-daemon'
+                      Rule id: 21 - Do monitor processes if EXE name equals 'silk-daemon'
+                    type: boolean
+                  exeSwitchboard:
+                    description: |-
+                      Do monitor processes if EXE name equals 'switchboard'
+                      Rule id: 22 - Do monitor processes if EXE name equals 'switchboard'
+                    type: boolean
+                  exeSyslogdrainbinder:
+                    description: |-
+                      Do monitor processes if EXE name equals 'syslog_drain_binder'
+                      Rule id: 23 - Do monitor processes if EXE name equals 'syslog_drain_binder'
+                    type: boolean
+                  exeTardis:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'tardis'
+                      Rule id: 56 - Do not monitor processes if EXE name equals 'tardis'
+                    type: boolean
+                  exeTmpbuildpacks:
+                    description: |-
+                      Do not monitor processes if EXE path begins with '/tmp/buildpacks/'
+                      Rule id: 43 - Do not monitor processes if EXE path begins with '/tmp/buildpacks/'
+                    type: boolean
+                  exeTpswatcher:
+                    description: |-
+                      Do monitor processes if EXE name equals 'tps-watcher'
+                      Rule id: 24 - Do monitor processes if EXE name equals 'tps-watcher'
+                    type: boolean
+                  exeTrafficcontroller:
+                    description: |-
+                      Do monitor processes if EXE name equals 'trafficcontroller'
+                      Rule id: 25 - Do monitor processes if EXE name equals 'trafficcontroller'
+                    type: boolean
+                  exeUipath:
+                    description: |-
+                      Do not monitor processes if EXE name contains 'UiPath'
+                      Rule id: 70 - Do not monitor processes if EXE name contains 'UiPath'
+                    type: boolean
+                  exeUserbinpiper:
+                    description: |-
+                      Do not monitor processes if EXE path equals '/usr/bin/piper'
+                      Rule id: 67 - Do not monitor processes if EXE path equals '/usr/bin/piper'
+                    type: boolean
+                  exeW3Wp:
+                    description: |-
+                      Do monitor processes if EXE name equals 'w3wp.exe'
+                      Rule id: 4 - Do monitor processes if EXE name equals 'w3wp.exe'
+                    type: boolean
+                  exeWheel:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'wheel'
+                      Rule id: 75 - Do not monitor processes if EXE name equals 'wheel'
+                    type: boolean
+                  exeYq:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'yq'
+                      Rule id: 72 - Do not monitor processes if EXE name equals 'yq'
+                    type: boolean
+                  exeYum:
+                    description: |-
+                      Do not monitor processes if EXE name equals 'yum'
+                      Rule id: 76 - Do not monitor processes if EXE name equals 'yum'
+                    type: boolean
+                  goStatic:
+                    description: |-
+                      Do not monitor processes if Go Binary Linkage equals 'static'
+                      Rule id: 47 - Do not monitor processes if Go Binary Linkage equals 'static'
+                    type: boolean
+                  hostGroupId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  jarDtibmmqconnector:
+                    description: |-
+                      Do not monitor processes if JAR file name equals 'dynatrace_ibm_mq_connector.jar'
+                      Rule id: 60 - Do not monitor processes if JAR file name equals 'dynatrace_ibm_mq_connector.jar'
+                    type: boolean
+                  jarEclipseequinox:
+                    description: |-
+                      Do not monitor processes if Java JAR file begins with 'org.eclipse.equinox.launcher'
+                      Rule id: 57 - Do not monitor processes if Java JAR file begins with 'org.eclipse.equinox.launcher'
+                    type: boolean
+                  k8sCassandraoperator:
+                    description: |-
+                      Do not monitor processes if Kubernetes container name equals 'cassandra-operator'
+                      Rule id: 69 - Do not monitor processes if Kubernetes container name equals 'cassandra-operator'
+                    type: boolean
+                  k8sContainerpod:
+                    description: |-
+                      Do not monitor processes if Kubernetes container name equals 'POD'
+                      Rule id: 38 - Do not monitor processes if Kubernetes container name equals 'POD'
+                    type: boolean
+                  k8sNamespace:
+                    description: |-
+                      Do monitor processes if Kubernetes namespace exists
+                      Rule id: 40 - Do monitor processes if Kubernetes namespace exists
+                    type: boolean
+                  nodeBinpm2:
+                    description: |-
+                      (Boolean) Do not monitor processes if Node.js script equals 'bin/pm2'
+                      Do not monitor processes if Node.js script equals 'bin/pm2'
+                    type: boolean
+                  nodeCorepack:
+                    description: |-
+                      Do not monitor processes if Node.js application equals 'corepack'
+                      Rule id: 68 - Do not monitor processes if Node.js application equals 'corepack'
+                    type: boolean
+                  nodeGrunt:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/grunt'
+                      Rule id: 28 - Do not monitor processes if Node.js application base directory ends with '/node_modules/grunt'
+                    type: boolean
+                  nodeGulpcli:
+                    description: |-
+                      cli'
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/gulp-cli'
+                    type: boolean
+                  nodeNodegyp:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/node-gyp'
+                      Rule id: 33 - Do not monitor processes if Node.js application base directory ends with '/node_modules/node-gyp'
+                    type: boolean
+                  nodeNodepregyp:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/node-pre-gyp'
+                      Rule id: 32 - Do not monitor processes if Node.js application base directory ends with '/node_modules/node-pre-gyp'
+                    type: boolean
+                  nodeNpm:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/npm'
+                      Rule id: 27 - Do not monitor processes if Node.js application base directory ends with '/node_modules/npm'
+                    type: boolean
+                  nodePrebuildinstall:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/prebuild-install'
+                      Rule id: 26 - Do not monitor processes if Node.js application base directory ends with '/node_modules/prebuild-install'
+                    type: boolean
+                  nodeTypescript:
+                    description: |-
+                      Do not monitor processes if Node.js application base directory ends with '/node_modules/typescript'
+                      Rule id: 29 - Do not monitor processes if Node.js application base directory ends with '/node_modules/typescript'
+                    type: boolean
+                  nodeYarn:
+                    description: |-
+                      Do not monitor processes if Node.js application equals 'yarn'
+                      Rule id: 45 - Do not monitor processes if Node.js application equals 'yarn'
+                    type: boolean
+                  phpScript:
+                    description: |-
+                      Do not monitor processes if PHP script exists
+                      (v1.274) Rule id: 1 - Do not monitor processes if PHP script exists
+                    type: boolean
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

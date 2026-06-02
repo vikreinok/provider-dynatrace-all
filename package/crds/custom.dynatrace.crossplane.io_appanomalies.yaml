@@ -1,0 +1,928 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: appanomalies.custom.dynatrace.crossplane.io
+spec:
+  group: custom.dynatrace.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: AppAnomalies
+    listKind: AppAnomaliesList
+    plural: appanomalies
+    singular: appanomalies
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AppAnomalies is the Schema for the AppAnomaliess API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AppAnomaliesSpec defines the desired state of AppAnomalies
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  errorRateIncrease:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Error rate increase (see below for nested schema)
+                      Error rate increase
+                    items:
+                      properties:
+                        detectionMode:
+                          description: |-
+                            (String) Possible Values: Auto, Fixed
+                            Possible Values: `Auto`, `Fixed`
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        errorRateIncreaseAuto:
+                          description: |-
+                            (Block List, Max: 1) Alert if the percentage of user actions affected by reported errors exceeds both the absolute threshold and the relative threshold (see below for nested schema)
+                            Alert if the percentage of user actions affected by reported errors exceeds **both** the absolute threshold and the relative threshold
+                          items:
+                            properties:
+                              thresholdAbsolute:
+                                description: |-
+                                  (Number) Absolute threshold
+                                  Absolute threshold
+                                type: number
+                              thresholdRelative:
+                                description: |-
+                                  (Number) Relative threshold
+                                  Relative threshold
+                                type: number
+                            type: object
+                          type: array
+                        errorRateIncreaseFixed:
+                          description: |-
+                            minute period (see below for nested schema)
+                            Alert if the custom reported error rate threshold is exceeded during any 5-minute period
+                          items:
+                            properties:
+                              sensitivity:
+                                description: |-
+                                  (String) Possible Values: Low, Medium, High
+                                  Possible Values: `Low`, `Medium`, `High`
+                                type: string
+                              thresholdAbsolute:
+                                description: |-
+                                  (Number) Absolute threshold
+                                  Absolute threshold
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (DEVICE_APPLICATION_METHOD CUSTOM_APPLICATION environment)
+                      The scope of this setting (DEVICE_APPLICATION_METHOD CUSTOM_APPLICATION environment)
+                    type: string
+                  slowUserActions:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Slow user actions (see below for nested schema)
+                      Slow user actions
+                    items:
+                      properties:
+                        detectionMode:
+                          description: |-
+                            (String) Possible Values: Auto, Fixed
+                            Possible Values: `Auto`, `Fixed`
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        slowUserActionsAuto:
+                          description: |-
+                            (Block List, Max: 1) no documentation available (see below for nested schema)
+                            no documentation available
+                          items:
+                            properties:
+                              durationAvoidOveralerting:
+                                description: |-
+                                  alerting do not alert for low traffic applications with less than (see below for nested schema)
+                                  To avoid over-alerting do not alert for low traffic applications with less than
+                                items:
+                                  properties:
+                                    minActionRate:
+                                      description: |-
+                                        (Number) no documentation available
+                                        no documentation available
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdAll:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of all user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of all user actions degrades beyond **both** the absolute and relative threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                    slowdownPercentage:
+                                      description: |-
+                                        (Number) Relative threshold
+                                        Relative threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdSlowest:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of the slowest 10% of user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of the slowest 10% of user actions degrades beyond **both** the absolute and relative threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                    slowdownPercentage:
+                                      description: |-
+                                        (Number) Relative threshold
+                                        Relative threshold
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        slowUserActionsFixed:
+                          description: |-
+                            (Block List, Max: 1) no documentation available (see below for nested schema)
+                            no documentation available
+                          items:
+                            properties:
+                              durationAvoidOveralerting:
+                                description: |-
+                                  alerting do not alert for low traffic applications with less than (see below for nested schema)
+                                  To avoid over-alerting do not alert for low traffic applications with less than
+                                items:
+                                  properties:
+                                    minActionRate:
+                                      description: |-
+                                        (Number) no documentation available
+                                        no documentation available
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdAllFixed:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of all user actions degrades beyond the absolute threshold: (see below for nested schema)
+                                  Alert if the action duration of all user actions degrades beyond the absolute threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdSlowest:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of the slowest 10% of user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of the slowest 10% of user actions degrades beyond the absolute threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              sensitivity:
+                                description: |-
+                                  (String) Possible Values: Low, Medium, High
+                                  Possible Values: `Medium`, `High`, `Low`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  unexpectedHighLoad:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Unexpected high load (see below for nested schema)
+                      Unexpected high load
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        thresholdPercentage:
+                          description: |-
+                            (Number) Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                            Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                          type: number
+                      type: object
+                    type: array
+                  unexpectedLowLoad:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Unexpected low load (see below for nested schema)
+                      Unexpected low load
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        thresholdPercentage:
+                          description: |-
+                            (Number) Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                            Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic drops within your application.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  errorRateIncrease:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Error rate increase (see below for nested schema)
+                      Error rate increase
+                    items:
+                      properties:
+                        detectionMode:
+                          description: |-
+                            (String) Possible Values: Auto, Fixed
+                            Possible Values: `Auto`, `Fixed`
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        errorRateIncreaseAuto:
+                          description: |-
+                            (Block List, Max: 1) Alert if the percentage of user actions affected by reported errors exceeds both the absolute threshold and the relative threshold (see below for nested schema)
+                            Alert if the percentage of user actions affected by reported errors exceeds **both** the absolute threshold and the relative threshold
+                          items:
+                            properties:
+                              thresholdAbsolute:
+                                description: |-
+                                  (Number) Absolute threshold
+                                  Absolute threshold
+                                type: number
+                              thresholdRelative:
+                                description: |-
+                                  (Number) Relative threshold
+                                  Relative threshold
+                                type: number
+                            type: object
+                          type: array
+                        errorRateIncreaseFixed:
+                          description: |-
+                            minute period (see below for nested schema)
+                            Alert if the custom reported error rate threshold is exceeded during any 5-minute period
+                          items:
+                            properties:
+                              sensitivity:
+                                description: |-
+                                  (String) Possible Values: Low, Medium, High
+                                  Possible Values: `Low`, `Medium`, `High`
+                                type: string
+                              thresholdAbsolute:
+                                description: |-
+                                  (Number) Absolute threshold
+                                  Absolute threshold
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (DEVICE_APPLICATION_METHOD CUSTOM_APPLICATION environment)
+                      The scope of this setting (DEVICE_APPLICATION_METHOD CUSTOM_APPLICATION environment)
+                    type: string
+                  slowUserActions:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Slow user actions (see below for nested schema)
+                      Slow user actions
+                    items:
+                      properties:
+                        detectionMode:
+                          description: |-
+                            (String) Possible Values: Auto, Fixed
+                            Possible Values: `Auto`, `Fixed`
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        slowUserActionsAuto:
+                          description: |-
+                            (Block List, Max: 1) no documentation available (see below for nested schema)
+                            no documentation available
+                          items:
+                            properties:
+                              durationAvoidOveralerting:
+                                description: |-
+                                  alerting do not alert for low traffic applications with less than (see below for nested schema)
+                                  To avoid over-alerting do not alert for low traffic applications with less than
+                                items:
+                                  properties:
+                                    minActionRate:
+                                      description: |-
+                                        (Number) no documentation available
+                                        no documentation available
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdAll:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of all user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of all user actions degrades beyond **both** the absolute and relative threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                    slowdownPercentage:
+                                      description: |-
+                                        (Number) Relative threshold
+                                        Relative threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdSlowest:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of the slowest 10% of user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of the slowest 10% of user actions degrades beyond **both** the absolute and relative threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                    slowdownPercentage:
+                                      description: |-
+                                        (Number) Relative threshold
+                                        Relative threshold
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        slowUserActionsFixed:
+                          description: |-
+                            (Block List, Max: 1) no documentation available (see below for nested schema)
+                            no documentation available
+                          items:
+                            properties:
+                              durationAvoidOveralerting:
+                                description: |-
+                                  alerting do not alert for low traffic applications with less than (see below for nested schema)
+                                  To avoid over-alerting do not alert for low traffic applications with less than
+                                items:
+                                  properties:
+                                    minActionRate:
+                                      description: |-
+                                        (Number) no documentation available
+                                        no documentation available
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdAllFixed:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of all user actions degrades beyond the absolute threshold: (see below for nested schema)
+                                  Alert if the action duration of all user actions degrades beyond the absolute threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdSlowest:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of the slowest 10% of user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of the slowest 10% of user actions degrades beyond the absolute threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              sensitivity:
+                                description: |-
+                                  (String) Possible Values: Low, Medium, High
+                                  Possible Values: `Medium`, `High`, `Low`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  unexpectedHighLoad:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Unexpected high load (see below for nested schema)
+                      Unexpected high load
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        thresholdPercentage:
+                          description: |-
+                            (Number) Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                            Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                          type: number
+                      type: object
+                    type: array
+                  unexpectedLowLoad:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Unexpected low load (see below for nested schema)
+                      Unexpected low load
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        thresholdPercentage:
+                          description: |-
+                            (Number) Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                            Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic drops within your application.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.errorRateIncrease is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.errorRateIncrease)
+                || (has(self.initProvider) && has(self.initProvider.errorRateIncrease))'
+            - message: spec.forProvider.slowUserActions is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.slowUserActions)
+                || (has(self.initProvider) && has(self.initProvider.slowUserActions))'
+            - message: spec.forProvider.unexpectedHighLoad is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.unexpectedHighLoad)
+                || (has(self.initProvider) && has(self.initProvider.unexpectedHighLoad))'
+            - message: spec.forProvider.unexpectedLowLoad is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.unexpectedLowLoad)
+                || (has(self.initProvider) && has(self.initProvider.unexpectedLowLoad))'
+          status:
+            description: AppAnomaliesStatus defines the observed state of AppAnomalies.
+            properties:
+              atProvider:
+                properties:
+                  errorRateIncrease:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Error rate increase (see below for nested schema)
+                      Error rate increase
+                    items:
+                      properties:
+                        detectionMode:
+                          description: |-
+                            (String) Possible Values: Auto, Fixed
+                            Possible Values: `Auto`, `Fixed`
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        errorRateIncreaseAuto:
+                          description: |-
+                            (Block List, Max: 1) Alert if the percentage of user actions affected by reported errors exceeds both the absolute threshold and the relative threshold (see below for nested schema)
+                            Alert if the percentage of user actions affected by reported errors exceeds **both** the absolute threshold and the relative threshold
+                          items:
+                            properties:
+                              thresholdAbsolute:
+                                description: |-
+                                  (Number) Absolute threshold
+                                  Absolute threshold
+                                type: number
+                              thresholdRelative:
+                                description: |-
+                                  (Number) Relative threshold
+                                  Relative threshold
+                                type: number
+                            type: object
+                          type: array
+                        errorRateIncreaseFixed:
+                          description: |-
+                            minute period (see below for nested schema)
+                            Alert if the custom reported error rate threshold is exceeded during any 5-minute period
+                          items:
+                            properties:
+                              sensitivity:
+                                description: |-
+                                  (String) Possible Values: Low, Medium, High
+                                  Possible Values: `Low`, `Medium`, `High`
+                                type: string
+                              thresholdAbsolute:
+                                description: |-
+                                  (Number) Absolute threshold
+                                  Absolute threshold
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (DEVICE_APPLICATION_METHOD CUSTOM_APPLICATION environment)
+                      The scope of this setting (DEVICE_APPLICATION_METHOD CUSTOM_APPLICATION environment)
+                    type: string
+                  slowUserActions:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Slow user actions (see below for nested schema)
+                      Slow user actions
+                    items:
+                      properties:
+                        detectionMode:
+                          description: |-
+                            (String) Possible Values: Auto, Fixed
+                            Possible Values: `Auto`, `Fixed`
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        slowUserActionsAuto:
+                          description: |-
+                            (Block List, Max: 1) no documentation available (see below for nested schema)
+                            no documentation available
+                          items:
+                            properties:
+                              durationAvoidOveralerting:
+                                description: |-
+                                  alerting do not alert for low traffic applications with less than (see below for nested schema)
+                                  To avoid over-alerting do not alert for low traffic applications with less than
+                                items:
+                                  properties:
+                                    minActionRate:
+                                      description: |-
+                                        (Number) no documentation available
+                                        no documentation available
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdAll:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of all user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of all user actions degrades beyond **both** the absolute and relative threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                    slowdownPercentage:
+                                      description: |-
+                                        (Number) Relative threshold
+                                        Relative threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdSlowest:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of the slowest 10% of user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of the slowest 10% of user actions degrades beyond **both** the absolute and relative threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                    slowdownPercentage:
+                                      description: |-
+                                        (Number) Relative threshold
+                                        Relative threshold
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        slowUserActionsFixed:
+                          description: |-
+                            (Block List, Max: 1) no documentation available (see below for nested schema)
+                            no documentation available
+                          items:
+                            properties:
+                              durationAvoidOveralerting:
+                                description: |-
+                                  alerting do not alert for low traffic applications with less than (see below for nested schema)
+                                  To avoid over-alerting do not alert for low traffic applications with less than
+                                items:
+                                  properties:
+                                    minActionRate:
+                                      description: |-
+                                        (Number) no documentation available
+                                        no documentation available
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdAllFixed:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of all user actions degrades beyond the absolute threshold: (see below for nested schema)
+                                  Alert if the action duration of all user actions degrades beyond the absolute threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              durationThresholdSlowest:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Alert if the action duration of the slowest 10% of user actions degrades beyond both the absolute and relative threshold: (see below for nested schema)
+                                  Alert if the action duration of the slowest 10% of user actions degrades beyond the absolute threshold:
+                                items:
+                                  properties:
+                                    durationThreshold:
+                                      description: |-
+                                        (Number) Absolute threshold
+                                        Absolute threshold
+                                      type: number
+                                  type: object
+                                type: array
+                              sensitivity:
+                                description: |-
+                                  (String) Possible Values: Low, Medium, High
+                                  Possible Values: `Medium`, `High`, `Low`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  unexpectedHighLoad:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Unexpected high load (see below for nested schema)
+                      Unexpected high load
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        thresholdPercentage:
+                          description: |-
+                            (Number) Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                            Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                          type: number
+                      type: object
+                    type: array
+                  unexpectedLowLoad:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Unexpected low load (see below for nested schema)
+                      Unexpected low load
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Boolean) This setting is enabled (true) or disabled (false)
+                            This setting is enabled (`true`) or disabled (`false`)
+                          type: boolean
+                        thresholdPercentage:
+                          description: |-
+                            (Number) Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic spikes within your application.
+                            Dynatrace learns your typical application traffic over an observation period of one week. Depending on this expected value Dynatrace detects abnormal traffic drops within your application.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

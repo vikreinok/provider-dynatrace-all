@@ -1,0 +1,1436 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: notifications.appsec.dynatrace.m.crossplane.io
+spec:
+  group: appsec.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Notification
+    listKind: NotificationList
+    plural: notifications
+    singular: notification
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Notification is the Schema for the Notifications API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NotificationSpec defines the desired state of Notification
+            properties:
+              forProvider:
+                properties:
+                  attackCandidateBasedAlertingProfile:
+                    description: |-
+                      (String) For attack candidate alerts, select an alerting profile to control the delivery of security notifications related to this integration.
+                      For attack candidate alerts, select an [alerting profile](/ui/settings/builtin:appsec.notification-attack-alerting-profile) to control the delivery of security notifications related to this integration.
+                    type: string
+                  attackCandidateBasedEmailPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based email payload, required when trigger equals ATTACK_CANDIDATE and type equals EMAIL (see below for nested schema)
+                      Attack candidate based email payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `EMAIL`
+                    items:
+                      properties:
+                        body:
+                          description: |-
+                            (String) The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+                            The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                        subject:
+                          description: |-
+                            1234".
+                            {Title}: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            {Type}: The type of attack, for example: "SQL Injection".
+                            {AttackUrl}: URL of the attack in Dynatrace.
+                            {ProcessGroupId}: Details about the process group attacked.
+                            {EntryPoint}: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            {Status}: The status of the attack, for example: "Exploited"
+                            {Timestamp}: When the attack happened.
+                            {VulnerabilityName}: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                            The subject of the email notifications.. Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example, "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  attackCandidateBasedJiraPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based Jira payload, required when trigger equals ATTACK_CANDIDATE and type equals JIRA (see below for nested schema)
+                      Attack candidate based Jira payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `JIRA`
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+                            The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                        summary:
+                          description: |-
+                            (String) The summary of the Jira issue to be created by this notification.. Note: The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+                            The summary of the Jira issue to be created by this notification.. **Note:** The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example, "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  attackCandidateBasedWebhookPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based webhook payload, required when trigger equals ATTACK_CANDIDATE and type equals WEBHOOK (see below for nested schema)
+                      Attack candidate based webhook payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        payload:
+                          description: |-
+                            (String) This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+                            This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: |-
+                      (String) Display name of the security notification
+                      Display name of the security notification
+                    type: string
+                  emailConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Email configuration, required when type equals EMAIL (see below for nested schema)
+                      Email configuration, required when `type` equals `EMAIL`
+                    items:
+                      properties:
+                        bccRecipients:
+                          description: |-
+                            (Set of String) BCC
+                            BCC
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        ccRecipients:
+                          description: |-
+                            (Set of String) CC
+                            CC
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        recipients:
+                          description: |-
+                            (Set of String) To
+                            To
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) Enable/Disable the security notification, enabled (true) or disabled (false)
+                      Enable/Disable the security notification, enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  jiraConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Jira configuration, required when type equals JIRA (see below for nested schema)
+                      Jira configuration, required when `type` equals `JIRA`
+                    items:
+                      properties:
+                        apiTokenSecretRef:
+                          description: |-
+                            (String, Sensitive) The API token for the Jira profile. Using password authentication was deprecated by Jira
+                            The API token for the Jira profile. Using password authentication [was deprecated by Jira](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-basic-auth-and-cookie-based-auth/)
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        issueType:
+                          description: |-
+                            (String) The type of the Jira issue to be created by this notification.
+                            The type of the Jira issue to be created by this notification.
+
+                            To find all available issue types or create your own, in Jira, go to Project settings > Issue types.
+                          type: string
+                        projectKey:
+                          description: |-
+                            (String) The project key of the Jira issue to be created by this notification.
+                            The project key of the Jira issue to be created by this notification.
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint.
+                            The URL of the Jira API endpoint.
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Jira profile.
+                            The username of the Jira profile.
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedAlertingProfile:
+                    description: |-
+                      (String) For security problem alerts, select an alerting profile to control the delivery of security notifications related to this integration.
+                      For security problem alerts, select an [alerting profile](/ui/settings/builtin:appsec.notification-alerting-profile) to control the delivery of security notifications related to this integration.
+                    type: string
+                  securityProblemBasedEmailPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based email payload, required when trigger equals SECURITY_PROBLEM and type equals EMAIL (see below for nested schema)
+                      Security problem based email payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `EMAIL`
+                    items:
+                      properties:
+                        body:
+                          description: |-
+                            (String) The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+                            The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                        subject:
+                          description: |-
+                            1234".
+                            {Title}: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            {Type}: The type of attack, for example: "SQL Injection".
+                            {AttackUrl}: URL of the attack in Dynatrace.
+                            {ProcessGroupId}: Details about the process group attacked.
+                            {EntryPoint}: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            {Status}: The status of the attack, for example: "Exploited"
+                            {Timestamp}: When the attack happened.
+                            {VulnerabilityName}: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                            The subject of the email notifications.. Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedJiraPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based Jira payload, required when trigger equals SECURITY_PROBLEM and type equals JIRA (see below for nested schema)
+                      Security problem based Jira payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `JIRA`
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+                            The description of the Jira issue to be created by this notification.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                        summary:
+                          description: |-
+                            (String) The summary of the Jira issue to be created by this notification.. Note: The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+                            The summary of the Jira issue to be created by this notification.. **Note:** The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedWebhookPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based webhook payload, required when trigger equals SECURITY_PROBLEM and type equals WEBHOOK (see below for nested schema)
+                      Security problem based webhook payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        payload:
+                          description: |-
+                            (String) This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+                            This is the content your notification message will include when users view it.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  trigger:
+                    description: |-
+                      (String) Security alert type, possible Values: ATTACK_CANDIDATE, SECURITY_PROBLEM
+                      Security alert type, possible Values: `ATTACK_CANDIDATE`, `SECURITY_PROBLEM`
+                    type: string
+                  type:
+                    description: |-
+                      (String) Notification type, possible Values: EMAIL, JIRA, WEBHOOK
+                      Notification type, possible Values: `EMAIL`, `JIRA`, `WEBHOOK`
+                    type: string
+                  webhookConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Webhook configuration, required when type equals WEBHOOK (see below for nested schema)
+                      Webhook configuration, required when `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid certificates)
+                            Accept any SSL certificate (including self-signed and invalid certificates)
+                          type: boolean
+                        headers:
+                          description: |-
+                            (Block List, Max: 1) Use additional HTTP headers to attach any additional information, for example, configuration, authorization, or metadata.
+                            Use additional HTTP headers to attach any additional information, for example, configuration, authorization, or metadata.
+
+                            Note that JSON-based webhook endpoints require the addition of the **Content-Type: application/json** header to enable escaping of special characters and to avoid malformed JSON content.
+                          items:
+                            properties:
+                              header:
+                                description: '(Block Set, Min: 1) (see below for nested
+                                  schema)'
+                                items:
+                                  properties:
+                                    name:
+                                      description: |-
+                                        (String) no documentation available
+                                        no documentation available
+                                      type: string
+                                    secret:
+                                      description: |-
+                                        (Boolean) Secret HTTP header value
+                                        Secret HTTP header value
+                                      type: boolean
+                                    secretValueSecretRef:
+                                      description: |-
+                                        (String, Sensitive) The secret value of the HTTP header. May contain an empty value.
+                                        The secret value of the HTTP header. May contain an empty value.
+                                      properties:
+                                        key:
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      type: object
+                                    value:
+                                      description: |-
+                                        (String) The value of the HTTP header. May contain an empty value.
+                                        The value of the HTTP header. May contain an empty value.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint.
+                            Webhook endpoint URL
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  attackCandidateBasedAlertingProfile:
+                    description: |-
+                      (String) For attack candidate alerts, select an alerting profile to control the delivery of security notifications related to this integration.
+                      For attack candidate alerts, select an [alerting profile](/ui/settings/builtin:appsec.notification-attack-alerting-profile) to control the delivery of security notifications related to this integration.
+                    type: string
+                  attackCandidateBasedEmailPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based email payload, required when trigger equals ATTACK_CANDIDATE and type equals EMAIL (see below for nested schema)
+                      Attack candidate based email payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `EMAIL`
+                    items:
+                      properties:
+                        body:
+                          description: |-
+                            (String) The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+                            The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                        subject:
+                          description: |-
+                            1234".
+                            {Title}: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            {Type}: The type of attack, for example: "SQL Injection".
+                            {AttackUrl}: URL of the attack in Dynatrace.
+                            {ProcessGroupId}: Details about the process group attacked.
+                            {EntryPoint}: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            {Status}: The status of the attack, for example: "Exploited"
+                            {Timestamp}: When the attack happened.
+                            {VulnerabilityName}: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                            The subject of the email notifications.. Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example, "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  attackCandidateBasedJiraPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based Jira payload, required when trigger equals ATTACK_CANDIDATE and type equals JIRA (see below for nested schema)
+                      Attack candidate based Jira payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `JIRA`
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+                            The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                        summary:
+                          description: |-
+                            (String) The summary of the Jira issue to be created by this notification.. Note: The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+                            The summary of the Jira issue to be created by this notification.. **Note:** The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example, "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  attackCandidateBasedWebhookPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based webhook payload, required when trigger equals ATTACK_CANDIDATE and type equals WEBHOOK (see below for nested schema)
+                      Attack candidate based webhook payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        payload:
+                          description: |-
+                            (String) This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+                            This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: |-
+                      (String) Display name of the security notification
+                      Display name of the security notification
+                    type: string
+                  emailConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Email configuration, required when type equals EMAIL (see below for nested schema)
+                      Email configuration, required when `type` equals `EMAIL`
+                    items:
+                      properties:
+                        bccRecipients:
+                          description: |-
+                            (Set of String) BCC
+                            BCC
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        ccRecipients:
+                          description: |-
+                            (Set of String) CC
+                            CC
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        recipients:
+                          description: |-
+                            (Set of String) To
+                            To
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) Enable/Disable the security notification, enabled (true) or disabled (false)
+                      Enable/Disable the security notification, enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  jiraConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Jira configuration, required when type equals JIRA (see below for nested schema)
+                      Jira configuration, required when `type` equals `JIRA`
+                    items:
+                      properties:
+                        apiTokenSecretRef:
+                          description: |-
+                            (String, Sensitive) The API token for the Jira profile. Using password authentication was deprecated by Jira
+                            The API token for the Jira profile. Using password authentication [was deprecated by Jira](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-basic-auth-and-cookie-based-auth/)
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        issueType:
+                          description: |-
+                            (String) The type of the Jira issue to be created by this notification.
+                            The type of the Jira issue to be created by this notification.
+
+                            To find all available issue types or create your own, in Jira, go to Project settings > Issue types.
+                          type: string
+                        projectKey:
+                          description: |-
+                            (String) The project key of the Jira issue to be created by this notification.
+                            The project key of the Jira issue to be created by this notification.
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint.
+                            The URL of the Jira API endpoint.
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Jira profile.
+                            The username of the Jira profile.
+                          type: string
+                      required:
+                      - apiTokenSecretRef
+                      type: object
+                    type: array
+                  securityProblemBasedAlertingProfile:
+                    description: |-
+                      (String) For security problem alerts, select an alerting profile to control the delivery of security notifications related to this integration.
+                      For security problem alerts, select an [alerting profile](/ui/settings/builtin:appsec.notification-alerting-profile) to control the delivery of security notifications related to this integration.
+                    type: string
+                  securityProblemBasedEmailPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based email payload, required when trigger equals SECURITY_PROBLEM and type equals EMAIL (see below for nested schema)
+                      Security problem based email payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `EMAIL`
+                    items:
+                      properties:
+                        body:
+                          description: |-
+                            (String) The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+                            The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                        subject:
+                          description: |-
+                            1234".
+                            {Title}: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            {Type}: The type of attack, for example: "SQL Injection".
+                            {AttackUrl}: URL of the attack in Dynatrace.
+                            {ProcessGroupId}: Details about the process group attacked.
+                            {EntryPoint}: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            {Status}: The status of the attack, for example: "Exploited"
+                            {Timestamp}: When the attack happened.
+                            {VulnerabilityName}: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                            The subject of the email notifications.. Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedJiraPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based Jira payload, required when trigger equals SECURITY_PROBLEM and type equals JIRA (see below for nested schema)
+                      Security problem based Jira payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `JIRA`
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+                            The description of the Jira issue to be created by this notification.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                        summary:
+                          description: |-
+                            (String) The summary of the Jira issue to be created by this notification.. Note: The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+                            The summary of the Jira issue to be created by this notification.. **Note:** The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedWebhookPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based webhook payload, required when trigger equals SECURITY_PROBLEM and type equals WEBHOOK (see below for nested schema)
+                      Security problem based webhook payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        payload:
+                          description: |-
+                            (String) This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+                            This is the content your notification message will include when users view it.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  trigger:
+                    description: |-
+                      (String) Security alert type, possible Values: ATTACK_CANDIDATE, SECURITY_PROBLEM
+                      Security alert type, possible Values: `ATTACK_CANDIDATE`, `SECURITY_PROBLEM`
+                    type: string
+                  type:
+                    description: |-
+                      (String) Notification type, possible Values: EMAIL, JIRA, WEBHOOK
+                      Notification type, possible Values: `EMAIL`, `JIRA`, `WEBHOOK`
+                    type: string
+                  webhookConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Webhook configuration, required when type equals WEBHOOK (see below for nested schema)
+                      Webhook configuration, required when `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid certificates)
+                            Accept any SSL certificate (including self-signed and invalid certificates)
+                          type: boolean
+                        headers:
+                          description: |-
+                            (Block List, Max: 1) Use additional HTTP headers to attach any additional information, for example, configuration, authorization, or metadata.
+                            Use additional HTTP headers to attach any additional information, for example, configuration, authorization, or metadata.
+
+                            Note that JSON-based webhook endpoints require the addition of the **Content-Type: application/json** header to enable escaping of special characters and to avoid malformed JSON content.
+                          items:
+                            properties:
+                              header:
+                                description: '(Block Set, Min: 1) (see below for nested
+                                  schema)'
+                                items:
+                                  properties:
+                                    name:
+                                      description: |-
+                                        (String) no documentation available
+                                        no documentation available
+                                      type: string
+                                    secret:
+                                      description: |-
+                                        (Boolean) Secret HTTP header value
+                                        Secret HTTP header value
+                                      type: boolean
+                                    secretValueSecretRef:
+                                      description: |-
+                                        (String, Sensitive) The secret value of the HTTP header. May contain an empty value.
+                                        The secret value of the HTTP header. May contain an empty value.
+                                      properties:
+                                        key:
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      type: object
+                                    value:
+                                      description: |-
+                                        (String) The value of the HTTP header. May contain an empty value.
+                                        The value of the HTTP header. May contain an empty value.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint.
+                            Webhook endpoint URL
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.trigger is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.trigger)
+                || (has(self.initProvider) && has(self.initProvider.trigger))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: NotificationStatus defines the observed state of Notification.
+            properties:
+              atProvider:
+                properties:
+                  attackCandidateBasedAlertingProfile:
+                    description: |-
+                      (String) For attack candidate alerts, select an alerting profile to control the delivery of security notifications related to this integration.
+                      For attack candidate alerts, select an [alerting profile](/ui/settings/builtin:appsec.notification-attack-alerting-profile) to control the delivery of security notifications related to this integration.
+                    type: string
+                  attackCandidateBasedEmailPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based email payload, required when trigger equals ATTACK_CANDIDATE and type equals EMAIL (see below for nested schema)
+                      Attack candidate based email payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `EMAIL`
+                    items:
+                      properties:
+                        body:
+                          description: |-
+                            (String) The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+                            The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                        subject:
+                          description: |-
+                            1234".
+                            {Title}: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            {Type}: The type of attack, for example: "SQL Injection".
+                            {AttackUrl}: URL of the attack in Dynatrace.
+                            {ProcessGroupId}: Details about the process group attacked.
+                            {EntryPoint}: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            {Status}: The status of the attack, for example: "Exploited"
+                            {Timestamp}: When the attack happened.
+                            {VulnerabilityName}: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                            The subject of the email notifications.. Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example, "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  attackCandidateBasedJiraPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based Jira payload, required when trigger equals ATTACK_CANDIDATE and type equals JIRA (see below for nested schema)
+                      Attack candidate based Jira payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `JIRA`
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+                            The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                        summary:
+                          description: |-
+                            (String) The summary of the Jira issue to be created by this notification.. Note: The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+                            The summary of the Jira issue to be created by this notification.. **Note:** The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example, "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  attackCandidateBasedWebhookPayload:
+                    description: |-
+                      (Block List, Max: 1) Attack candidate based webhook payload, required when trigger equals ATTACK_CANDIDATE and type equals WEBHOOK (see below for nested schema)
+                      Attack candidate based webhook payload, required when `trigger` equals `ATTACK_CANDIDATE` and `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        payload:
+                          description: |-
+                            (String) This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+                            This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{AttackDisplayId}**: The unique identifier assigned by Dynatrace, for example: "A-1234".
+                            **{Title}**: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            **{Type}**: The type of attack, for example: "SQL Injection".
+                            **{AttackUrl}**: URL of the attack in Dynatrace.
+                            **{ProcessGroupId}**: Details about the process group attacked.
+                            **{EntryPoint}**: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            **{Status}**: The status of the attack, for example: "Exploited"
+                            **{Timestamp}**: When the attack happened.
+                            **{VulnerabilityName}**: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: |-
+                      (String) Display name of the security notification
+                      Display name of the security notification
+                    type: string
+                  emailConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Email configuration, required when type equals EMAIL (see below for nested schema)
+                      Email configuration, required when `type` equals `EMAIL`
+                    items:
+                      properties:
+                        bccRecipients:
+                          description: |-
+                            (Set of String) BCC
+                            BCC
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        ccRecipients:
+                          description: |-
+                            (Set of String) CC
+                            CC
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        recipients:
+                          description: |-
+                            (Set of String) To
+                            To
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) Enable/Disable the security notification, enabled (true) or disabled (false)
+                      Enable/Disable the security notification, enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  jiraConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Jira configuration, required when type equals JIRA (see below for nested schema)
+                      Jira configuration, required when `type` equals `JIRA`
+                    items:
+                      properties:
+                        issueType:
+                          description: |-
+                            (String) The type of the Jira issue to be created by this notification.
+                            The type of the Jira issue to be created by this notification.
+
+                            To find all available issue types or create your own, in Jira, go to Project settings > Issue types.
+                          type: string
+                        projectKey:
+                          description: |-
+                            (String) The project key of the Jira issue to be created by this notification.
+                            The project key of the Jira issue to be created by this notification.
+                          type: string
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint.
+                            The URL of the Jira API endpoint.
+                          type: string
+                        username:
+                          description: |-
+                            (String) The username of the Jira profile.
+                            The username of the Jira profile.
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedAlertingProfile:
+                    description: |-
+                      (String) For security problem alerts, select an alerting profile to control the delivery of security notifications related to this integration.
+                      For security problem alerts, select an [alerting profile](/ui/settings/builtin:appsec.notification-alerting-profile) to control the delivery of security notifications related to this integration.
+                    type: string
+                  securityProblemBasedEmailPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based email payload, required when trigger equals SECURITY_PROBLEM and type equals EMAIL (see below for nested schema)
+                      Security problem based email payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `EMAIL`
+                    items:
+                      properties:
+                        body:
+                          description: |-
+                            (String) The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the body might leak information to untrusted parties.
+                            The template of the email notifications.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                        subject:
+                          description: |-
+                            1234".
+                            {Title}: Location of the attack, for example: "com.dynatrace.Class.method():120"
+                            {Type}: The type of attack, for example: "SQL Injection".
+                            {AttackUrl}: URL of the attack in Dynatrace.
+                            {ProcessGroupId}: Details about the process group attacked.
+                            {EntryPoint}: The entry point of the attack into the process, for example: "/login". Can be empty.
+                            {Status}: The status of the attack, for example: "Exploited"
+                            {Timestamp}: When the attack happened.
+                            {VulnerabilityName}: Name of the associated code-level vulnerability, for example: "InMemoryDatabaseCaller.getAccountInfo():51". Can be empty.
+                            The subject of the email notifications.. Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedJiraPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based Jira payload, required when trigger equals SECURITY_PROBLEM and type equals JIRA (see below for nested schema)
+                      Security problem based Jira payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `JIRA`
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) The description of the Jira issue to be created by this notification.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+                            The description of the Jira issue to be created by this notification.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the description might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                        summary:
+                          description: |-
+                            (String) The summary of the Jira issue to be created by this notification.. Note: The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+                            The summary of the Jira issue to be created by this notification.. **Note:** The Jira summary field must contain less than 255 characters. Any content exceeding this limit after evaluating the placeholders will be discarded.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  securityProblemBasedWebhookPayload:
+                    description: |-
+                      (Block List, Max: 1) Security problem based webhook payload, required when trigger equals SECURITY_PROBLEM and type equals WEBHOOK (see below for nested schema)
+                      Security problem based webhook payload, required when `trigger` equals `SECURITY_PROBLEM` and `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        payload:
+                          description: |-
+                            (String) This is the content your notification message will include when users view it.
+                            In case a value of an attack is not set, the placeholder will be replaced by an empty string.. Note: Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+                            This is the content your notification message will include when users view it.
+                            In case a value of a security problem is not set, the placeholder will be replaced by an empty string.. **Note:** Security notifications contain sensitive information. Excessive usage of placeholders in the custom payload might leak information to untrusted parties.
+
+                            Available placeholders:
+                            **{SecurityProblemId}**: The unique identifier assigned by Dynatrace, for example, "S-1234".
+                            **{Title}**: A short summary of the type of vulnerability that was found, for example, "Remote Code Execution".
+                            **{Description}**: A more detailed description of the vulnerability.
+                            **{CvssScore}**: CVSS score of the identified vulnerability, for example, "10.0". Can be empty.
+                            **{DavisSecurityScore}**: [Davis Security Score](https://www.dynatrace.com/support/help/how-to-use-dynatrace/application-security/davis-security-score/) is an enhanced risk-calculation score based on the CVSS, for example, "10.0".
+                            **{Severity}**: The security problem severity, for example, "Critical" or "Medium".
+                            **{SecurityProblemUrl}**: URL of the security problem in Dynatrace.
+                            **{AffectedEntities}**: Details about the entities affected by the security problem in a json array.
+                            **{ManagementZones}**: Comma-separated list of all management zones affected by the vulnerability at the time of detection.
+                            **{Tags}**: Comma-separated list of tags that are defined for a vulnerability's affected entities. For example: "PROD, owner:John". Assign the tag's key in square brackets: **{Tags[key]}** to get all associated values. For example: "{Tags[owner]}" will be resolved as "John". Tags without an assigned value will be resolved as empty string.
+                            **{Exposed}**: Describes whether one or more affected process is exposed to the public Internet. Can be "true" or "false".
+                            **{DataAssetsReachable}**: Describes whether one or more affected process can reach data assets. Can be "true" or "false".
+                            **{ExploitAvailable}**: Describes whether there's an exploit available for the vulnerability. Can be "true" or "false".
+                          type: string
+                      type: object
+                    type: array
+                  trigger:
+                    description: |-
+                      (String) Security alert type, possible Values: ATTACK_CANDIDATE, SECURITY_PROBLEM
+                      Security alert type, possible Values: `ATTACK_CANDIDATE`, `SECURITY_PROBLEM`
+                    type: string
+                  type:
+                    description: |-
+                      (String) Notification type, possible Values: EMAIL, JIRA, WEBHOOK
+                      Notification type, possible Values: `EMAIL`, `JIRA`, `WEBHOOK`
+                    type: string
+                  webhookConfiguration:
+                    description: |-
+                      (Block List, Max: 1) Webhook configuration, required when type equals WEBHOOK (see below for nested schema)
+                      Webhook configuration, required when `type` equals `WEBHOOK`
+                    items:
+                      properties:
+                        acceptAnyCertificate:
+                          description: |-
+                            signed and invalid certificates)
+                            Accept any SSL certificate (including self-signed and invalid certificates)
+                          type: boolean
+                        headers:
+                          description: |-
+                            (Block List, Max: 1) Use additional HTTP headers to attach any additional information, for example, configuration, authorization, or metadata.
+                            Use additional HTTP headers to attach any additional information, for example, configuration, authorization, or metadata.
+
+                            Note that JSON-based webhook endpoints require the addition of the **Content-Type: application/json** header to enable escaping of special characters and to avoid malformed JSON content.
+                          items:
+                            properties:
+                              header:
+                                description: '(Block Set, Min: 1) (see below for nested
+                                  schema)'
+                                items:
+                                  properties:
+                                    name:
+                                      description: |-
+                                        (String) no documentation available
+                                        no documentation available
+                                      type: string
+                                    secret:
+                                      description: |-
+                                        (Boolean) Secret HTTP header value
+                                        Secret HTTP header value
+                                      type: boolean
+                                    value:
+                                      description: |-
+                                        (String) The value of the HTTP header. May contain an empty value.
+                                        The value of the HTTP header. May contain an empty value.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        url:
+                          description: |-
+                            (String) The URL of the Jira API endpoint.
+                            Webhook endpoint URL
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

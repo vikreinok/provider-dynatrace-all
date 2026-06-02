@@ -1,0 +1,1075 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: edgeanomalydetectors.disk.dynatrace.crossplane.io
+spec:
+  group: disk.dynatrace.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: EdgeAnomalyDetectors
+    listKind: EdgeAnomalyDetectorsList
+    plural: edgeanomalydetectors
+    singular: edgeanomalydetectors
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EdgeAnomalyDetectors is the Schema for the EdgeAnomalyDetectorss
+          API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EdgeAnomalyDetectorsSpec defines the desired state of EdgeAnomalyDetectors
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  alerts:
+                    description: |-
+                      (Block List, Max: 1) Alerts (see below for nested schema)
+                      Alerts
+                    items:
+                      properties:
+                        alert:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              sampleCountThresholds:
+                                description: |-
+                                  (Block List, Max: 1) No documentation available (see below for nested schema)
+                                  No documentation available
+                                items:
+                                  properties:
+                                    dealertingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window for dealerting.
+                                        The number of **10-second samples** that form the sliding evaluation window for dealerting.
+                                      type: number
+                                    dealertingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must be lower than the threshold to close an event
+                                        The number of **10-second samples** within the evaluation window that must be lower than the threshold to close an event
+                                      type: number
+                                    violatingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window to detect violating samples.
+                                        The number of **10-second samples** that form the sliding evaluation window to detect violating samples.
+                                      type: number
+                                    violatingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must exceed the threshold to trigger an event
+                                        The number of **10-second samples** within the evaluation window that must exceed the threshold to trigger an event
+                                      type: number
+                                  type: object
+                                type: array
+                              sampleCountThresholdsImmediately:
+                                description: |-
+                                  (Block List, Max: 1) No documentation available (see below for nested schema)
+                                  No documentation available
+                                items:
+                                  properties:
+                                    dealertingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window for dealerting.
+                                        The number of **10-second samples** that form the sliding evaluation window for dealerting.
+                                      type: number
+                                    dealertingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must be lower than the threshold to close an event
+                                        The number of **10-second samples** within the evaluation window that must be lower than the threshold to close an event
+                                      type: number
+                                    violatingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window to detect violating samples.
+                                        The number of **10-second samples** that form the sliding evaluation window to detect violating samples.
+                                      type: number
+                                    violatingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must exceed the threshold to trigger an event
+                                        The number of **10-second samples** within the evaluation window that must exceed the threshold to trigger an event
+                                      type: number
+                                  type: object
+                                type: array
+                              thresholdMebibytes:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdMilliseconds:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdNumber:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdPercent:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              trigger:
+                                description: |-
+                                  (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
+                                  Possible values: `AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW`, `AVAILABLE_DISK_SPACE_PERCENT_BELOW`, `AVAILABLE_INODES_NUMBER_BELOW`, `AVAILABLE_INODES_PERCENT_BELOW`, `READ_ONLY_FILE_SYSTEM`, `READ_TIME_EXCEEDING`, `WRITE_TIME_EXCEEDING`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  detectionConditions:
+                    description: |-
+                      (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
+                      Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
+                    items:
+                      properties:
+                        detectionCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              diskFilesystemCondition:
+                                description: |-
+                                  (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
+                                  Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
+
+                                  - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                  - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
+                                  - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
+                                  - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
+                                  - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
+
+                                  Available logic operations:
+                                  - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
+                                  - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
+                                  - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
+
+                                  Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
+                                type: string
+                              diskTotalCondition:
+                                description: |-
+                                  (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
+                                  Specify disk total space range in GiB
+                                items:
+                                  properties:
+                                    thresholdAbove:
+                                      description: |-
+                                        (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
+                                        If this field is empty then there is no lower limit. Minimum total disk space in GiB
+                                      type: number
+                                    thresholdBelow:
+                                      description: |-
+                                        (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
+                                        If this field is empty then there is no upper limit. Maximum total disk space in GiB
+                                      type: number
+                                  type: object
+                                type: array
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                                items:
+                                  properties:
+                                    hostMetadataCondition:
+                                      description: |-
+                                        defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                        No documentation available
+                                      items:
+                                        properties:
+                                          keyMustExist:
+                                            description: |-
+                                              (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                              When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                            type: boolean
+                                          metadataCondition:
+                                            description: |-
+                                              (String) This string has to match a required format.
+                                              This string has to match a required format.
+
+                                              - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                              - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                              - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                              - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                              - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                              Available logic operations:
+                                              - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                              - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                              - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                              Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                            type: string
+                                          metadataKey:
+                                            description: |-
+                                              (String) Key
+                                              Key
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              localDiskCondition:
+                                description: |-
+                                  (String) Possible values: LOCAL, REMOTE
+                                  Possible values: `LOCAL`, `REMOTE`
+                                type: string
+                              property:
+                                description: |-
+                                  (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
+                                  Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
+                                  Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  diskNameFilters:
+                    description: |-
+                      (Set of String) Disk will be included in this policy if any of the filters match
+                      Disk will be included in this policy if **any** of the filters match
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  eventProperties:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+) (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+)
+                    items:
+                      properties:
+                        eventPropertie:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              metadataKey:
+                                description: |-
+                                  (String) Key
+                                  Type 'dt.' for key hints.
+                                type: string
+                              metadataValue:
+                                description: |-
+                                  (String) No documentation available
+                                  No documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  operatingSystem:
+                    description: |-
+                      (Set of String) Select the operating systems on which policy should be applied. Possible values: AIX, LINUX, WINDOWS
+                      Select the operating systems on which policy should be applied. Possible values: `AIX`, `LINUX`, `WINDOWS`
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  policyName:
+                    description: |-
+                      (String) Policy name
+                      Policy name
+                    type: string
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  alerts:
+                    description: |-
+                      (Block List, Max: 1) Alerts (see below for nested schema)
+                      Alerts
+                    items:
+                      properties:
+                        alert:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              sampleCountThresholds:
+                                description: |-
+                                  (Block List, Max: 1) No documentation available (see below for nested schema)
+                                  No documentation available
+                                items:
+                                  properties:
+                                    dealertingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window for dealerting.
+                                        The number of **10-second samples** that form the sliding evaluation window for dealerting.
+                                      type: number
+                                    dealertingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must be lower than the threshold to close an event
+                                        The number of **10-second samples** within the evaluation window that must be lower than the threshold to close an event
+                                      type: number
+                                    violatingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window to detect violating samples.
+                                        The number of **10-second samples** that form the sliding evaluation window to detect violating samples.
+                                      type: number
+                                    violatingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must exceed the threshold to trigger an event
+                                        The number of **10-second samples** within the evaluation window that must exceed the threshold to trigger an event
+                                      type: number
+                                  type: object
+                                type: array
+                              sampleCountThresholdsImmediately:
+                                description: |-
+                                  (Block List, Max: 1) No documentation available (see below for nested schema)
+                                  No documentation available
+                                items:
+                                  properties:
+                                    dealertingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window for dealerting.
+                                        The number of **10-second samples** that form the sliding evaluation window for dealerting.
+                                      type: number
+                                    dealertingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must be lower than the threshold to close an event
+                                        The number of **10-second samples** within the evaluation window that must be lower than the threshold to close an event
+                                      type: number
+                                    violatingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window to detect violating samples.
+                                        The number of **10-second samples** that form the sliding evaluation window to detect violating samples.
+                                      type: number
+                                    violatingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must exceed the threshold to trigger an event
+                                        The number of **10-second samples** within the evaluation window that must exceed the threshold to trigger an event
+                                      type: number
+                                  type: object
+                                type: array
+                              thresholdMebibytes:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdMilliseconds:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdNumber:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdPercent:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              trigger:
+                                description: |-
+                                  (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
+                                  Possible values: `AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW`, `AVAILABLE_DISK_SPACE_PERCENT_BELOW`, `AVAILABLE_INODES_NUMBER_BELOW`, `AVAILABLE_INODES_PERCENT_BELOW`, `READ_ONLY_FILE_SYSTEM`, `READ_TIME_EXCEEDING`, `WRITE_TIME_EXCEEDING`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  detectionConditions:
+                    description: |-
+                      (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
+                      Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
+                    items:
+                      properties:
+                        detectionCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              diskFilesystemCondition:
+                                description: |-
+                                  (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
+                                  Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
+
+                                  - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                  - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
+                                  - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
+                                  - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
+                                  - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
+
+                                  Available logic operations:
+                                  - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
+                                  - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
+                                  - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
+
+                                  Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
+                                type: string
+                              diskTotalCondition:
+                                description: |-
+                                  (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
+                                  Specify disk total space range in GiB
+                                items:
+                                  properties:
+                                    thresholdAbove:
+                                      description: |-
+                                        (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
+                                        If this field is empty then there is no lower limit. Minimum total disk space in GiB
+                                      type: number
+                                    thresholdBelow:
+                                      description: |-
+                                        (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
+                                        If this field is empty then there is no upper limit. Maximum total disk space in GiB
+                                      type: number
+                                  type: object
+                                type: array
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                                items:
+                                  properties:
+                                    hostMetadataCondition:
+                                      description: |-
+                                        defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                        No documentation available
+                                      items:
+                                        properties:
+                                          keyMustExist:
+                                            description: |-
+                                              (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                              When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                            type: boolean
+                                          metadataCondition:
+                                            description: |-
+                                              (String) This string has to match a required format.
+                                              This string has to match a required format.
+
+                                              - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                              - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                              - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                              - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                              - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                              Available logic operations:
+                                              - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                              - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                              - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                              Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                            type: string
+                                          metadataKey:
+                                            description: |-
+                                              (String) Key
+                                              Key
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              localDiskCondition:
+                                description: |-
+                                  (String) Possible values: LOCAL, REMOTE
+                                  Possible values: `LOCAL`, `REMOTE`
+                                type: string
+                              property:
+                                description: |-
+                                  (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
+                                  Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
+                                  Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  diskNameFilters:
+                    description: |-
+                      (Set of String) Disk will be included in this policy if any of the filters match
+                      Disk will be included in this policy if **any** of the filters match
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  eventProperties:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+) (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+)
+                    items:
+                      properties:
+                        eventPropertie:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              metadataKey:
+                                description: |-
+                                  (String) Key
+                                  Type 'dt.' for key hints.
+                                type: string
+                              metadataValue:
+                                description: |-
+                                  (String) No documentation available
+                                  No documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  operatingSystem:
+                    description: |-
+                      (Set of String) Select the operating systems on which policy should be applied. Possible values: AIX, LINUX, WINDOWS
+                      Select the operating systems on which policy should be applied. Possible values: `AIX`, `LINUX`, `WINDOWS`
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  policyName:
+                    description: |-
+                      (String) Policy name
+                      Policy name
+                    type: string
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.policyName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.policyName)
+                || (has(self.initProvider) && has(self.initProvider.policyName))'
+          status:
+            description: EdgeAnomalyDetectorsStatus defines the observed state of
+              EdgeAnomalyDetectors.
+            properties:
+              atProvider:
+                properties:
+                  alerts:
+                    description: |-
+                      (Block List, Max: 1) Alerts (see below for nested schema)
+                      Alerts
+                    items:
+                      properties:
+                        alert:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              sampleCountThresholds:
+                                description: |-
+                                  (Block List, Max: 1) No documentation available (see below for nested schema)
+                                  No documentation available
+                                items:
+                                  properties:
+                                    dealertingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window for dealerting.
+                                        The number of **10-second samples** that form the sliding evaluation window for dealerting.
+                                      type: number
+                                    dealertingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must be lower than the threshold to close an event
+                                        The number of **10-second samples** within the evaluation window that must be lower than the threshold to close an event
+                                      type: number
+                                    violatingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window to detect violating samples.
+                                        The number of **10-second samples** that form the sliding evaluation window to detect violating samples.
+                                      type: number
+                                    violatingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must exceed the threshold to trigger an event
+                                        The number of **10-second samples** within the evaluation window that must exceed the threshold to trigger an event
+                                      type: number
+                                  type: object
+                                type: array
+                              sampleCountThresholdsImmediately:
+                                description: |-
+                                  (Block List, Max: 1) No documentation available (see below for nested schema)
+                                  No documentation available
+                                items:
+                                  properties:
+                                    dealertingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window for dealerting.
+                                        The number of **10-second samples** that form the sliding evaluation window for dealerting.
+                                      type: number
+                                    dealertingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must be lower than the threshold to close an event
+                                        The number of **10-second samples** within the evaluation window that must be lower than the threshold to close an event
+                                      type: number
+                                    violatingEvaluationWindow:
+                                      description: |-
+                                        second samples that form the sliding evaluation window to detect violating samples.
+                                        The number of **10-second samples** that form the sliding evaluation window to detect violating samples.
+                                      type: number
+                                    violatingSamples:
+                                      description: |-
+                                        second samples within the evaluation window that must exceed the threshold to trigger an event
+                                        The number of **10-second samples** within the evaluation window that must exceed the threshold to trigger an event
+                                      type: number
+                                  type: object
+                                type: array
+                              thresholdMebibytes:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdMilliseconds:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdNumber:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              thresholdPercent:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              trigger:
+                                description: |-
+                                  (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
+                                  Possible values: `AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW`, `AVAILABLE_DISK_SPACE_PERCENT_BELOW`, `AVAILABLE_INODES_NUMBER_BELOW`, `AVAILABLE_INODES_PERCENT_BELOW`, `READ_ONLY_FILE_SYSTEM`, `READ_TIME_EXCEEDING`, `WRITE_TIME_EXCEEDING`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  detectionConditions:
+                    description: |-
+                      (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
+                      Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
+                    items:
+                      properties:
+                        detectionCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              diskFilesystemCondition:
+                                description: |-
+                                  (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
+                                  Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
+
+                                  - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                  - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
+                                  - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
+                                  - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
+                                  - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
+
+                                  Available logic operations:
+                                  - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
+                                  - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
+                                  - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
+
+                                  Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
+                                type: string
+                              diskTotalCondition:
+                                description: |-
+                                  (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
+                                  Specify disk total space range in GiB
+                                items:
+                                  properties:
+                                    thresholdAbove:
+                                      description: |-
+                                        (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
+                                        If this field is empty then there is no lower limit. Minimum total disk space in GiB
+                                      type: number
+                                    thresholdBelow:
+                                      description: |-
+                                        (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
+                                        If this field is empty then there is no upper limit. Maximum total disk space in GiB
+                                      type: number
+                                  type: object
+                                type: array
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                                items:
+                                  properties:
+                                    hostMetadataCondition:
+                                      description: |-
+                                        defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                        No documentation available
+                                      items:
+                                        properties:
+                                          keyMustExist:
+                                            description: |-
+                                              (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                              When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                            type: boolean
+                                          metadataCondition:
+                                            description: |-
+                                              (String) This string has to match a required format.
+                                              This string has to match a required format.
+
+                                              - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                              - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                              - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                              - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                              - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                              Available logic operations:
+                                              - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                              - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                              - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                              Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                            type: string
+                                          metadataKey:
+                                            description: |-
+                                              (String) Key
+                                              Key
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              localDiskCondition:
+                                description: |-
+                                  (String) Possible values: LOCAL, REMOTE
+                                  Possible values: `LOCAL`, `REMOTE`
+                                type: string
+                              property:
+                                description: |-
+                                  (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
+                                  Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
+                                  Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  diskNameFilters:
+                    description: |-
+                      (Set of String) Disk will be included in this policy if any of the filters match
+                      Disk will be included in this policy if **any** of the filters match
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  eventProperties:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+) (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+)
+                    items:
+                      properties:
+                        eventPropertie:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              metadataKey:
+                                description: |-
+                                  (String) Key
+                                  Type 'dt.' for key hints.
+                                type: string
+                              metadataValue:
+                                description: |-
+                                  (String) No documentation available
+                                  No documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  operatingSystem:
+                    description: |-
+                      (Set of String) Select the operating systems on which policy should be applied. Possible values: AIX, LINUX, WINDOWS
+                      Select the operating systems on which policy should be applied. Possible values: `AIX`, `LINUX`, `WINDOWS`
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  policyName:
+                    description: |-
+                      (String) Policy name
+                      Policy name
+                    type: string
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

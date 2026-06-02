@@ -1,4 +1,4 @@
-module github.com/crossplane/upjet-provider-template
+module github.com/vikreinok/provider-dynatrace-all
 
 go 1.25.9
 

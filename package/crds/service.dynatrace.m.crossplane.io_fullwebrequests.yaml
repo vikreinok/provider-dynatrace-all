@@ -1,0 +1,1447 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: fullwebrequests.service.dynatrace.m.crossplane.io
+spec:
+  group: service.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: FullWebRequest
+    listKind: FullWebRequestList
+    plural: fullwebrequests
+    singular: fullwebrequest
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: FullWebRequest is the Schema for the FullWebRequests API. The
+          resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FullWebRequestSpec defines the desired state of FullWebRequest
+            properties:
+              forProvider:
+                properties:
+                  conditions:
+                    description: |-
+                      (Block List, Max: 1) A list of conditions necessary for the rule to take effect. If multiple conditions are specified, they must all match a Request for the rule to apply. If there is no condition at all, the rule is always applied. Conditions are evaluated against attributes, but do not modify them. (see below for nested schema)
+                      A list of conditions necessary for the rule to take effect. If multiple conditions are specified, they must **all** match a Request for the rule to apply. If there is no condition at all, the rule is always applied. Conditions are evaluated against attributes, but do not modify them.
+                    items:
+                      properties:
+                        condition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              attribute:
+                                description: |-
+                                  (String) Take the value of this attribute
+                                  Take the value of this attribute
+                                type: string
+                              compareOperationType:
+                                description: |-
+                                  (String) Apply this operation
+                                  Apply this operation
+                                type: string
+                              framework:
+                                description: |-
+                                  (Set of String) Technology
+                                  Technology
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              ignoreCase:
+                                description: |-
+                                  (Boolean) Ignore case sensitivity for texts.
+                                  Ignore case sensitivity for texts.
+                                type: boolean
+                              intValue:
+                                description: |-
+                                  (Number) Value
+                                  Value
+                                type: number
+                              intValues:
+                                description: |-
+                                  (Set of Number) Values
+                                  Values
+                                items:
+                                  type: number
+                                type: array
+                                x-kubernetes-list-type: set
+                              ipRangeFrom:
+                                description: |-
+                                  (String) From
+                                  From
+                                type: string
+                              ipRangeTo:
+                                description: |-
+                                  (String) To
+                                  To
+                                type: string
+                              tagValues:
+                                description: |-
+                                  (Set of String) If multiple values are specified, at least one of them must match for the condition to match
+                                  If multiple values are specified, at least one of them must match for the condition to match
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              textValues:
+                                description: |-
+                                  (Set of String) If multiple values are specified, at least one of them must match for the condition to match
+                                  If multiple values are specified, at least one of them must match for the condition to match
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      (String) Description
+                      Description
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  idContributors:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Contributors to the Service Identifier calculation. All of the Contributors are always applied. (see below for nested schema)
+                      Contributors to the Service Identifier calculation. All of the Contributors are always applied.
+                    items:
+                      properties:
+                        applicationId:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Application identifier (see below for nested schema)
+                            Application identifier
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformValue`
+                                      type: string
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                segmentCount:
+                                                  description: |-
+                                                    (Number) How many segments should be taken.
+                                                    How many segments should be taken.
+                                                  type: number
+                                                selectIndex:
+                                                  description: |-
+                                                    (Number) select index
+                                                    select index
+                                                  type: number
+                                                splitDelimiter:
+                                                  description: |-
+                                                    (String) split by
+                                                    split by
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                takeFromEnd:
+                                                  description: |-
+                                                    (Boolean) take from end
+                                                    take from end
+                                                  type: boolean
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `AFTER`, `BEFORE`, `BETWEEN`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`, `SPLIT_SELECT`, `TAKE_SEGMENTS`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        contextRoot:
+                          description: |-
+                            api/ URL the context root is /support. The context root value can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                            The context root is the first segment of the request URL after the Server name. For example, in the `www.dynatrace.com/support/help/dynatrace-api/` URL the context root is `/support`. The context root value can be found on the **Service overview page** under **Properties and tags**.
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformURL`, `TransformValue`
+                                      type: string
+                                    segmentCount:
+                                      description: |-
+                                        (Number) How many segments should be taken.
+                                        The number of segments of the URL to be kept. The URL is divided by slashes (/), the indexing starts with 1 at context root. For example, if you specify 2 for the `www.dynatrace.com/support/help/dynatrace-api/` URL, the value of `support/help` is used.
+                                      type: number
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `BEFORE`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        serverName:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Server Name (see below for nested schema)
+                            Server Name
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformValue`
+                                      type: string
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                segmentCount:
+                                                  description: |-
+                                                    (Number) How many segments should be taken.
+                                                    How many segments should be taken.
+                                                  type: number
+                                                selectIndex:
+                                                  description: |-
+                                                    (Number) select index
+                                                    select index
+                                                  type: number
+                                                splitDelimiter:
+                                                  description: |-
+                                                    (String) split by
+                                                    split by
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                takeFromEnd:
+                                                  description: |-
+                                                    (Boolean) take from end
+                                                    take from end
+                                                  type: boolean
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `AFTER`, `BEFORE`, `BETWEEN`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`, `SPLIT_SELECT`, `TAKE_SEGMENTS`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  managementZones:
+                    description: |-
+                      (Set of String) Define a management zone of the process group for which this service detection rule should be created.
+                      Define a management zone of the process group for which this service detection rule should be created.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  name:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  conditions:
+                    description: |-
+                      (Block List, Max: 1) A list of conditions necessary for the rule to take effect. If multiple conditions are specified, they must all match a Request for the rule to apply. If there is no condition at all, the rule is always applied. Conditions are evaluated against attributes, but do not modify them. (see below for nested schema)
+                      A list of conditions necessary for the rule to take effect. If multiple conditions are specified, they must **all** match a Request for the rule to apply. If there is no condition at all, the rule is always applied. Conditions are evaluated against attributes, but do not modify them.
+                    items:
+                      properties:
+                        condition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              attribute:
+                                description: |-
+                                  (String) Take the value of this attribute
+                                  Take the value of this attribute
+                                type: string
+                              compareOperationType:
+                                description: |-
+                                  (String) Apply this operation
+                                  Apply this operation
+                                type: string
+                              framework:
+                                description: |-
+                                  (Set of String) Technology
+                                  Technology
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              ignoreCase:
+                                description: |-
+                                  (Boolean) Ignore case sensitivity for texts.
+                                  Ignore case sensitivity for texts.
+                                type: boolean
+                              intValue:
+                                description: |-
+                                  (Number) Value
+                                  Value
+                                type: number
+                              intValues:
+                                description: |-
+                                  (Set of Number) Values
+                                  Values
+                                items:
+                                  type: number
+                                type: array
+                                x-kubernetes-list-type: set
+                              ipRangeFrom:
+                                description: |-
+                                  (String) From
+                                  From
+                                type: string
+                              ipRangeTo:
+                                description: |-
+                                  (String) To
+                                  To
+                                type: string
+                              tagValues:
+                                description: |-
+                                  (Set of String) If multiple values are specified, at least one of them must match for the condition to match
+                                  If multiple values are specified, at least one of them must match for the condition to match
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              textValues:
+                                description: |-
+                                  (Set of String) If multiple values are specified, at least one of them must match for the condition to match
+                                  If multiple values are specified, at least one of them must match for the condition to match
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      (String) Description
+                      Description
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  idContributors:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Contributors to the Service Identifier calculation. All of the Contributors are always applied. (see below for nested schema)
+                      Contributors to the Service Identifier calculation. All of the Contributors are always applied.
+                    items:
+                      properties:
+                        applicationId:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Application identifier (see below for nested schema)
+                            Application identifier
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformValue`
+                                      type: string
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                segmentCount:
+                                                  description: |-
+                                                    (Number) How many segments should be taken.
+                                                    How many segments should be taken.
+                                                  type: number
+                                                selectIndex:
+                                                  description: |-
+                                                    (Number) select index
+                                                    select index
+                                                  type: number
+                                                splitDelimiter:
+                                                  description: |-
+                                                    (String) split by
+                                                    split by
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                takeFromEnd:
+                                                  description: |-
+                                                    (Boolean) take from end
+                                                    take from end
+                                                  type: boolean
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `AFTER`, `BEFORE`, `BETWEEN`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`, `SPLIT_SELECT`, `TAKE_SEGMENTS`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        contextRoot:
+                          description: |-
+                            api/ URL the context root is /support. The context root value can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                            The context root is the first segment of the request URL after the Server name. For example, in the `www.dynatrace.com/support/help/dynatrace-api/` URL the context root is `/support`. The context root value can be found on the **Service overview page** under **Properties and tags**.
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformURL`, `TransformValue`
+                                      type: string
+                                    segmentCount:
+                                      description: |-
+                                        (Number) How many segments should be taken.
+                                        The number of segments of the URL to be kept. The URL is divided by slashes (/), the indexing starts with 1 at context root. For example, if you specify 2 for the `www.dynatrace.com/support/help/dynatrace-api/` URL, the value of `support/help` is used.
+                                      type: number
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `BEFORE`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        serverName:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Server Name (see below for nested schema)
+                            Server Name
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformValue`
+                                      type: string
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                segmentCount:
+                                                  description: |-
+                                                    (Number) How many segments should be taken.
+                                                    How many segments should be taken.
+                                                  type: number
+                                                selectIndex:
+                                                  description: |-
+                                                    (Number) select index
+                                                    select index
+                                                  type: number
+                                                splitDelimiter:
+                                                  description: |-
+                                                    (String) split by
+                                                    split by
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                takeFromEnd:
+                                                  description: |-
+                                                    (Boolean) take from end
+                                                    take from end
+                                                  type: boolean
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `AFTER`, `BEFORE`, `BETWEEN`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`, `SPLIT_SELECT`, `TAKE_SEGMENTS`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  managementZones:
+                    description: |-
+                      (Set of String) Define a management zone of the process group for which this service detection rule should be created.
+                      Define a management zone of the process group for which this service detection rule should be created.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  name:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.idContributors is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.idContributors)
+                || (has(self.initProvider) && has(self.initProvider.idContributors))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: FullWebRequestStatus defines the observed state of FullWebRequest.
+            properties:
+              atProvider:
+                properties:
+                  conditions:
+                    description: |-
+                      (Block List, Max: 1) A list of conditions necessary for the rule to take effect. If multiple conditions are specified, they must all match a Request for the rule to apply. If there is no condition at all, the rule is always applied. Conditions are evaluated against attributes, but do not modify them. (see below for nested schema)
+                      A list of conditions necessary for the rule to take effect. If multiple conditions are specified, they must **all** match a Request for the rule to apply. If there is no condition at all, the rule is always applied. Conditions are evaluated against attributes, but do not modify them.
+                    items:
+                      properties:
+                        condition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              attribute:
+                                description: |-
+                                  (String) Take the value of this attribute
+                                  Take the value of this attribute
+                                type: string
+                              compareOperationType:
+                                description: |-
+                                  (String) Apply this operation
+                                  Apply this operation
+                                type: string
+                              framework:
+                                description: |-
+                                  (Set of String) Technology
+                                  Technology
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              ignoreCase:
+                                description: |-
+                                  (Boolean) Ignore case sensitivity for texts.
+                                  Ignore case sensitivity for texts.
+                                type: boolean
+                              intValue:
+                                description: |-
+                                  (Number) Value
+                                  Value
+                                type: number
+                              intValues:
+                                description: |-
+                                  (Set of Number) Values
+                                  Values
+                                items:
+                                  type: number
+                                type: array
+                                x-kubernetes-list-type: set
+                              ipRangeFrom:
+                                description: |-
+                                  (String) From
+                                  From
+                                type: string
+                              ipRangeTo:
+                                description: |-
+                                  (String) To
+                                  To
+                                type: string
+                              tagValues:
+                                description: |-
+                                  (Set of String) If multiple values are specified, at least one of them must match for the condition to match
+                                  If multiple values are specified, at least one of them must match for the condition to match
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              textValues:
+                                description: |-
+                                  (Set of String) If multiple values are specified, at least one of them must match for the condition to match
+                                  If multiple values are specified, at least one of them must match for the condition to match
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      (String) Description
+                      Description
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  idContributors:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Contributors to the Service Identifier calculation. All of the Contributors are always applied. (see below for nested schema)
+                      Contributors to the Service Identifier calculation. All of the Contributors are always applied.
+                    items:
+                      properties:
+                        applicationId:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Application identifier (see below for nested schema)
+                            Application identifier
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformValue`
+                                      type: string
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                segmentCount:
+                                                  description: |-
+                                                    (Number) How many segments should be taken.
+                                                    How many segments should be taken.
+                                                  type: number
+                                                selectIndex:
+                                                  description: |-
+                                                    (Number) select index
+                                                    select index
+                                                  type: number
+                                                splitDelimiter:
+                                                  description: |-
+                                                    (String) split by
+                                                    split by
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                takeFromEnd:
+                                                  description: |-
+                                                    (Boolean) take from end
+                                                    take from end
+                                                  type: boolean
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `AFTER`, `BEFORE`, `BETWEEN`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`, `SPLIT_SELECT`, `TAKE_SEGMENTS`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        contextRoot:
+                          description: |-
+                            api/ URL the context root is /support. The context root value can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                            The context root is the first segment of the request URL after the Server name. For example, in the `www.dynatrace.com/support/help/dynatrace-api/` URL the context root is `/support`. The context root value can be found on the **Service overview page** under **Properties and tags**.
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformURL`, `TransformValue`
+                                      type: string
+                                    segmentCount:
+                                      description: |-
+                                        (Number) How many segments should be taken.
+                                        The number of segments of the URL to be kept. The URL is divided by slashes (/), the indexing starts with 1 at context root. For example, if you specify 2 for the `www.dynatrace.com/support/help/dynatrace-api/` URL, the value of `support/help` is used.
+                                      type: number
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `BEFORE`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        serverName:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Server Name (see below for nested schema)
+                            Server Name
+                          items:
+                            properties:
+                              enableIdContributor:
+                                description: |-
+                                  (Boolean) Transform this value before letting it contribute to the Service Id
+                                  Transform this value before letting it contribute to the Service Id
+                                type: boolean
+                              serviceIdContributor:
+                                description: |-
+                                  (Block List, Max: 1) no documentation available (see below for nested schema)
+                                  no documentation available
+                                items:
+                                  properties:
+                                    contributionType:
+                                      description: |-
+                                        (String) Possible Values: OriginalValue, OverrideValue, TransformValue
+                                        Possible Values: `OriginalValue`, `OverrideValue`, `TransformValue`
+                                      type: string
+                                    transformations:
+                                      description: |-
+                                        (Block List, Max: 1) Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the Service overview page under Properties and tags. (see below for nested schema)
+                                        Choose how to transform a value before it contributes to the Service Id. Note that all of the Transformations are always applied. Transformations are applied in the order they are specified, and the output of the previous transformation is the input for the next one. The resulting value contributes to the Service Id and can be found on the **Service overview page** under **Properties and tags**.
+                                      items:
+                                        properties:
+                                          transformation:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                includeHexNumbers:
+                                                  description: |-
+                                                    (Boolean) include hexadecimal numbers
+                                                    include hexadecimal numbers
+                                                  type: boolean
+                                                minDigitCount:
+                                                  description: |-
+                                                    (Number) min digit count
+                                                    min digit count
+                                                  type: number
+                                                prefix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                replacementValue:
+                                                  description: |-
+                                                    (String) replacement
+                                                    replacement
+                                                  type: string
+                                                segmentCount:
+                                                  description: |-
+                                                    (Number) How many segments should be taken.
+                                                    How many segments should be taken.
+                                                  type: number
+                                                selectIndex:
+                                                  description: |-
+                                                    (Number) select index
+                                                    select index
+                                                  type: number
+                                                splitDelimiter:
+                                                  description: |-
+                                                    (String) split by
+                                                    split by
+                                                  type: string
+                                                suffix:
+                                                  description: |-
+                                                    (String) no documentation available
+                                                    no documentation available
+                                                  type: string
+                                                takeFromEnd:
+                                                  description: |-
+                                                    (Boolean) take from end
+                                                    take from end
+                                                  type: boolean
+                                                transformationType:
+                                                  description: |-
+                                                    (String) Possible Values: AFTER, BEFORE, BETWEEN, REMOVE_CREDIT_CARDS, REMOVE_IBANS, REMOVE_IPS, REMOVE_NUMBERS, REPLACE_BETWEEN, SPLIT_SELECT, TAKE_SEGMENTS
+                                                    Possible Values: `AFTER`, `BEFORE`, `BETWEEN`, `REMOVE_CREDIT_CARDS`, `REMOVE_IBANS`, `REMOVE_IPS`, `REMOVE_NUMBERS`, `REPLACE_BETWEEN`, `SPLIT_SELECT`, `TAKE_SEGMENTS`
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    valueOverride:
+                                      description: |-
+                                        (Block List, Max: 1) The value to be used instead of the detected value. (see below for nested schema)
+                                        The value to be used instead of the detected value.
+                                      items:
+                                        properties:
+                                          value:
+                                            description: |-
+                                              (String) no documentation available
+                                              no documentation available
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  managementZones:
+                    description: |-
+                      (Set of String) Define a management zone of the process group for which this service detection rule should be created.
+                      Define a management zone of the process group for which this service detection rule should be created.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  name:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

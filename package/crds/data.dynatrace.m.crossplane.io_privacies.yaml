@@ -1,0 +1,502 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: privacies.data.dynatrace.m.crossplane.io
+spec:
+  group: data.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Privacy
+    listKind: PrivacyList
+    plural: privacies
+    singular: privacy
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Privacy is the Schema for the Privacys API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PrivacySpec defines the desired state of Privacy
+            properties:
+              forProvider:
+                properties:
+                  applicationId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                    type: string
+                  dataCollection:
+                    description: |-
+                      in mode. (see below for nested schema)
+                      To provide your end users with the ability to decide for themselves if their activities should be tracked to measure application performance and usage, enable opt-in mode.
+                    items:
+                      properties:
+                        optInModeEnabled:
+                          description: |-
+                            collection and opt-in mode enabled, Real User Monitoring data isn't captured until dtrum.enable() is called for specific user sessions.
+                            With [Data-collection and opt-in mode](https://dt-url.net/7l3p0p3h) enabled, Real User Monitoring data isn't captured until dtrum.enable() is called for specific user sessions.
+                          type: boolean
+                      type: object
+                    type: array
+                  doNotTrack:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Most modern web browsers have a privacy feature called "Do Not Track" that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting. (see below for nested schema)
+                      Most modern web browsers have a privacy feature called ["Do Not Track"](https://dt-url.net/sb3n0pnl) that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting.
+                    items:
+                      properties:
+                        complyWithDoNotTrack:
+                          description: |-
+                            (Boolean) Comply with "Do Not Track" browser settings
+                            Comply with "Do Not Track" browser settings
+                          type: boolean
+                        doNotTrack:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Most modern web browsers have a privacy feature called "Do Not Track" that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting. (see below for nested schema)
+                            Possible Values: `Anonymous`, `Disable_rum`
+                          type: string
+                      type: object
+                    type: array
+                  masking:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) no documentation available (see below for nested schema)
+                      no documentation available
+                    items:
+                      properties:
+                        ipAddressMasking:
+                          description: |-
+                            (String, Deprecated) Possible Values: All, Public
+                            Possible Values: `All`, `Public`
+                          type: string
+                        ipAddressMaskingEnabled:
+                          description: |-
+                            users to determine the regions from which they access your application. To learn more, visit Mask IPs and GPS coordinates.. Dynatrace also captures GPS data from mobile apps that provide their users with the option of sharing geolocation data. On the server side, Dynatrace captures IP addresses to enable detailed troubleshooting for Dynatrace service calls.
+                            Dynatrace captures the IP addresses of your end-users to determine the regions from which they access your application. To learn more, visit [Mask IPs and GPS coordinates](https://dt-url.net/mask-end-users-ip-addresses).. Dynatrace also captures GPS data from mobile apps that provide their users with the option of sharing geolocation data. On the server side, Dynatrace captures IP addresses to enable detailed troubleshooting for Dynatrace service calls.
+
+                            Once enabled, IP address masking sets the last octet of monitored IPv4 addresses and the last 80 bits of IPv6 addresses to zeroes. GPS coordinates are rounded up to 1 decimal place (~10 km). This masking occurs in memory. Full IP addresses are never written to disk. Location lookups are made using anonymized IP addresses and GPS coordinates.
+                          type: boolean
+                        personalDataUriMaskingEnabled:
+                          description: |-
+                            side to enable detailed performance analysis of your applications. For complete details, visit Mask personal data in URIs.. URIs and request headers contain personal data. When this setting is enabled, Dynatrace automatically detects UUIDs, credit card numbers, email addresses, IP addresses, and other IDs and replaces those values with placeholders. The personal data is then masked in PurePath analysis, error analysis, user action naming for RUM, and elsewhere in Dynatrace.
+                            Dynatrace captures the URIs and request headers sent from desktop and mobile browsers. Dynatrace also captures full URIs on the server-side to enable detailed performance analysis of your applications. For complete details, visit [Mask personal data in URIs](https://dt-url.net/mask-personal-data-in-URIs).. URIs and request headers contain personal data. When this setting is enabled, Dynatrace automatically detects UUIDs, credit card numbers, email addresses, IP addresses, and other IDs and replaces those values with placeholders. The personal data is then masked in PurePath analysis, error analysis, user action naming for RUM, and elsewhere in Dynatrace.
+                          type: boolean
+                        userActionMaskingEnabled:
+                          description: |-
+                            (Boolean) When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action. To learn more about masking user actions, visit Mask user actions.. When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action, it constructs a name for the user action based on:
+                            When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action. To learn more about masking user actions, visit [Mask user actions](https://dt-url.net/mask-user-action).. When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action, it constructs a name for the user action based on:
+
+                            - User event type (click on..., loading of page..., or keypress on...)
+                            - Title, caption, label, value, ID, className, or other available property of the related HTML element (for example, an image, button, checkbox, or text input field).
+
+                            In most instances, the default approach to user-action naming works well, resulting in user-action names such as:
+
+                            - click on "Search" on page /search.html
+                            - keypress on "Feedback" on page /contact.html
+                            - touch on "Homescreen" of page /list.jsf
+
+                            In rare circumstances, confidential data (for example, email addresses, usernames, or account numbers) can be unintentionally included in user action names because the confidential data itself is included in an HTML element label, attribute, or other value (for example, click on "my Account Number: 1231231"...). If such confidential data appears in your application's user action names, enable the Mask user action names setting. This setting replaces specific HTML element names and values with generic HTML element names. With user-action name masking enabled, the user action names listed above appear as:
+
+                            - click on INPUT on page /search.html
+                            - keypress on TEXTAREA on page /contact.html
+                            - touch on DIV of page /list.jsf
+                          type: boolean
+                      type: object
+                    type: array
+                  userTracking:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) User tracking (see below for nested schema)
+                      User tracking
+                    items:
+                      properties:
+                        persistentCookieEnabled:
+                          description: |-
+                            user devices to identify returning users.
+                            When enabled, Dynatrace places a [persistent cookie](https://dt-url.net/313o0p4n) on all end-user devices to identify returning users.
+                          type: boolean
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  applicationId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                    type: string
+                  dataCollection:
+                    description: |-
+                      in mode. (see below for nested schema)
+                      To provide your end users with the ability to decide for themselves if their activities should be tracked to measure application performance and usage, enable opt-in mode.
+                    items:
+                      properties:
+                        optInModeEnabled:
+                          description: |-
+                            collection and opt-in mode enabled, Real User Monitoring data isn't captured until dtrum.enable() is called for specific user sessions.
+                            With [Data-collection and opt-in mode](https://dt-url.net/7l3p0p3h) enabled, Real User Monitoring data isn't captured until dtrum.enable() is called for specific user sessions.
+                          type: boolean
+                      type: object
+                    type: array
+                  doNotTrack:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Most modern web browsers have a privacy feature called "Do Not Track" that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting. (see below for nested schema)
+                      Most modern web browsers have a privacy feature called ["Do Not Track"](https://dt-url.net/sb3n0pnl) that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting.
+                    items:
+                      properties:
+                        complyWithDoNotTrack:
+                          description: |-
+                            (Boolean) Comply with "Do Not Track" browser settings
+                            Comply with "Do Not Track" browser settings
+                          type: boolean
+                        doNotTrack:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Most modern web browsers have a privacy feature called "Do Not Track" that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting. (see below for nested schema)
+                            Possible Values: `Anonymous`, `Disable_rum`
+                          type: string
+                      type: object
+                    type: array
+                  masking:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) no documentation available (see below for nested schema)
+                      no documentation available
+                    items:
+                      properties:
+                        ipAddressMasking:
+                          description: |-
+                            (String, Deprecated) Possible Values: All, Public
+                            Possible Values: `All`, `Public`
+                          type: string
+                        ipAddressMaskingEnabled:
+                          description: |-
+                            users to determine the regions from which they access your application. To learn more, visit Mask IPs and GPS coordinates.. Dynatrace also captures GPS data from mobile apps that provide their users with the option of sharing geolocation data. On the server side, Dynatrace captures IP addresses to enable detailed troubleshooting for Dynatrace service calls.
+                            Dynatrace captures the IP addresses of your end-users to determine the regions from which they access your application. To learn more, visit [Mask IPs and GPS coordinates](https://dt-url.net/mask-end-users-ip-addresses).. Dynatrace also captures GPS data from mobile apps that provide their users with the option of sharing geolocation data. On the server side, Dynatrace captures IP addresses to enable detailed troubleshooting for Dynatrace service calls.
+
+                            Once enabled, IP address masking sets the last octet of monitored IPv4 addresses and the last 80 bits of IPv6 addresses to zeroes. GPS coordinates are rounded up to 1 decimal place (~10 km). This masking occurs in memory. Full IP addresses are never written to disk. Location lookups are made using anonymized IP addresses and GPS coordinates.
+                          type: boolean
+                        personalDataUriMaskingEnabled:
+                          description: |-
+                            side to enable detailed performance analysis of your applications. For complete details, visit Mask personal data in URIs.. URIs and request headers contain personal data. When this setting is enabled, Dynatrace automatically detects UUIDs, credit card numbers, email addresses, IP addresses, and other IDs and replaces those values with placeholders. The personal data is then masked in PurePath analysis, error analysis, user action naming for RUM, and elsewhere in Dynatrace.
+                            Dynatrace captures the URIs and request headers sent from desktop and mobile browsers. Dynatrace also captures full URIs on the server-side to enable detailed performance analysis of your applications. For complete details, visit [Mask personal data in URIs](https://dt-url.net/mask-personal-data-in-URIs).. URIs and request headers contain personal data. When this setting is enabled, Dynatrace automatically detects UUIDs, credit card numbers, email addresses, IP addresses, and other IDs and replaces those values with placeholders. The personal data is then masked in PurePath analysis, error analysis, user action naming for RUM, and elsewhere in Dynatrace.
+                          type: boolean
+                        userActionMaskingEnabled:
+                          description: |-
+                            (Boolean) When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action. To learn more about masking user actions, visit Mask user actions.. When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action, it constructs a name for the user action based on:
+                            When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action. To learn more about masking user actions, visit [Mask user actions](https://dt-url.net/mask-user-action).. When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action, it constructs a name for the user action based on:
+
+                            - User event type (click on..., loading of page..., or keypress on...)
+                            - Title, caption, label, value, ID, className, or other available property of the related HTML element (for example, an image, button, checkbox, or text input field).
+
+                            In most instances, the default approach to user-action naming works well, resulting in user-action names such as:
+
+                            - click on "Search" on page /search.html
+                            - keypress on "Feedback" on page /contact.html
+                            - touch on "Homescreen" of page /list.jsf
+
+                            In rare circumstances, confidential data (for example, email addresses, usernames, or account numbers) can be unintentionally included in user action names because the confidential data itself is included in an HTML element label, attribute, or other value (for example, click on "my Account Number: 1231231"...). If such confidential data appears in your application's user action names, enable the Mask user action names setting. This setting replaces specific HTML element names and values with generic HTML element names. With user-action name masking enabled, the user action names listed above appear as:
+
+                            - click on INPUT on page /search.html
+                            - keypress on TEXTAREA on page /contact.html
+                            - touch on DIV of page /list.jsf
+                          type: boolean
+                      type: object
+                    type: array
+                  userTracking:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) User tracking (see below for nested schema)
+                      User tracking
+                    items:
+                      properties:
+                        persistentCookieEnabled:
+                          description: |-
+                            user devices to identify returning users.
+                            When enabled, Dynatrace places a [persistent cookie](https://dt-url.net/313o0p4n) on all end-user devices to identify returning users.
+                          type: boolean
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.dataCollection is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataCollection)
+                || (has(self.initProvider) && has(self.initProvider.dataCollection))'
+            - message: spec.forProvider.doNotTrack is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.doNotTrack)
+                || (has(self.initProvider) && has(self.initProvider.doNotTrack))'
+            - message: spec.forProvider.masking is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.masking)
+                || (has(self.initProvider) && has(self.initProvider.masking))'
+            - message: spec.forProvider.userTracking is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.userTracking)
+                || (has(self.initProvider) && has(self.initProvider.userTracking))'
+          status:
+            description: PrivacyStatus defines the observed state of Privacy.
+            properties:
+              atProvider:
+                properties:
+                  applicationId:
+                    description: |-
+                      (String) The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                      The scope of this settings. If the settings should cover the whole environment, just don't specify any scope.
+                    type: string
+                  dataCollection:
+                    description: |-
+                      in mode. (see below for nested schema)
+                      To provide your end users with the ability to decide for themselves if their activities should be tracked to measure application performance and usage, enable opt-in mode.
+                    items:
+                      properties:
+                        optInModeEnabled:
+                          description: |-
+                            collection and opt-in mode enabled, Real User Monitoring data isn't captured until dtrum.enable() is called for specific user sessions.
+                            With [Data-collection and opt-in mode](https://dt-url.net/7l3p0p3h) enabled, Real User Monitoring data isn't captured until dtrum.enable() is called for specific user sessions.
+                          type: boolean
+                      type: object
+                    type: array
+                  doNotTrack:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Most modern web browsers have a privacy feature called "Do Not Track" that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting. (see below for nested schema)
+                      Most modern web browsers have a privacy feature called ["Do Not Track"](https://dt-url.net/sb3n0pnl) that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting.
+                    items:
+                      properties:
+                        complyWithDoNotTrack:
+                          description: |-
+                            (Boolean) Comply with "Do Not Track" browser settings
+                            Comply with "Do Not Track" browser settings
+                          type: boolean
+                        doNotTrack:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Most modern web browsers have a privacy feature called "Do Not Track" that individual users may have enabled on their devices. Customize how Dynatrace should behave when it encounters this setting. (see below for nested schema)
+                            Possible Values: `Anonymous`, `Disable_rum`
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  masking:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) no documentation available (see below for nested schema)
+                      no documentation available
+                    items:
+                      properties:
+                        ipAddressMasking:
+                          description: |-
+                            (String, Deprecated) Possible Values: All, Public
+                            Possible Values: `All`, `Public`
+                          type: string
+                        ipAddressMaskingEnabled:
+                          description: |-
+                            users to determine the regions from which they access your application. To learn more, visit Mask IPs and GPS coordinates.. Dynatrace also captures GPS data from mobile apps that provide their users with the option of sharing geolocation data. On the server side, Dynatrace captures IP addresses to enable detailed troubleshooting for Dynatrace service calls.
+                            Dynatrace captures the IP addresses of your end-users to determine the regions from which they access your application. To learn more, visit [Mask IPs and GPS coordinates](https://dt-url.net/mask-end-users-ip-addresses).. Dynatrace also captures GPS data from mobile apps that provide their users with the option of sharing geolocation data. On the server side, Dynatrace captures IP addresses to enable detailed troubleshooting for Dynatrace service calls.
+
+                            Once enabled, IP address masking sets the last octet of monitored IPv4 addresses and the last 80 bits of IPv6 addresses to zeroes. GPS coordinates are rounded up to 1 decimal place (~10 km). This masking occurs in memory. Full IP addresses are never written to disk. Location lookups are made using anonymized IP addresses and GPS coordinates.
+                          type: boolean
+                        personalDataUriMaskingEnabled:
+                          description: |-
+                            side to enable detailed performance analysis of your applications. For complete details, visit Mask personal data in URIs.. URIs and request headers contain personal data. When this setting is enabled, Dynatrace automatically detects UUIDs, credit card numbers, email addresses, IP addresses, and other IDs and replaces those values with placeholders. The personal data is then masked in PurePath analysis, error analysis, user action naming for RUM, and elsewhere in Dynatrace.
+                            Dynatrace captures the URIs and request headers sent from desktop and mobile browsers. Dynatrace also captures full URIs on the server-side to enable detailed performance analysis of your applications. For complete details, visit [Mask personal data in URIs](https://dt-url.net/mask-personal-data-in-URIs).. URIs and request headers contain personal data. When this setting is enabled, Dynatrace automatically detects UUIDs, credit card numbers, email addresses, IP addresses, and other IDs and replaces those values with placeholders. The personal data is then masked in PurePath analysis, error analysis, user action naming for RUM, and elsewhere in Dynatrace.
+                          type: boolean
+                        userActionMaskingEnabled:
+                          description: |-
+                            (Boolean) When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action. To learn more about masking user actions, visit Mask user actions.. When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action, it constructs a name for the user action based on:
+                            When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action. To learn more about masking user actions, visit [Mask user actions](https://dt-url.net/mask-user-action).. When Dynatrace detects a user action that triggers a page load or an AJAX/XHR action, it constructs a name for the user action based on:
+
+                            - User event type (click on..., loading of page..., or keypress on...)
+                            - Title, caption, label, value, ID, className, or other available property of the related HTML element (for example, an image, button, checkbox, or text input field).
+
+                            In most instances, the default approach to user-action naming works well, resulting in user-action names such as:
+
+                            - click on "Search" on page /search.html
+                            - keypress on "Feedback" on page /contact.html
+                            - touch on "Homescreen" of page /list.jsf
+
+                            In rare circumstances, confidential data (for example, email addresses, usernames, or account numbers) can be unintentionally included in user action names because the confidential data itself is included in an HTML element label, attribute, or other value (for example, click on "my Account Number: 1231231"...). If such confidential data appears in your application's user action names, enable the Mask user action names setting. This setting replaces specific HTML element names and values with generic HTML element names. With user-action name masking enabled, the user action names listed above appear as:
+
+                            - click on INPUT on page /search.html
+                            - keypress on TEXTAREA on page /contact.html
+                            - touch on DIV of page /list.jsf
+                          type: boolean
+                      type: object
+                    type: array
+                  userTracking:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) User tracking (see below for nested schema)
+                      User tracking
+                    items:
+                      properties:
+                        persistentCookieEnabled:
+                          description: |-
+                            user devices to identify returning users.
+                            When enabled, Dynatrace places a [persistent cookie](https://dt-url.net/313o0p4n) on all end-user devices to identify returning users.
+                          type: boolean
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

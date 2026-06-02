@@ -1,0 +1,473 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: enrichments.kubernetes.dynatrace.m.crossplane.io
+spec:
+  group: kubernetes.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Enrichment
+    listKind: EnrichmentList
+    plural: enrichments
+    singular: enrichment
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Enrichment is the Schema for the Enrichments API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EnrichmentSpec defines the desired state of Enrichment
+            properties:
+              forProvider:
+                properties:
+                  rules:
+                    description: |-
+                      (Block List, Max: 1) Dynatrace allows to use metadata defined on Kubernetes nodes, namespaces, and pods to set security and cost allocation attributes and dimensions for metrics, events, log, spans, and entities associated with the respective Kubernetes resource.
+                      Dynatrace allows to use metadata defined on Kubernetes nodes, namespaces, and pods to set security and cost allocation attributes and dimensions for metrics, events, log, spans, and entities associated with the respective Kubernetes resource.
+
+                      The following annotation keys are considered:
+                      * `metadata.dynatrace.com/dt.security_context`
+                      * `metadata.dynatrace.com/dt.cost.product`
+                      * `metadata.dynatrace.com/dt.cost.costcenter`
+
+                      Pod annotations determine the attributes of data associated with the pod itself, and containers belonging to the pod.
+
+                      Namespace annotations determine the attributes of data associated with the namespace itself, workloads, services, and - if not overwritten on pod level - pods, and containers belonging to the namespace.
+
+                      Node annotations determine the attributes of data associated with only the node.
+
+                      Depending on your specific use case and environment, you have the following enrichment options:
+
+                      **Manual annotation:**
+
+                      Use the aforementioned annotation keys when annotating your namespaces and pods to enrich your Kubernetes data with security and cost allocation attributes.
+
+                      With Dynatrace Operator version 1.3.0, the aforementioned namespace annotations are copied down to pods in the namespace, if they are not yet set on the respective pod.
+
+                      **Rule-based annotation:**
+
+                      If you already have labels or annotations defined on your namespaces, and you want to reuse them for enrichment, you can do so with the help of rules definable here.
+
+                      **Example:**
+
+                      * Namespace label:
+                      * `label/example: test-value`
+
+                      * Rule:
+                      * `Label`
+                      `label/example --> dt.security_context`
+
+                      * Pod annotation:
+                      * `metadata.dynatrace.com/dt.security_context: test-value`
+
+                      A maximum of 5 rules can be defined. The first applicable rule will be applied. Preexisting annotations will not be overwritten. For a detailed description of this feature, have a look at our [documentation](https://dt-url.net/pn22sye).
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean, Deprecated) This setting is enabled (true) or disabled (false)
+                                  This setting is enabled (`true`) or disabled (`false`)
+                                type: boolean
+                              primaryGrailTag:
+                                description: |-
+                                  (Boolean) Uses the key of the annotation or label as field name
+                                  Uses the key of the annotation or label as field name
+                                type: boolean
+                              source:
+                                description: |-
+                                  (String) The source must follow the syntax of Kubernetes annotation/label keys as defined in the Kubernetes documentation.
+                                  The source must follow the syntax of Kubernetes annotation/label keys as defined in the [Kubernetes documentation](https://dt-url.net/2c02sbn).
+
+                                  `source := (prefix/)?name`
+
+                                  `prefix := [a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*`
+
+                                  `name := ([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]`
+
+                                  Additionally, the name can have at most 63 characters, and the overall length of the source must not exceed 75 characters.
+                                type: string
+                              target:
+                                description: |-
+                                  (String) Required when primary_grail_tag is omitted or false. Possible Values: dt.cost.costcenter“, dt.cost.product“, `dt.security_context
+                                  Required when `primary_grail_tag` is omitted or `false`. Possible Values: `dt.cost.costcenter“, `dt.cost.product“, `dt.security_context
+                                type: string
+                              type:
+                                description: |-
+                                  (String) Possible Values: ANNOTATION, LABEL
+                                  Possible Values: `ANNOTATION`, `LABEL`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (KUBERNETES_CLUSTER). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (KUBERNETES_CLUSTER). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  rules:
+                    description: |-
+                      (Block List, Max: 1) Dynatrace allows to use metadata defined on Kubernetes nodes, namespaces, and pods to set security and cost allocation attributes and dimensions for metrics, events, log, spans, and entities associated with the respective Kubernetes resource.
+                      Dynatrace allows to use metadata defined on Kubernetes nodes, namespaces, and pods to set security and cost allocation attributes and dimensions for metrics, events, log, spans, and entities associated with the respective Kubernetes resource.
+
+                      The following annotation keys are considered:
+                      * `metadata.dynatrace.com/dt.security_context`
+                      * `metadata.dynatrace.com/dt.cost.product`
+                      * `metadata.dynatrace.com/dt.cost.costcenter`
+
+                      Pod annotations determine the attributes of data associated with the pod itself, and containers belonging to the pod.
+
+                      Namespace annotations determine the attributes of data associated with the namespace itself, workloads, services, and - if not overwritten on pod level - pods, and containers belonging to the namespace.
+
+                      Node annotations determine the attributes of data associated with only the node.
+
+                      Depending on your specific use case and environment, you have the following enrichment options:
+
+                      **Manual annotation:**
+
+                      Use the aforementioned annotation keys when annotating your namespaces and pods to enrich your Kubernetes data with security and cost allocation attributes.
+
+                      With Dynatrace Operator version 1.3.0, the aforementioned namespace annotations are copied down to pods in the namespace, if they are not yet set on the respective pod.
+
+                      **Rule-based annotation:**
+
+                      If you already have labels or annotations defined on your namespaces, and you want to reuse them for enrichment, you can do so with the help of rules definable here.
+
+                      **Example:**
+
+                      * Namespace label:
+                      * `label/example: test-value`
+
+                      * Rule:
+                      * `Label`
+                      `label/example --> dt.security_context`
+
+                      * Pod annotation:
+                      * `metadata.dynatrace.com/dt.security_context: test-value`
+
+                      A maximum of 5 rules can be defined. The first applicable rule will be applied. Preexisting annotations will not be overwritten. For a detailed description of this feature, have a look at our [documentation](https://dt-url.net/pn22sye).
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean, Deprecated) This setting is enabled (true) or disabled (false)
+                                  This setting is enabled (`true`) or disabled (`false`)
+                                type: boolean
+                              primaryGrailTag:
+                                description: |-
+                                  (Boolean) Uses the key of the annotation or label as field name
+                                  Uses the key of the annotation or label as field name
+                                type: boolean
+                              source:
+                                description: |-
+                                  (String) The source must follow the syntax of Kubernetes annotation/label keys as defined in the Kubernetes documentation.
+                                  The source must follow the syntax of Kubernetes annotation/label keys as defined in the [Kubernetes documentation](https://dt-url.net/2c02sbn).
+
+                                  `source := (prefix/)?name`
+
+                                  `prefix := [a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*`
+
+                                  `name := ([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]`
+
+                                  Additionally, the name can have at most 63 characters, and the overall length of the source must not exceed 75 characters.
+                                type: string
+                              target:
+                                description: |-
+                                  (String) Required when primary_grail_tag is omitted or false. Possible Values: dt.cost.costcenter“, dt.cost.product“, `dt.security_context
+                                  Required when `primary_grail_tag` is omitted or `false`. Possible Values: `dt.cost.costcenter“, `dt.cost.product“, `dt.security_context
+                                type: string
+                              type:
+                                description: |-
+                                  (String) Possible Values: ANNOTATION, LABEL
+                                  Possible Values: `ANNOTATION`, `LABEL`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (KUBERNETES_CLUSTER). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (KUBERNETES_CLUSTER). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: EnrichmentStatus defines the observed state of Enrichment.
+            properties:
+              atProvider:
+                properties:
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  rules:
+                    description: |-
+                      (Block List, Max: 1) Dynatrace allows to use metadata defined on Kubernetes nodes, namespaces, and pods to set security and cost allocation attributes and dimensions for metrics, events, log, spans, and entities associated with the respective Kubernetes resource.
+                      Dynatrace allows to use metadata defined on Kubernetes nodes, namespaces, and pods to set security and cost allocation attributes and dimensions for metrics, events, log, spans, and entities associated with the respective Kubernetes resource.
+
+                      The following annotation keys are considered:
+                      * `metadata.dynatrace.com/dt.security_context`
+                      * `metadata.dynatrace.com/dt.cost.product`
+                      * `metadata.dynatrace.com/dt.cost.costcenter`
+
+                      Pod annotations determine the attributes of data associated with the pod itself, and containers belonging to the pod.
+
+                      Namespace annotations determine the attributes of data associated with the namespace itself, workloads, services, and - if not overwritten on pod level - pods, and containers belonging to the namespace.
+
+                      Node annotations determine the attributes of data associated with only the node.
+
+                      Depending on your specific use case and environment, you have the following enrichment options:
+
+                      **Manual annotation:**
+
+                      Use the aforementioned annotation keys when annotating your namespaces and pods to enrich your Kubernetes data with security and cost allocation attributes.
+
+                      With Dynatrace Operator version 1.3.0, the aforementioned namespace annotations are copied down to pods in the namespace, if they are not yet set on the respective pod.
+
+                      **Rule-based annotation:**
+
+                      If you already have labels or annotations defined on your namespaces, and you want to reuse them for enrichment, you can do so with the help of rules definable here.
+
+                      **Example:**
+
+                      * Namespace label:
+                      * `label/example: test-value`
+
+                      * Rule:
+                      * `Label`
+                      `label/example --> dt.security_context`
+
+                      * Pod annotation:
+                      * `metadata.dynatrace.com/dt.security_context: test-value`
+
+                      A maximum of 5 rules can be defined. The first applicable rule will be applied. Preexisting annotations will not be overwritten. For a detailed description of this feature, have a look at our [documentation](https://dt-url.net/pn22sye).
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean, Deprecated) This setting is enabled (true) or disabled (false)
+                                  This setting is enabled (`true`) or disabled (`false`)
+                                type: boolean
+                              primaryGrailTag:
+                                description: |-
+                                  (Boolean) Uses the key of the annotation or label as field name
+                                  Uses the key of the annotation or label as field name
+                                type: boolean
+                              source:
+                                description: |-
+                                  (String) The source must follow the syntax of Kubernetes annotation/label keys as defined in the Kubernetes documentation.
+                                  The source must follow the syntax of Kubernetes annotation/label keys as defined in the [Kubernetes documentation](https://dt-url.net/2c02sbn).
+
+                                  `source := (prefix/)?name`
+
+                                  `prefix := [a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*`
+
+                                  `name := ([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]`
+
+                                  Additionally, the name can have at most 63 characters, and the overall length of the source must not exceed 75 characters.
+                                type: string
+                              target:
+                                description: |-
+                                  (String) Required when primary_grail_tag is omitted or false. Possible Values: dt.cost.costcenter“, dt.cost.product“, `dt.security_context
+                                  Required when `primary_grail_tag` is omitted or `false`. Possible Values: `dt.cost.costcenter“, `dt.cost.product“, `dt.security_context
+                                type: string
+                              type:
+                                description: |-
+                                  (String) Possible Values: ANNOTATION, LABEL
+                                  Possible Values: `ANNOTATION`, `LABEL`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (KUBERNETES_CLUSTER). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (KUBERNETES_CLUSTER). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

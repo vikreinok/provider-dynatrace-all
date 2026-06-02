@@ -1,0 +1,788 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: environments.environment.dynatrace.m.crossplane.io
+spec:
+  group: environment.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Environment
+    listKind: EnvironmentList
+    plural: environments
+    singular: environment
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Environment is the Schema for the Environments API. <no value>
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EnvironmentSpec defines the desired state of Environment
+            properties:
+              forProvider:
+                properties:
+                  name:
+                    description: The display name of the environment
+                    type: string
+                  quotas:
+                    description: Environment level consumption and quotas information
+                    items:
+                      properties:
+                        ddus:
+                          description: Davis Data Units consumption and quota information
+                            on environment level. Not set (and not editable) if Davis
+                            data units is not enabled
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        demUnits:
+                          description: DEM units consumption and quota information
+                            on environment level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        hostUnits:
+                          description: Host units consumption and quota information
+                            on environment level
+                          type: number
+                        logs:
+                          description: Log Monitoring consumption and quota information
+                            on environment level. Not set (and not editable) if Log
+                            monitoring is not enabled. Not set (and not editable)
+                            if Log monitoring is migrated to Davis data on license
+                            level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        synthetic:
+                          description: Synthetic monitors consumption and quota information
+                            on environment level. Not set (and not editable) if neither
+                            Synthetic nor DEM units is enabled
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        userSessions:
+                          description: User sessions consumption and quota information
+                            on environment level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual total User sessions environment
+                                  quota. Not set if unlimited
+                                type: number
+                              monthly:
+                                description: Monthly total User sessions environment
+                                  quota. Not set if unlimited
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  state:
+                    description: Indicates whether the environment is enabled or disabled.
+                      Possible values are `ENABLED` and `DISABLED`. The default value
+                      is ENABLED
+                    type: string
+                  storage:
+                    description: Environment level storage usage and limit information
+                    items:
+                      properties:
+                        limits:
+                          items:
+                            properties:
+                              logs:
+                                description: Log monitoring storage usage and limit
+                                  information on environment level in bytes. Not editable
+                                  when Log monitoring is not allowed by license or
+                                  not configured on cluster level. 0 for unlimited.
+                                type: number
+                              sessionReplay:
+                                description: Session replay storage usage and limit
+                                  information on environment level in bytes. 0 for
+                                  unlimited.
+                                type: number
+                              symbolFiles:
+                                description: Session replay storage usage and limit
+                                  information on environment level in bytes. 0 for
+                                  unlimited.
+                                type: number
+                              transactions:
+                                description: Transaction storage usage and limit information
+                                  on environment level in bytes. 0 for unlimited.
+                                type: number
+                            type: object
+                          type: array
+                        retention:
+                          items:
+                            properties:
+                              logs:
+                                description: Log monitoring retention settings on
+                                  environment level in days. Not editable when Log
+                                  monitoring is not allowed by license or not configured
+                                  on cluster level. Can be set to any value from 5
+                                  to 90 days
+                                type: number
+                              rum:
+                                description: Real user monitoring retention settings
+                                  on environment level in days. Can be set to any
+                                  value from 1 to 35 days
+                                type: number
+                              serviceCodeLevel:
+                                description: Service code level retention settings
+                                  on environment level in days. Service code level
+                                  retention time can't be greater than service request
+                                  level retention time and both can't exceed one year
+                                type: number
+                              serviceRequestLevel:
+                                description: Service request level retention settings
+                                  on environment level in days. Service code level
+                                  retention time can't be greater than service request
+                                  level retention time and both can't exceed one year
+                                type: number
+                              sessionReplay:
+                                description: Session replay retention settings on
+                                  environment level in days. Can be set to any value
+                                  from 1 to 35 days
+                                type: number
+                              synthetic:
+                                description: Synthetic monitoring retention settings
+                                  on environment level in days. Can be set to any
+                                  value from 1 to 35 days
+                                type: number
+                            type: object
+                          type: array
+                        transactions:
+                          description: Maximum number of newly monitored entry point
+                            PurePaths captured per process/minute on environment level.
+                            Can be set to any value from 100 to 100000
+                          type: number
+                        userActions:
+                          description: Maximum number of user actions generated per
+                            minute on environment level. Can be set to any value from
+                            1 to 2147483646 or left unlimited by omitting this property
+                          type: number
+                      type: object
+                    type: array
+                  tags:
+                    description: A set of tags that are assigned to this environment.
+                      Every tag can have a maximum length of 100 characters
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  trial:
+                    description: Specifies whether the environment is a trial environment
+                      or a non-trial environment. Creating a trial environment is
+                      only possible if your license allows that. The default value
+                      is false (non-trial)
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  name:
+                    description: The display name of the environment
+                    type: string
+                  quotas:
+                    description: Environment level consumption and quotas information
+                    items:
+                      properties:
+                        ddus:
+                          description: Davis Data Units consumption and quota information
+                            on environment level. Not set (and not editable) if Davis
+                            data units is not enabled
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        demUnits:
+                          description: DEM units consumption and quota information
+                            on environment level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        hostUnits:
+                          description: Host units consumption and quota information
+                            on environment level
+                          type: number
+                        logs:
+                          description: Log Monitoring consumption and quota information
+                            on environment level. Not set (and not editable) if Log
+                            monitoring is not enabled. Not set (and not editable)
+                            if Log monitoring is migrated to Davis data on license
+                            level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        synthetic:
+                          description: Synthetic monitors consumption and quota information
+                            on environment level. Not set (and not editable) if neither
+                            Synthetic nor DEM units is enabled
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        userSessions:
+                          description: User sessions consumption and quota information
+                            on environment level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual total User sessions environment
+                                  quota. Not set if unlimited
+                                type: number
+                              monthly:
+                                description: Monthly total User sessions environment
+                                  quota. Not set if unlimited
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  state:
+                    description: Indicates whether the environment is enabled or disabled.
+                      Possible values are `ENABLED` and `DISABLED`. The default value
+                      is ENABLED
+                    type: string
+                  storage:
+                    description: Environment level storage usage and limit information
+                    items:
+                      properties:
+                        limits:
+                          items:
+                            properties:
+                              logs:
+                                description: Log monitoring storage usage and limit
+                                  information on environment level in bytes. Not editable
+                                  when Log monitoring is not allowed by license or
+                                  not configured on cluster level. 0 for unlimited.
+                                type: number
+                              sessionReplay:
+                                description: Session replay storage usage and limit
+                                  information on environment level in bytes. 0 for
+                                  unlimited.
+                                type: number
+                              symbolFiles:
+                                description: Session replay storage usage and limit
+                                  information on environment level in bytes. 0 for
+                                  unlimited.
+                                type: number
+                              transactions:
+                                description: Transaction storage usage and limit information
+                                  on environment level in bytes. 0 for unlimited.
+                                type: number
+                            type: object
+                          type: array
+                        retention:
+                          items:
+                            properties:
+                              logs:
+                                description: Log monitoring retention settings on
+                                  environment level in days. Not editable when Log
+                                  monitoring is not allowed by license or not configured
+                                  on cluster level. Can be set to any value from 5
+                                  to 90 days
+                                type: number
+                              rum:
+                                description: Real user monitoring retention settings
+                                  on environment level in days. Can be set to any
+                                  value from 1 to 35 days
+                                type: number
+                              serviceCodeLevel:
+                                description: Service code level retention settings
+                                  on environment level in days. Service code level
+                                  retention time can't be greater than service request
+                                  level retention time and both can't exceed one year
+                                type: number
+                              serviceRequestLevel:
+                                description: Service request level retention settings
+                                  on environment level in days. Service code level
+                                  retention time can't be greater than service request
+                                  level retention time and both can't exceed one year
+                                type: number
+                              sessionReplay:
+                                description: Session replay retention settings on
+                                  environment level in days. Can be set to any value
+                                  from 1 to 35 days
+                                type: number
+                              synthetic:
+                                description: Synthetic monitoring retention settings
+                                  on environment level in days. Can be set to any
+                                  value from 1 to 35 days
+                                type: number
+                            type: object
+                          type: array
+                        transactions:
+                          description: Maximum number of newly monitored entry point
+                            PurePaths captured per process/minute on environment level.
+                            Can be set to any value from 100 to 100000
+                          type: number
+                        userActions:
+                          description: Maximum number of user actions generated per
+                            minute on environment level. Can be set to any value from
+                            1 to 2147483646 or left unlimited by omitting this property
+                          type: number
+                      type: object
+                    type: array
+                  tags:
+                    description: A set of tags that are assigned to this environment.
+                      Every tag can have a maximum length of 100 characters
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  trial:
+                    description: Specifies whether the environment is a trial environment
+                      or a non-trial environment. Creating a trial environment is
+                      only possible if your license allows that. The default value
+                      is false (non-trial)
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.state is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.state)
+                || (has(self.initProvider) && has(self.initProvider.state))'
+            - message: spec.forProvider.storage is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storage)
+                || (has(self.initProvider) && has(self.initProvider.storage))'
+          status:
+            description: EnvironmentStatus defines the observed state of Environment.
+            properties:
+              atProvider:
+                properties:
+                  id:
+                    type: string
+                  name:
+                    description: The display name of the environment
+                    type: string
+                  quotas:
+                    description: Environment level consumption and quotas information
+                    items:
+                      properties:
+                        ddus:
+                          description: Davis Data Units consumption and quota information
+                            on environment level. Not set (and not editable) if Davis
+                            data units is not enabled
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        demUnits:
+                          description: DEM units consumption and quota information
+                            on environment level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        hostUnits:
+                          description: Host units consumption and quota information
+                            on environment level
+                          type: number
+                        logs:
+                          description: Log Monitoring consumption and quota information
+                            on environment level. Not set (and not editable) if Log
+                            monitoring is not enabled. Not set (and not editable)
+                            if Log monitoring is migrated to Davis data on license
+                            level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        synthetic:
+                          description: Synthetic monitors consumption and quota information
+                            on environment level. Not set (and not editable) if neither
+                            Synthetic nor DEM units is enabled
+                          items:
+                            properties:
+                              annual:
+                                description: Annual environment quota. Not set if
+                                  unlimited
+                                type: number
+                              monthly:
+                                description: Monthly environment quota. Not set if
+                                  unlimited
+                                type: number
+                            type: object
+                          type: array
+                        userSessions:
+                          description: User sessions consumption and quota information
+                            on environment level
+                          items:
+                            properties:
+                              annual:
+                                description: Annual total User sessions environment
+                                  quota. Not set if unlimited
+                                type: number
+                              monthly:
+                                description: Monthly total User sessions environment
+                                  quota. Not set if unlimited
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  state:
+                    description: Indicates whether the environment is enabled or disabled.
+                      Possible values are `ENABLED` and `DISABLED`. The default value
+                      is ENABLED
+                    type: string
+                  storage:
+                    description: Environment level storage usage and limit information
+                    items:
+                      properties:
+                        limits:
+                          items:
+                            properties:
+                              logs:
+                                description: Log monitoring storage usage and limit
+                                  information on environment level in bytes. Not editable
+                                  when Log monitoring is not allowed by license or
+                                  not configured on cluster level. 0 for unlimited.
+                                type: number
+                              sessionReplay:
+                                description: Session replay storage usage and limit
+                                  information on environment level in bytes. 0 for
+                                  unlimited.
+                                type: number
+                              symbolFiles:
+                                description: Session replay storage usage and limit
+                                  information on environment level in bytes. 0 for
+                                  unlimited.
+                                type: number
+                              transactions:
+                                description: Transaction storage usage and limit information
+                                  on environment level in bytes. 0 for unlimited.
+                                type: number
+                            type: object
+                          type: array
+                        retention:
+                          items:
+                            properties:
+                              logs:
+                                description: Log monitoring retention settings on
+                                  environment level in days. Not editable when Log
+                                  monitoring is not allowed by license or not configured
+                                  on cluster level. Can be set to any value from 5
+                                  to 90 days
+                                type: number
+                              rum:
+                                description: Real user monitoring retention settings
+                                  on environment level in days. Can be set to any
+                                  value from 1 to 35 days
+                                type: number
+                              serviceCodeLevel:
+                                description: Service code level retention settings
+                                  on environment level in days. Service code level
+                                  retention time can't be greater than service request
+                                  level retention time and both can't exceed one year
+                                type: number
+                              serviceRequestLevel:
+                                description: Service request level retention settings
+                                  on environment level in days. Service code level
+                                  retention time can't be greater than service request
+                                  level retention time and both can't exceed one year
+                                type: number
+                              sessionReplay:
+                                description: Session replay retention settings on
+                                  environment level in days. Can be set to any value
+                                  from 1 to 35 days
+                                type: number
+                              synthetic:
+                                description: Synthetic monitoring retention settings
+                                  on environment level in days. Can be set to any
+                                  value from 1 to 35 days
+                                type: number
+                            type: object
+                          type: array
+                        transactions:
+                          description: Maximum number of newly monitored entry point
+                            PurePaths captured per process/minute on environment level.
+                            Can be set to any value from 100 to 100000
+                          type: number
+                        userActions:
+                          description: Maximum number of user actions generated per
+                            minute on environment level. Can be set to any value from
+                            1 to 2147483646 or left unlimited by omitting this property
+                          type: number
+                      type: object
+                    type: array
+                  tags:
+                    description: A set of tags that are assigned to this environment.
+                      Every tag can have a maximum length of 100 characters
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  trial:
+                    description: Specifies whether the environment is a trial environment
+                      or a non-trial environment. Creating a trial environment is
+                      only possible if your license allows that. The default value
+                      is false (non-trial)
+                    type: boolean
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

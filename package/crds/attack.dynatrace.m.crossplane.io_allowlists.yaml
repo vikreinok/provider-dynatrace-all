@@ -1,0 +1,598 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: allowlists.attack.dynatrace.m.crossplane.io
+spec:
+  group: attack.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Allowlist
+    listKind: AllowlistList
+    plural: allowlists
+    singular: allowlist
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Allowlist is the Schema for the Allowlists API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AllowlistSpec defines the desired state of Allowlist
+            properties:
+              forProvider:
+                properties:
+                  attackHandling:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Step 1: Define attack control for chosen criteria (see below for nested schema)
+                      Step 1: Define attack control for chosen criteria
+                    items:
+                      properties:
+                        blockingStrategy:
+                          description: |-
+                            (String) Possible Values: MONITOR, OFF
+                            Possible Values: `MONITOR`, `OFF`
+                          type: string
+                      type: object
+                    type: array
+                  criteria:
+                    description: |-
+                      (Block List, Max: 1, Deprecated) Step 1: Define criteria. Please specify at least one of source IP or attack pattern. (see below for nested schema)
+                      Step 1: Define criteria. Please specify at least one of source IP or attack pattern.
+                    items:
+                      properties:
+                        attackPattern:
+                          description: |-
+                            (String) Only consider attacks matching the specified pattern.
+                            Only consider attacks matching the specified pattern.
+                          type: string
+                        sourceIp:
+                          description: |-
+                            (String) Source IP
+                            Source IP
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Step 4: Leave comment  (see below for nested schema)
+                      Step 4: Leave comment (optional)
+                    items:
+                      properties:
+                        comment:
+                          description: |-
+                            (String) no documentation available
+                            no documentation available
+                          type: string
+                      type: object
+                    type: array
+                  resourceAttributeConditions:
+                    description: |-
+                      (Block List, Max: 1) When you add multiple conditions, the rule applies if all conditions apply.
+                      When you add multiple conditions, the rule applies if all conditions apply.
+
+                      If you want the rule to apply only to a subset of your environment, provide the resource attributes that should be used to identify that part of the environment.
+                    items:
+                      properties:
+                        resourceAttributeCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              matcher:
+                                description: |-
+                                  (String) Possible Values: CONTAINS, DOES_NOT_CONTAIN, DOES_NOT_END_WITH, DOES_NOT_EXIST, DOES_NOT_START_WITH, ENDS_WITH, EQUALS, EXISTS, NOT_EQUALS, STARTS_WITH
+                                  Possible Values: `CONTAINS`, `DOES_NOT_CONTAIN`, `DOES_NOT_END_WITH`, `DOES_NOT_EXIST`, `DOES_NOT_START_WITH`, `ENDS_WITH`, `EQUALS`, `EXISTS`, `NOT_EQUALS`, `STARTS_WITH`
+                                type: string
+                              resourceAttributeKey:
+                                description: |-
+                                  (String) Resource attribute key
+                                  Resource attribute key
+                                type: string
+                              resourceAttributeValue:
+                                description: |-
+                                  (String) Resource attribute value
+                                  Resource attribute value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  ruleName:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                  rules:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Provide conditions that must be met by the detection finding you want to allowlist. (see below for nested schema)
+                      Provide conditions that must be met by the detection finding you want to allowlist.
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              criteriaKey:
+                                description: |-
+                                  (String) Possible Values: ACTOR_IP, DETECTION_TYPE, ENTRY_POINT_PAYLOAD, ENTRY_POINT_PAYLOAD_DOMAIN, ENTRY_POINT_PAYLOAD_PORT, ENTRY_POINT_URL_PATH
+                                  Possible Values: `ACTOR_IP`, `DETECTION_TYPE`, `ENTRY_POINT_PAYLOAD`, `ENTRY_POINT_PAYLOAD_DOMAIN`, `ENTRY_POINT_PAYLOAD_PORT`, `ENTRY_POINT_URL_PATH`
+                                type: string
+                              criteriaMatcher:
+                                description: |-
+                                  (String) Possible Values: CONTAINS, DOES_NOT_CONTAIN, DOES_NOT_END_WITH, DOES_NOT_STARTS_WITH, ENDS_WITH, EQUALS, IP_CIDR, NOT_EQUALS, NOT_IN_IP_CIDR, STARTS_WITH
+                                  Possible Values: `CONTAINS`, `DOES_NOT_CONTAIN`, `DOES_NOT_END_WITH`, `DOES_NOT_STARTS_WITH`, `ENDS_WITH`, `EQUALS`, `IP_CIDR`, `NOT_EQUALS`, `NOT_IN_IP_CIDR`, `STARTS_WITH`
+                                type: string
+                              criteriaValueDetectionType:
+                                description: |-
+                                  (String) Possible Values: CMD_INJECTION, JNDI_INJECTION, SQL_INJECTION, SSRF
+                                  Possible Values: `CMD_INJECTION`, `JNDI_INJECTION`, `SQL_INJECTION`, `SSRF`
+                                type: string
+                              criteriaValueFreeText:
+                                description: |-
+                                  (String) Value
+                                  Value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  attackHandling:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Step 1: Define attack control for chosen criteria (see below for nested schema)
+                      Step 1: Define attack control for chosen criteria
+                    items:
+                      properties:
+                        blockingStrategy:
+                          description: |-
+                            (String) Possible Values: MONITOR, OFF
+                            Possible Values: `MONITOR`, `OFF`
+                          type: string
+                      type: object
+                    type: array
+                  criteria:
+                    description: |-
+                      (Block List, Max: 1, Deprecated) Step 1: Define criteria. Please specify at least one of source IP or attack pattern. (see below for nested schema)
+                      Step 1: Define criteria. Please specify at least one of source IP or attack pattern.
+                    items:
+                      properties:
+                        attackPattern:
+                          description: |-
+                            (String) Only consider attacks matching the specified pattern.
+                            Only consider attacks matching the specified pattern.
+                          type: string
+                        sourceIp:
+                          description: |-
+                            (String) Source IP
+                            Source IP
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Step 4: Leave comment  (see below for nested schema)
+                      Step 4: Leave comment (optional)
+                    items:
+                      properties:
+                        comment:
+                          description: |-
+                            (String) no documentation available
+                            no documentation available
+                          type: string
+                      type: object
+                    type: array
+                  resourceAttributeConditions:
+                    description: |-
+                      (Block List, Max: 1) When you add multiple conditions, the rule applies if all conditions apply.
+                      When you add multiple conditions, the rule applies if all conditions apply.
+
+                      If you want the rule to apply only to a subset of your environment, provide the resource attributes that should be used to identify that part of the environment.
+                    items:
+                      properties:
+                        resourceAttributeCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              matcher:
+                                description: |-
+                                  (String) Possible Values: CONTAINS, DOES_NOT_CONTAIN, DOES_NOT_END_WITH, DOES_NOT_EXIST, DOES_NOT_START_WITH, ENDS_WITH, EQUALS, EXISTS, NOT_EQUALS, STARTS_WITH
+                                  Possible Values: `CONTAINS`, `DOES_NOT_CONTAIN`, `DOES_NOT_END_WITH`, `DOES_NOT_EXIST`, `DOES_NOT_START_WITH`, `ENDS_WITH`, `EQUALS`, `EXISTS`, `NOT_EQUALS`, `STARTS_WITH`
+                                type: string
+                              resourceAttributeKey:
+                                description: |-
+                                  (String) Resource attribute key
+                                  Resource attribute key
+                                type: string
+                              resourceAttributeValue:
+                                description: |-
+                                  (String) Resource attribute value
+                                  Resource attribute value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  ruleName:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                  rules:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Provide conditions that must be met by the detection finding you want to allowlist. (see below for nested schema)
+                      Provide conditions that must be met by the detection finding you want to allowlist.
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              criteriaKey:
+                                description: |-
+                                  (String) Possible Values: ACTOR_IP, DETECTION_TYPE, ENTRY_POINT_PAYLOAD, ENTRY_POINT_PAYLOAD_DOMAIN, ENTRY_POINT_PAYLOAD_PORT, ENTRY_POINT_URL_PATH
+                                  Possible Values: `ACTOR_IP`, `DETECTION_TYPE`, `ENTRY_POINT_PAYLOAD`, `ENTRY_POINT_PAYLOAD_DOMAIN`, `ENTRY_POINT_PAYLOAD_PORT`, `ENTRY_POINT_URL_PATH`
+                                type: string
+                              criteriaMatcher:
+                                description: |-
+                                  (String) Possible Values: CONTAINS, DOES_NOT_CONTAIN, DOES_NOT_END_WITH, DOES_NOT_STARTS_WITH, ENDS_WITH, EQUALS, IP_CIDR, NOT_EQUALS, NOT_IN_IP_CIDR, STARTS_WITH
+                                  Possible Values: `CONTAINS`, `DOES_NOT_CONTAIN`, `DOES_NOT_END_WITH`, `DOES_NOT_STARTS_WITH`, `ENDS_WITH`, `EQUALS`, `IP_CIDR`, `NOT_EQUALS`, `NOT_IN_IP_CIDR`, `STARTS_WITH`
+                                type: string
+                              criteriaValueDetectionType:
+                                description: |-
+                                  (String) Possible Values: CMD_INJECTION, JNDI_INJECTION, SQL_INJECTION, SSRF
+                                  Possible Values: `CMD_INJECTION`, `JNDI_INJECTION`, `SQL_INJECTION`, `SSRF`
+                                type: string
+                              criteriaValueFreeText:
+                                description: |-
+                                  (String) Value
+                                  Value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.attackHandling is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.attackHandling)
+                || (has(self.initProvider) && has(self.initProvider.attackHandling))'
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.metadata is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.metadata)
+                || (has(self.initProvider) && has(self.initProvider.metadata))'
+            - message: spec.forProvider.rules is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.rules)
+                || (has(self.initProvider) && has(self.initProvider.rules))'
+          status:
+            description: AllowlistStatus defines the observed state of Allowlist.
+            properties:
+              atProvider:
+                properties:
+                  attackHandling:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Step 1: Define attack control for chosen criteria (see below for nested schema)
+                      Step 1: Define attack control for chosen criteria
+                    items:
+                      properties:
+                        blockingStrategy:
+                          description: |-
+                            (String) Possible Values: MONITOR, OFF
+                            Possible Values: `MONITOR`, `OFF`
+                          type: string
+                      type: object
+                    type: array
+                  criteria:
+                    description: |-
+                      (Block List, Max: 1, Deprecated) Step 1: Define criteria. Please specify at least one of source IP or attack pattern. (see below for nested schema)
+                      Step 1: Define criteria. Please specify at least one of source IP or attack pattern.
+                    items:
+                      properties:
+                        attackPattern:
+                          description: |-
+                            (String) Only consider attacks matching the specified pattern.
+                            Only consider attacks matching the specified pattern.
+                          type: string
+                        sourceIp:
+                          description: |-
+                            (String) Source IP
+                            Source IP
+                          type: string
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Step 4: Leave comment  (see below for nested schema)
+                      Step 4: Leave comment (optional)
+                    items:
+                      properties:
+                        comment:
+                          description: |-
+                            (String) no documentation available
+                            no documentation available
+                          type: string
+                      type: object
+                    type: array
+                  resourceAttributeConditions:
+                    description: |-
+                      (Block List, Max: 1) When you add multiple conditions, the rule applies if all conditions apply.
+                      When you add multiple conditions, the rule applies if all conditions apply.
+
+                      If you want the rule to apply only to a subset of your environment, provide the resource attributes that should be used to identify that part of the environment.
+                    items:
+                      properties:
+                        resourceAttributeCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              matcher:
+                                description: |-
+                                  (String) Possible Values: CONTAINS, DOES_NOT_CONTAIN, DOES_NOT_END_WITH, DOES_NOT_EXIST, DOES_NOT_START_WITH, ENDS_WITH, EQUALS, EXISTS, NOT_EQUALS, STARTS_WITH
+                                  Possible Values: `CONTAINS`, `DOES_NOT_CONTAIN`, `DOES_NOT_END_WITH`, `DOES_NOT_EXIST`, `DOES_NOT_START_WITH`, `ENDS_WITH`, `EQUALS`, `EXISTS`, `NOT_EQUALS`, `STARTS_WITH`
+                                type: string
+                              resourceAttributeKey:
+                                description: |-
+                                  (String) Resource attribute key
+                                  Resource attribute key
+                                type: string
+                              resourceAttributeValue:
+                                description: |-
+                                  (String) Resource attribute value
+                                  Resource attribute value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  ruleName:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                  rules:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Provide conditions that must be met by the detection finding you want to allowlist. (see below for nested schema)
+                      Provide conditions that must be met by the detection finding you want to allowlist.
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              criteriaKey:
+                                description: |-
+                                  (String) Possible Values: ACTOR_IP, DETECTION_TYPE, ENTRY_POINT_PAYLOAD, ENTRY_POINT_PAYLOAD_DOMAIN, ENTRY_POINT_PAYLOAD_PORT, ENTRY_POINT_URL_PATH
+                                  Possible Values: `ACTOR_IP`, `DETECTION_TYPE`, `ENTRY_POINT_PAYLOAD`, `ENTRY_POINT_PAYLOAD_DOMAIN`, `ENTRY_POINT_PAYLOAD_PORT`, `ENTRY_POINT_URL_PATH`
+                                type: string
+                              criteriaMatcher:
+                                description: |-
+                                  (String) Possible Values: CONTAINS, DOES_NOT_CONTAIN, DOES_NOT_END_WITH, DOES_NOT_STARTS_WITH, ENDS_WITH, EQUALS, IP_CIDR, NOT_EQUALS, NOT_IN_IP_CIDR, STARTS_WITH
+                                  Possible Values: `CONTAINS`, `DOES_NOT_CONTAIN`, `DOES_NOT_END_WITH`, `DOES_NOT_STARTS_WITH`, `ENDS_WITH`, `EQUALS`, `IP_CIDR`, `NOT_EQUALS`, `NOT_IN_IP_CIDR`, `STARTS_WITH`
+                                type: string
+                              criteriaValueDetectionType:
+                                description: |-
+                                  (String) Possible Values: CMD_INJECTION, JNDI_INJECTION, SQL_INJECTION, SSRF
+                                  Possible Values: `CMD_INJECTION`, `JNDI_INJECTION`, `SQL_INJECTION`, `SSRF`
+                                type: string
+                              criteriaValueFreeText:
+                                description: |-
+                                  (String) Value
+                                  Value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

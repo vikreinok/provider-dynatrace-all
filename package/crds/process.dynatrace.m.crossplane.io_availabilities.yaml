@@ -1,0 +1,623 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: availabilities.process.dynatrace.m.crossplane.io
+spec:
+  group: process.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Availability
+    listKind: AvailabilityList
+    plural: availabilities
+    singular: availability
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Availability is the Schema for the Availabilitys API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AvailabilitySpec defines the desired state of Availability
+            properties:
+              forProvider:
+                properties:
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+). (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+).
+                    items:
+                      properties:
+                        item:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              key:
+                                description: |-
+                                  (String) Type 'dt.' for key hints.
+                                  Type 'dt.' for key hints.
+                                type: string
+                              value:
+                                description: |-
+                                  (String) no documentation available
+                                  no documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  minimumProcesses:
+                    description: |-
+                      (Number) Specify a minimum number of processes matching the monitoring rule. An alert is triggered if any host falls below this threshold.
+                      Specify a minimum number of processes matching the monitoring rule. An alert is triggered if any host falls below this threshold.
+                    type: number
+                  name:
+                    description: |-
+                      (String) Monitoring rule name
+                      Monitoring rule name
+                    type: string
+                  operatingSystem:
+                    description: |-
+                      (Set of String) Select the operating systems on which the monitoring rule should be applied. Possible values: AIX, LINUX, WINDOWS
+                      Select the operating systems on which the monitoring rule should be applied. Possible values: `AIX`, `LINUX`, `WINDOWS`
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  rules:
+                    description: |-
+                      (Block List, Max: 1) Define process detection rules by selecting a process property and a condition. Each monitoring rule can have multiple detection rules associated with it. (see below for nested schema)
+                      Define process detection rules by selecting a process property and a condition. Each monitoring rule can have multiple detection rules associated with it.
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  $contains(svc) – Matches if svc appears anywhere in the process property value.
+                                  - $contains(svc) – Matches if svc appears anywhere in the process property value.
+                                  - $eq(svc.exe) – Matches if svc.exe matches the process property value exactly.
+                                  - $prefix(svc) – Matches if app matches the prefix of the process property value.
+                                  - $suffix(svc.py) – Matches if svc.py matches the suffix of the process property value.
+
+                                  For example, $suffix(svc.py) would detect processes named loyaltysvc.py and paymentssvc.py.
+
+                                  For more details, see [Process availability](https://dt-url.net/v923x37).
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Select process property. Possible values: commandLine, executable, executablePath, fullCommandLine, user
+                                  Select process property. Possible values: `commandLine`, `executable`, `executablePath`, `fullCommandLine`, `user`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Rule scope. Possible Values: RuleTypeHost, RuleTypeProcess
+                                  Rule scope. Possible Values: `RuleTypeHost`, `RuleTypeProcess`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+). (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+).
+                    items:
+                      properties:
+                        item:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              key:
+                                description: |-
+                                  (String) Type 'dt.' for key hints.
+                                  Type 'dt.' for key hints.
+                                type: string
+                              value:
+                                description: |-
+                                  (String) no documentation available
+                                  no documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  minimumProcesses:
+                    description: |-
+                      (Number) Specify a minimum number of processes matching the monitoring rule. An alert is triggered if any host falls below this threshold.
+                      Specify a minimum number of processes matching the monitoring rule. An alert is triggered if any host falls below this threshold.
+                    type: number
+                  name:
+                    description: |-
+                      (String) Monitoring rule name
+                      Monitoring rule name
+                    type: string
+                  operatingSystem:
+                    description: |-
+                      (Set of String) Select the operating systems on which the monitoring rule should be applied. Possible values: AIX, LINUX, WINDOWS
+                      Select the operating systems on which the monitoring rule should be applied. Possible values: `AIX`, `LINUX`, `WINDOWS`
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  rules:
+                    description: |-
+                      (Block List, Max: 1) Define process detection rules by selecting a process property and a condition. Each monitoring rule can have multiple detection rules associated with it. (see below for nested schema)
+                      Define process detection rules by selecting a process property and a condition. Each monitoring rule can have multiple detection rules associated with it.
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  $contains(svc) – Matches if svc appears anywhere in the process property value.
+                                  - $contains(svc) – Matches if svc appears anywhere in the process property value.
+                                  - $eq(svc.exe) – Matches if svc.exe matches the process property value exactly.
+                                  - $prefix(svc) – Matches if app matches the prefix of the process property value.
+                                  - $suffix(svc.py) – Matches if svc.py matches the suffix of the process property value.
+
+                                  For example, $suffix(svc.py) would detect processes named loyaltysvc.py and paymentssvc.py.
+
+                                  For more details, see [Process availability](https://dt-url.net/v923x37).
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Select process property. Possible values: commandLine, executable, executablePath, fullCommandLine, user
+                                  Select process property. Possible values: `commandLine`, `executable`, `executablePath`, `fullCommandLine`, `user`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Rule scope. Possible Values: RuleTypeHost, RuleTypeProcess
+                                  Rule scope. Possible Values: `RuleTypeHost`, `RuleTypeProcess`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: AvailabilityStatus defines the observed state of Availability.
+            properties:
+              atProvider:
+                properties:
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+). (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+).
+                    items:
+                      properties:
+                        item:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              key:
+                                description: |-
+                                  (String) Type 'dt.' for key hints.
+                                  Type 'dt.' for key hints.
+                                type: string
+                              value:
+                                description: |-
+                                  (String) no documentation available
+                                  no documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  minimumProcesses:
+                    description: |-
+                      (Number) Specify a minimum number of processes matching the monitoring rule. An alert is triggered if any host falls below this threshold.
+                      Specify a minimum number of processes matching the monitoring rule. An alert is triggered if any host falls below this threshold.
+                    type: number
+                  name:
+                    description: |-
+                      (String) Monitoring rule name
+                      Monitoring rule name
+                    type: string
+                  operatingSystem:
+                    description: |-
+                      (Set of String) Select the operating systems on which the monitoring rule should be applied. Possible values: AIX, LINUX, WINDOWS
+                      Select the operating systems on which the monitoring rule should be applied. Possible values: `AIX`, `LINUX`, `WINDOWS`
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  rules:
+                    description: |-
+                      (Block List, Max: 1) Define process detection rules by selecting a process property and a condition. Each monitoring rule can have multiple detection rules associated with it. (see below for nested schema)
+                      Define process detection rules by selecting a process property and a condition. Each monitoring rule can have multiple detection rules associated with it.
+                    items:
+                      properties:
+                        rule:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  $contains(svc) – Matches if svc appears anywhere in the process property value.
+                                  - $contains(svc) – Matches if svc appears anywhere in the process property value.
+                                  - $eq(svc.exe) – Matches if svc.exe matches the process property value exactly.
+                                  - $prefix(svc) – Matches if app matches the prefix of the process property value.
+                                  - $suffix(svc.py) – Matches if svc.py matches the suffix of the process property value.
+
+                                  For example, $suffix(svc.py) would detect processes named loyaltysvc.py and paymentssvc.py.
+
+                                  For more details, see [Process availability](https://dt-url.net/v923x37).
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Select process property. Possible values: commandLine, executable, executablePath, fullCommandLine, user
+                                  Select process property. Possible values: `commandLine`, `executable`, `executablePath`, `fullCommandLine`, `user`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Rule scope. Possible Values: RuleTypeHost, RuleTypeProcess
+                                  Rule scope. Possible Values: `RuleTypeHost`, `RuleTypeProcess`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,1136 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: services.os.dynatrace.m.crossplane.io
+spec:
+  group: os.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Services
+    listKind: ServicesList
+    plural: services
+    singular: services
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Services is the Schema for the Servicess API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ServicesSpec defines the desired state of Services
+            properties:
+              forProvider:
+                properties:
+                  alertActivationDuration:
+                    description: |-
+                      second measurement cycles before alerting is triggered
+                      The number of **10-second measurement cycles** before alerting is triggered
+                    type: number
+                  alerting:
+                    description: |-
+                      (Boolean) Toggle the switch in order to enable or disable alerting for this policy
+                      Toggle the switch in order to enable or disable alerting for this policy
+                    type: boolean
+                  detectionConditionsLinux:
+                    description: |-
+                      (Block List, Max: 1) Detection rules (see below for nested schema)
+                      Detection rules
+                    items:
+                      properties:
+                        linuxDetectionCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$contains(ssh)` – Matches if `ssh` appears anywhere in the service's property value.
+                                  - `$eq(sshd)` – Matches if `sshd` matches the service's property value exactly.
+                                  - `$prefix(ss)` – Matches if `ss` matches the prefix of the service's property value.
+                                  - `$suffix(hd)` – Matches if `hd` matches the suffix of the service's property value.
+
+                                  Available logic operations:
+                                  - `$not($eq(sshd))` – Matches if the service's property value is different from `sshd`.
+                                  - `$and($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` and ends with `hd`.
+                                  - `$or($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` or ends with `hd`.
+
+                                  Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  (Block List, Max: 1) Custom metadata (see below for nested schema)
+                                  Custom metadata
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Possible Values: ServiceName, StartupType
+                                  Possible Values: `ServiceName`, `StartupType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Possible Values: RuleTypeHost, RuleTypeOsService
+                                  Possible Values: `RuleTypeHost`, `RuleTypeOsService`
+                                type: string
+                              startupCondition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$eq(enabled)` – Matches services with startup type equal to enabled.
+
+                                  Available logic operations:
+                                  - `$not($eq(enabled))` – Matches services with startup type different from enabled.
+                                  - `$or($eq(enabled),$eq(disabled))` - Matches services that are either enabled or disabled.
+
+                                  Use one of the following values as a parameter for this condition:
+
+                                  - `enabled`
+                                  - `enabled-runtime`
+                                  - `static`
+                                  - `disabled`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  detectionConditionsWindows:
+                    description: |-
+                      (Block List, Max: 1) Detection rules (see below for nested schema)
+                      Detection rules
+                    items:
+                      properties:
+                        detectionConditionsWindow:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$contains(ssh)` – Matches if `ssh` appears anywhere in the service's property value.
+                                  - `$eq(sshd)` – Matches if `sshd` matches the service's property value exactly.
+                                  - `$prefix(ss)` – Matches if `ss` matches the prefix of the service's property value.
+                                  - `$suffix(hd)` – Matches if `hd` matches the suffix of the service's property value.
+
+                                  Available logic operations:
+                                  - `$not($eq(sshd))` – Matches if the service's property value is different from `sshd`.
+                                  - `$and($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` and ends with `hd`.
+                                  - `$or($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` or ends with `hd`.
+
+                                  Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  (Block List, Max: 1) Custom metadata (see below for nested schema)
+                                  Custom metadata
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Possible Values: ServiceName, StartupType
+                                  Possible Values: `DisplayName`, `Manufacturer`, `Path`, `ServiceName`, `StartupType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Possible Values: RuleTypeHost, RuleTypeOsService
+                                  Possible Values: `RuleTypeHost`, `RuleTypeOsService`
+                                type: string
+                              startupCondition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$eq(manual)` – Matches services that are started manually.
+
+                                  Available logic operations:
+                                  - `$not($eq(auto))` – Matches services with startup type different from Automatic.
+                                  - `$or($eq(auto),$eq(manual))` – Matches if service's startup type is either Automatic or Manual.
+
+                                  Use one of the following values as a parameter for this condition:
+
+                                  - `manual` for Manual
+                                  - `manual_trigger` for Manual (Trigger Start)
+                                  - `auto` for Automatic
+                                  - `auto_delay` for Automatic (Delayed Start)
+                                  - `auto_trigger` for Automatic (Trigger Start)
+                                  - `auto_delay_trigger` for Automatic (Delayed Start, Trigger Start)
+                                  - `disabled` for Disabled
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+). (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+).
+                    items:
+                      properties:
+                        item:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              metadataKey:
+                                description: |-
+                                  (String) Key
+                                  Type 'dt.' for key hints.
+                                type: string
+                              metadataValue:
+                                description: |-
+                                  (String) no documentation available
+                                  no documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  monitoring:
+                    description: |-
+                      (Boolean) Toggle the switch in order to enable or disable availability metric monitoring for this policy. Availability metrics produce custom metrics. Refer to documentation for consumption examples. Each monitored service consumes one custom metric.
+                      Toggle the switch in order to enable or disable availability metric monitoring for this policy. Availability metrics produce custom metrics. Refer to [documentation](https://dt-url.net/vl03xzk) for consumption examples. Each monitored service consumes one custom metric.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                  notInstalledAlerting:
+                    description: |-
+                      (Boolean) By default, Dynatrace does not alert if the service is not installed. Toggle the switch to enable or disable this feature
+                      By default, Dynatrace does not alert if the service is not installed. Toggle the switch to enable or disable this feature
+                    type: boolean
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                  statusConditionLinux:
+                    description: |-
+                      (String) This string has to match a required format. See OS services monitoring.
+                      This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                      - `$eq(failed)` – Matches services that are in failed state.
+
+                      Available logic operations:
+                      - `$not($eq(active))` – Matches services with state different from active.
+                      - `$or($eq(inactive),$eq(failed))` – Matches services that are either in inactive or failed state.
+
+                      Use one of the following values as a parameter for this condition:
+
+                      - `reloading`
+                      - `activating`
+                      - `deactivating`
+                      - `failed`
+                      - `inactive`
+                      - `active`
+                    type: string
+                  statusConditionWindows:
+                    description: |-
+                      (String) This string has to match a required format. See OS services monitoring.
+                      This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                      - `$eq(paused)` – Matches services that are in paused state.
+
+                      Available logic operations:
+                      - `$not($eq(paused))` – Matches services that are in state different from paused.
+                      - `$or($eq(paused),$eq(running))` – Matches services that are either in paused or running state.
+
+                      Use one of the following values as a parameter for this condition:
+
+                      - `running`
+                      - `stopped`
+                      - `start_pending`
+                      - `stop_pending`
+                      - `continue_pending`
+                      - `pause_pending`
+                      - `paused`
+                    type: string
+                  system:
+                    description: |-
+                      (String) Possible Values: LINUX, WINDOWS
+                      Possible Values: `LINUX`, `WINDOWS`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  alertActivationDuration:
+                    description: |-
+                      second measurement cycles before alerting is triggered
+                      The number of **10-second measurement cycles** before alerting is triggered
+                    type: number
+                  alerting:
+                    description: |-
+                      (Boolean) Toggle the switch in order to enable or disable alerting for this policy
+                      Toggle the switch in order to enable or disable alerting for this policy
+                    type: boolean
+                  detectionConditionsLinux:
+                    description: |-
+                      (Block List, Max: 1) Detection rules (see below for nested schema)
+                      Detection rules
+                    items:
+                      properties:
+                        linuxDetectionCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$contains(ssh)` – Matches if `ssh` appears anywhere in the service's property value.
+                                  - `$eq(sshd)` – Matches if `sshd` matches the service's property value exactly.
+                                  - `$prefix(ss)` – Matches if `ss` matches the prefix of the service's property value.
+                                  - `$suffix(hd)` – Matches if `hd` matches the suffix of the service's property value.
+
+                                  Available logic operations:
+                                  - `$not($eq(sshd))` – Matches if the service's property value is different from `sshd`.
+                                  - `$and($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` and ends with `hd`.
+                                  - `$or($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` or ends with `hd`.
+
+                                  Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  (Block List, Max: 1) Custom metadata (see below for nested schema)
+                                  Custom metadata
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Possible Values: ServiceName, StartupType
+                                  Possible Values: `ServiceName`, `StartupType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Possible Values: RuleTypeHost, RuleTypeOsService
+                                  Possible Values: `RuleTypeHost`, `RuleTypeOsService`
+                                type: string
+                              startupCondition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$eq(enabled)` – Matches services with startup type equal to enabled.
+
+                                  Available logic operations:
+                                  - `$not($eq(enabled))` – Matches services with startup type different from enabled.
+                                  - `$or($eq(enabled),$eq(disabled))` - Matches services that are either enabled or disabled.
+
+                                  Use one of the following values as a parameter for this condition:
+
+                                  - `enabled`
+                                  - `enabled-runtime`
+                                  - `static`
+                                  - `disabled`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  detectionConditionsWindows:
+                    description: |-
+                      (Block List, Max: 1) Detection rules (see below for nested schema)
+                      Detection rules
+                    items:
+                      properties:
+                        detectionConditionsWindow:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$contains(ssh)` – Matches if `ssh` appears anywhere in the service's property value.
+                                  - `$eq(sshd)` – Matches if `sshd` matches the service's property value exactly.
+                                  - `$prefix(ss)` – Matches if `ss` matches the prefix of the service's property value.
+                                  - `$suffix(hd)` – Matches if `hd` matches the suffix of the service's property value.
+
+                                  Available logic operations:
+                                  - `$not($eq(sshd))` – Matches if the service's property value is different from `sshd`.
+                                  - `$and($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` and ends with `hd`.
+                                  - `$or($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` or ends with `hd`.
+
+                                  Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  (Block List, Max: 1) Custom metadata (see below for nested schema)
+                                  Custom metadata
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Possible Values: ServiceName, StartupType
+                                  Possible Values: `DisplayName`, `Manufacturer`, `Path`, `ServiceName`, `StartupType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Possible Values: RuleTypeHost, RuleTypeOsService
+                                  Possible Values: `RuleTypeHost`, `RuleTypeOsService`
+                                type: string
+                              startupCondition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$eq(manual)` – Matches services that are started manually.
+
+                                  Available logic operations:
+                                  - `$not($eq(auto))` – Matches services with startup type different from Automatic.
+                                  - `$or($eq(auto),$eq(manual))` – Matches if service's startup type is either Automatic or Manual.
+
+                                  Use one of the following values as a parameter for this condition:
+
+                                  - `manual` for Manual
+                                  - `manual_trigger` for Manual (Trigger Start)
+                                  - `auto` for Automatic
+                                  - `auto_delay` for Automatic (Delayed Start)
+                                  - `auto_trigger` for Automatic (Trigger Start)
+                                  - `auto_delay_trigger` for Automatic (Delayed Start, Trigger Start)
+                                  - `disabled` for Disabled
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+). (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+).
+                    items:
+                      properties:
+                        item:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              metadataKey:
+                                description: |-
+                                  (String) Key
+                                  Type 'dt.' for key hints.
+                                type: string
+                              metadataValue:
+                                description: |-
+                                  (String) no documentation available
+                                  no documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  monitoring:
+                    description: |-
+                      (Boolean) Toggle the switch in order to enable or disable availability metric monitoring for this policy. Availability metrics produce custom metrics. Refer to documentation for consumption examples. Each monitored service consumes one custom metric.
+                      Toggle the switch in order to enable or disable availability metric monitoring for this policy. Availability metrics produce custom metrics. Refer to [documentation](https://dt-url.net/vl03xzk) for consumption examples. Each monitored service consumes one custom metric.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                  notInstalledAlerting:
+                    description: |-
+                      (Boolean) By default, Dynatrace does not alert if the service is not installed. Toggle the switch to enable or disable this feature
+                      By default, Dynatrace does not alert if the service is not installed. Toggle the switch to enable or disable this feature
+                    type: boolean
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                  statusConditionLinux:
+                    description: |-
+                      (String) This string has to match a required format. See OS services monitoring.
+                      This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                      - `$eq(failed)` – Matches services that are in failed state.
+
+                      Available logic operations:
+                      - `$not($eq(active))` – Matches services with state different from active.
+                      - `$or($eq(inactive),$eq(failed))` – Matches services that are either in inactive or failed state.
+
+                      Use one of the following values as a parameter for this condition:
+
+                      - `reloading`
+                      - `activating`
+                      - `deactivating`
+                      - `failed`
+                      - `inactive`
+                      - `active`
+                    type: string
+                  statusConditionWindows:
+                    description: |-
+                      (String) This string has to match a required format. See OS services monitoring.
+                      This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                      - `$eq(paused)` – Matches services that are in paused state.
+
+                      Available logic operations:
+                      - `$not($eq(paused))` – Matches services that are in state different from paused.
+                      - `$or($eq(paused),$eq(running))` – Matches services that are either in paused or running state.
+
+                      Use one of the following values as a parameter for this condition:
+
+                      - `running`
+                      - `stopped`
+                      - `start_pending`
+                      - `stop_pending`
+                      - `continue_pending`
+                      - `pause_pending`
+                      - `paused`
+                    type: string
+                  system:
+                    description: |-
+                      (String) Possible Values: LINUX, WINDOWS
+                      Possible Values: `LINUX`, `WINDOWS`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.alerting is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.alerting)
+                || (has(self.initProvider) && has(self.initProvider.alerting))'
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.monitoring is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.monitoring)
+                || (has(self.initProvider) && has(self.initProvider.monitoring))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.system is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.system)
+                || (has(self.initProvider) && has(self.initProvider.system))'
+          status:
+            description: ServicesStatus defines the observed state of Services.
+            properties:
+              atProvider:
+                properties:
+                  alertActivationDuration:
+                    description: |-
+                      second measurement cycles before alerting is triggered
+                      The number of **10-second measurement cycles** before alerting is triggered
+                    type: number
+                  alerting:
+                    description: |-
+                      (Boolean) Toggle the switch in order to enable or disable alerting for this policy
+                      Toggle the switch in order to enable or disable alerting for this policy
+                    type: boolean
+                  detectionConditionsLinux:
+                    description: |-
+                      (Block List, Max: 1) Detection rules (see below for nested schema)
+                      Detection rules
+                    items:
+                      properties:
+                        linuxDetectionCondition:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$contains(ssh)` – Matches if `ssh` appears anywhere in the service's property value.
+                                  - `$eq(sshd)` – Matches if `sshd` matches the service's property value exactly.
+                                  - `$prefix(ss)` – Matches if `ss` matches the prefix of the service's property value.
+                                  - `$suffix(hd)` – Matches if `hd` matches the suffix of the service's property value.
+
+                                  Available logic operations:
+                                  - `$not($eq(sshd))` – Matches if the service's property value is different from `sshd`.
+                                  - `$and($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` and ends with `hd`.
+                                  - `$or($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` or ends with `hd`.
+
+                                  Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  (Block List, Max: 1) Custom metadata (see below for nested schema)
+                                  Custom metadata
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Possible Values: ServiceName, StartupType
+                                  Possible Values: `ServiceName`, `StartupType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Possible Values: RuleTypeHost, RuleTypeOsService
+                                  Possible Values: `RuleTypeHost`, `RuleTypeOsService`
+                                type: string
+                              startupCondition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$eq(enabled)` – Matches services with startup type equal to enabled.
+
+                                  Available logic operations:
+                                  - `$not($eq(enabled))` – Matches services with startup type different from enabled.
+                                  - `$or($eq(enabled),$eq(disabled))` - Matches services that are either enabled or disabled.
+
+                                  Use one of the following values as a parameter for this condition:
+
+                                  - `enabled`
+                                  - `enabled-runtime`
+                                  - `static`
+                                  - `disabled`
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  detectionConditionsWindows:
+                    description: |-
+                      (Block List, Max: 1) Detection rules (see below for nested schema)
+                      Detection rules
+                    items:
+                      properties:
+                        detectionConditionsWindow:
+                          description: '(Block List, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              condition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$contains(ssh)` – Matches if `ssh` appears anywhere in the service's property value.
+                                  - `$eq(sshd)` – Matches if `sshd` matches the service's property value exactly.
+                                  - `$prefix(ss)` – Matches if `ss` matches the prefix of the service's property value.
+                                  - `$suffix(hd)` – Matches if `hd` matches the suffix of the service's property value.
+
+                                  Available logic operations:
+                                  - `$not($eq(sshd))` – Matches if the service's property value is different from `sshd`.
+                                  - `$and($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` and ends with `hd`.
+                                  - `$or($prefix(ss),$suffix(hd))` – Matches if service's property value starts with `ss` or ends with `hd`.
+
+                                  Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                type: string
+                              hostMetadataCondition:
+                                description: |-
+                                  (Block List, Max: 1) Custom metadata (see below for nested schema)
+                                  Custom metadata
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a metadata key to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
+                              property:
+                                description: |-
+                                  (String) Possible Values: ServiceName, StartupType
+                                  Possible Values: `DisplayName`, `Manufacturer`, `Path`, `ServiceName`, `StartupType`
+                                type: string
+                              ruleType:
+                                description: |-
+                                  (String) Possible Values: RuleTypeHost, RuleTypeOsService
+                                  Possible Values: `RuleTypeHost`, `RuleTypeOsService`
+                                type: string
+                              startupCondition:
+                                description: |-
+                                  (String) This string has to match a required format. See OS services monitoring.
+                                  This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                                  - `$eq(manual)` – Matches services that are started manually.
+
+                                  Available logic operations:
+                                  - `$not($eq(auto))` – Matches services with startup type different from Automatic.
+                                  - `$or($eq(auto),$eq(manual))` – Matches if service's startup type is either Automatic or Manual.
+
+                                  Use one of the following values as a parameter for this condition:
+
+                                  - `manual` for Manual
+                                  - `manual_trigger` for Manual (Trigger Start)
+                                  - `auto` for Automatic
+                                  - `auto_delay` for Automatic (Delayed Start)
+                                  - `auto_trigger` for Automatic (Trigger Start)
+                                  - `auto_delay_trigger` for Automatic (Delayed Start, Trigger Start)
+                                  - `disabled` for Disabled
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  enabled:
+                    description: |-
+                      (Boolean) This setting is enabled (true) or disabled (false)
+                      This setting is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  insertAfter:
+                    description: |-
+                      (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                      Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
+                    type: string
+                  metadata:
+                    description: |-
+                      value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+). (see below for nested schema)
+                      Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+).
+                    items:
+                      properties:
+                        item:
+                          description: '(Block Set, Min: 1) (see below for nested
+                            schema)'
+                          items:
+                            properties:
+                              metadataKey:
+                                description: |-
+                                  (String) Key
+                                  Type 'dt.' for key hints.
+                                type: string
+                              metadataValue:
+                                description: |-
+                                  (String) no documentation available
+                                  no documentation available
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  monitoring:
+                    description: |-
+                      (Boolean) Toggle the switch in order to enable or disable availability metric monitoring for this policy. Availability metrics produce custom metrics. Refer to documentation for consumption examples. Each monitored service consumes one custom metric.
+                      Toggle the switch in order to enable or disable availability metric monitoring for this policy. Availability metrics produce custom metrics. Refer to [documentation](https://dt-url.net/vl03xzk) for consumption examples. Each monitored service consumes one custom metric.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) Rule name
+                      Rule name
+                    type: string
+                  notInstalledAlerting:
+                    description: |-
+                      (Boolean) By default, Dynatrace does not alert if the service is not installed. Toggle the switch to enable or disable this feature
+                      By default, Dynatrace does not alert if the service is not installed. Toggle the switch to enable or disable this feature
+                    type: boolean
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                  statusConditionLinux:
+                    description: |-
+                      (String) This string has to match a required format. See OS services monitoring.
+                      This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                      - `$eq(failed)` – Matches services that are in failed state.
+
+                      Available logic operations:
+                      - `$not($eq(active))` – Matches services with state different from active.
+                      - `$or($eq(inactive),$eq(failed))` – Matches services that are either in inactive or failed state.
+
+                      Use one of the following values as a parameter for this condition:
+
+                      - `reloading`
+                      - `activating`
+                      - `deactivating`
+                      - `failed`
+                      - `inactive`
+                      - `active`
+                    type: string
+                  statusConditionWindows:
+                    description: |-
+                      (String) This string has to match a required format. See OS services monitoring.
+                      This string has to match a required format. See [OS services monitoring](https://dt-url.net/vl03xzk).
+
+                      - `$eq(paused)` – Matches services that are in paused state.
+
+                      Available logic operations:
+                      - `$not($eq(paused))` – Matches services that are in state different from paused.
+                      - `$or($eq(paused),$eq(running))` – Matches services that are either in paused or running state.
+
+                      Use one of the following values as a parameter for this condition:
+
+                      - `running`
+                      - `stopped`
+                      - `start_pending`
+                      - `stop_pending`
+                      - `continue_pending`
+                      - `pause_pending`
+                      - `paused`
+                    type: string
+                  system:
+                    description: |-
+                      (String) Possible Values: LINUX, WINDOWS
+                      Possible Values: `LINUX`, `WINDOWS`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

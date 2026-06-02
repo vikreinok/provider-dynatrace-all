@@ -1,0 +1,1918 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: anomalies.custom.dynatrace.m.crossplane.io
+spec:
+  group: custom.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Anomalies
+    listKind: AnomaliesList
+    plural: anomalies
+    singular: anomalies
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Anomalies is the Schema for the Anomaliess API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AnomaliesSpec defines the desired state of Anomalies
+            properties:
+              forProvider:
+                properties:
+                  aggregationType:
+                    description: |-
+                      (String) How the metric data points are aggregated for the evaluation. The timeseries must support this aggregation
+                      How the metric data points are aggregated for the evaluation. The timeseries must support this aggregation
+                    type: string
+                  description:
+                    description: |-
+                      (String) The description of the metric event
+                      The description of the metric event
+                    type: string
+                  dimensions:
+                    description: |-
+                      (Block List) Defines the dimensions of the metric to alert on. The filters are combined by conjunction (see below for nested schema)
+                      Defines the dimensions of the metric to alert on. The filters are combined by conjunction
+                    items:
+                      properties:
+                        dimension:
+                          description: |-
+                            (Block List) A generic definition for a filter (see below for nested schema)
+                            A generic definition for a filter
+                          items:
+                            properties:
+                              index:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the metric event displayed in the UI
+                                  No documentation available
+                                type: string
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        entity:
+                          description: |-
+                            (Block List) A filter for the metrics entity dimensions (see below for nested schema)
+                            A filter for the metrics entity dimensions
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        string:
+                          description: |-
+                            (Block List) A filter for the metrics string dimensions (see below for nested schema)
+                            A filter for the metrics string dimensions
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              index:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the metric event displayed in the UI
+                                  No documentation available
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  disabledReason:
+                    description: |-
+                      (String, Deprecated) The reason of automatic disabling.  The NONE means config was not disabled automatically. Possible values are METRIC_DEFINITION_INCONSISTENCY, NONE, TOO_MANY_DIMS and TOPX_FORCIBLY_DEACTIVATED
+                      The reason of automatic disabling.  The `NONE` means config was not disabled automatically. Possible values are `METRIC_DEFINITION_INCONSISTENCY`, `NONE`, `TOO_MANY_DIMS` and `TOPX_FORCIBLY_DEACTIVATED`
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) The metric event is enabled (true) or disabled (false)
+                      The metric event is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  metricId:
+                    description: |-
+                      (String) The ID of the metric evaluated by the metric event
+                      The ID of the metric evaluated by the metric event
+                    type: string
+                  metricSelector:
+                    description: |-
+                      (String) The metric selector that should be executed
+                      The metric selector that should be executed
+                    type: string
+                  name:
+                    description: |-
+                      (String) The name of the metric event displayed in the UI
+                      The name of the metric event displayed in the UI
+                    type: string
+                  primaryDimensionKey:
+                    description: |-
+                      (String) Defines which dimension key should be used for the alertingScope
+                      Defines which dimension key should be used for the **alertingScope**
+                    type: string
+                  scopes:
+                    description: |-
+                      (Block List) Defines the scope of the metric event. Only one filter is allowed per filter type, except for tags, where up to 3 are allowed. The filters are combined by conjunction (see below for nested schema)
+                      Defines the scope of the metric event. Only one filter is allowed per filter type, except for tags, where up to 3 are allowed. The filters are combined by conjunction
+                    items:
+                      properties:
+                        customDeviceGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related custom device group name (see below for nested schema)
+                            A scope filter for the related custom device group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        entity:
+                          description: |-
+                            (Block List) A filter for the metrics entity dimensions (see below for nested schema)
+                            A scope filter for a monitored entity identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The monitored entities id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        hostGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related host group name (see below for nested schema)
+                            A scope filter for the related host group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        hostName:
+                          description: |-
+                            (Block List) A scope filter for the related host name (see below for nested schema)
+                            A scope filter for the related host name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        managementZone:
+                          description: |-
+                            (Block List) A scope filter for a management zone identifier (see below for nested schema)
+                            A scope filter for a management zone identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The management zone id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the metric event displayed in the UI
+                            A scope filter for a monitored entity name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        processGroupId:
+                          description: |-
+                            (Block List) A scope filter for a process group identifier (see below for nested schema)
+                            A scope filter for a process group identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The process groups id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        processGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related process group name (see below for nested schema)
+                            A scope filter for the related process group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        scope:
+                          description: |-
+                            (Block List) A generic scope filter (see below for nested schema)
+                            A generic scope filter
+                          items:
+                            properties:
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        tag:
+                          description: |-
+                            (Block List) A scope filter for tags on entities (see below for nested schema)
+                            A scope filter for tags on entities
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    context:
+                                      description: |-
+                                        (String) The origin of the tag, such as AWS or Cloud Foundry. Custom tags use the CONTEXTLESS value
+                                        The origin of the tag, such as AWS or Cloud Foundry. Custom tags use the `CONTEXTLESS` value
+                                      type: string
+                                    key:
+                                      description: |-
+                                        (String) The dimensions key on the metric
+                                        The key of the tag. Custom tags have the tag value here
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value of the tag. Not applicable to custom tags
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  severity:
+                    description: |-
+                      (String) The type of the event to trigger on the threshold violation.  The CUSTOM_ALERT type is not correlated with other alerts. The INFO type does not open a problem
+                      The type of the event to trigger on the threshold violation.  The `CUSTOM_ALERT` type is not correlated with other alerts. The `INFO` type does not open a problem
+                    type: string
+                  strategy:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) A monitoring strategy for a metric event config. This is the base version of the monitoring strategy, depending on the type,  the actual JSON may contain additional fields (see below for nested schema)
+                      A monitoring strategy for a metric event config. This is the base version of the monitoring strategy, depending on the type,  the actual JSON may contain additional fields
+                    items:
+                      properties:
+                        auto:
+                          description: |-
+                            adaptive baseline strategy to detect anomalies within metrics that show a regular change over time, as the baseline is also updated automatically. An example is to detect an anomaly in the number of received network packets or within the number of user actions over time (see below for nested schema)
+                            An auto-adaptive baseline strategy to detect anomalies within metrics that show a regular change over time, as the baseline is also updated automatically. An example is to detect an anomaly in the number of received network packets or within the number of user actions over time
+                          items:
+                            properties:
+                              alertCondition:
+                                description: |-
+                                  (String) The condition for the threshold value check: ABOVE or BELOW
+                                  The condition for the **threshold** value check: `ABOVE` or `BELOW`
+                                type: string
+                              alertingOnMissingData:
+                                description: |-
+                                  minute samples without data are counted as violating samples
+                                  If true, also one-minute samples without data are counted as violating samples
+                                type: boolean
+                              dealertingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must go back to normal to close the event
+                                  The number of one-minute samples within the evaluation window that must go back to normal to close the event
+                                type: number
+                              samples:
+                                description: |-
+                                  minute samples that form the sliding evaluation window
+                                  The number of one-minute samples that form the sliding evaluation window
+                                type: number
+                              signalFluctuations:
+                                description: |-
+                                  (Number) Defines the factor of how many signal fluctuations are valid. Values above the baseline plus the signal fluctuation times the number of tolerated signal fluctuations are alerted
+                                  Defines the factor of how many signal fluctuations are valid. Values above the baseline plus the signal fluctuation times the number of tolerated signal fluctuations are alerted
+                                type: number
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              violatingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must violate the threshold to trigger an event
+                                  The number of one-minute samples within the evaluation window that must violate the threshold to trigger an event
+                                type: number
+                            type: object
+                          type: array
+                        generic:
+                          description: |-
+                            (Block List) A generic monitoring strategy (see below for nested schema)
+                            A generic monitoring strategy
+                          items:
+                            properties:
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        static:
+                          description: |-
+                            (Block List, Max: 1) A static threshold monitoring strategy to alert on hard limits within a given metric. An example is the violation of a critical memory limit (see below for nested schema)
+                            A static threshold monitoring strategy to alert on hard limits within a given metric. An example is the violation of a critical memory limit
+                          items:
+                            properties:
+                              alertCondition:
+                                description: |-
+                                  (String) The condition for the threshold value check: ABOVE or BELOW
+                                  The condition for the **threshold** value check: `ABOVE` or `BELOW`
+                                type: string
+                              alertingOnMissingData:
+                                description: |-
+                                  minute samples without data are counted as violating samples
+                                  If true, also one-minute samples without data are counted as violating samples
+                                type: boolean
+                              dealertingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must go back to normal to close the event
+                                  The number of one-minute samples within the evaluation window that must go back to normal to close the event
+                                type: number
+                              samples:
+                                description: |-
+                                  minute samples that form the sliding evaluation window
+                                  The number of one-minute samples that form the sliding evaluation window
+                                type: number
+                              threshold:
+                                description: |-
+                                  (Number) The value of the static threshold based on the specified unit
+                                  The value of the static threshold based on the specified unit
+                                type: number
+                              unit:
+                                description: |-
+                                  (String) The unit of the threshold, matching the metric definition
+                                  The unit of the threshold, matching the metric definition
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              violatingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must violate the threshold to trigger an event
+                                  The number of one-minute samples within the evaluation window that must violate the threshold to trigger an event
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  unknowns:
+                    description: |-
+                      (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                      allows for configuring properties that are not explicitly supported by the current version of this provider
+                    type: string
+                  warningReason:
+                    description: |-
+                      (String, Deprecated) The reason of a warning set on the config. The NONE means config has no warnings. The other supported value is TOO_MANY_DIMS
+                      The reason of a warning set on the config. The `NONE` means config has no warnings. The other supported value is `TOO_MANY_DIMS`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  aggregationType:
+                    description: |-
+                      (String) How the metric data points are aggregated for the evaluation. The timeseries must support this aggregation
+                      How the metric data points are aggregated for the evaluation. The timeseries must support this aggregation
+                    type: string
+                  description:
+                    description: |-
+                      (String) The description of the metric event
+                      The description of the metric event
+                    type: string
+                  dimensions:
+                    description: |-
+                      (Block List) Defines the dimensions of the metric to alert on. The filters are combined by conjunction (see below for nested schema)
+                      Defines the dimensions of the metric to alert on. The filters are combined by conjunction
+                    items:
+                      properties:
+                        dimension:
+                          description: |-
+                            (Block List) A generic definition for a filter (see below for nested schema)
+                            A generic definition for a filter
+                          items:
+                            properties:
+                              index:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the metric event displayed in the UI
+                                  No documentation available
+                                type: string
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        entity:
+                          description: |-
+                            (Block List) A filter for the metrics entity dimensions (see below for nested schema)
+                            A filter for the metrics entity dimensions
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        string:
+                          description: |-
+                            (Block List) A filter for the metrics string dimensions (see below for nested schema)
+                            A filter for the metrics string dimensions
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              index:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the metric event displayed in the UI
+                                  No documentation available
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  disabledReason:
+                    description: |-
+                      (String, Deprecated) The reason of automatic disabling.  The NONE means config was not disabled automatically. Possible values are METRIC_DEFINITION_INCONSISTENCY, NONE, TOO_MANY_DIMS and TOPX_FORCIBLY_DEACTIVATED
+                      The reason of automatic disabling.  The `NONE` means config was not disabled automatically. Possible values are `METRIC_DEFINITION_INCONSISTENCY`, `NONE`, `TOO_MANY_DIMS` and `TOPX_FORCIBLY_DEACTIVATED`
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) The metric event is enabled (true) or disabled (false)
+                      The metric event is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  metricId:
+                    description: |-
+                      (String) The ID of the metric evaluated by the metric event
+                      The ID of the metric evaluated by the metric event
+                    type: string
+                  metricSelector:
+                    description: |-
+                      (String) The metric selector that should be executed
+                      The metric selector that should be executed
+                    type: string
+                  name:
+                    description: |-
+                      (String) The name of the metric event displayed in the UI
+                      The name of the metric event displayed in the UI
+                    type: string
+                  primaryDimensionKey:
+                    description: |-
+                      (String) Defines which dimension key should be used for the alertingScope
+                      Defines which dimension key should be used for the **alertingScope**
+                    type: string
+                  scopes:
+                    description: |-
+                      (Block List) Defines the scope of the metric event. Only one filter is allowed per filter type, except for tags, where up to 3 are allowed. The filters are combined by conjunction (see below for nested schema)
+                      Defines the scope of the metric event. Only one filter is allowed per filter type, except for tags, where up to 3 are allowed. The filters are combined by conjunction
+                    items:
+                      properties:
+                        customDeviceGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related custom device group name (see below for nested schema)
+                            A scope filter for the related custom device group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        entity:
+                          description: |-
+                            (Block List) A filter for the metrics entity dimensions (see below for nested schema)
+                            A scope filter for a monitored entity identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The monitored entities id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        hostGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related host group name (see below for nested schema)
+                            A scope filter for the related host group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        hostName:
+                          description: |-
+                            (Block List) A scope filter for the related host name (see below for nested schema)
+                            A scope filter for the related host name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        managementZone:
+                          description: |-
+                            (Block List) A scope filter for a management zone identifier (see below for nested schema)
+                            A scope filter for a management zone identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The management zone id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the metric event displayed in the UI
+                            A scope filter for a monitored entity name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        processGroupId:
+                          description: |-
+                            (Block List) A scope filter for a process group identifier (see below for nested schema)
+                            A scope filter for a process group identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The process groups id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        processGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related process group name (see below for nested schema)
+                            A scope filter for the related process group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        scope:
+                          description: |-
+                            (Block List) A generic scope filter (see below for nested schema)
+                            A generic scope filter
+                          items:
+                            properties:
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        tag:
+                          description: |-
+                            (Block List) A scope filter for tags on entities (see below for nested schema)
+                            A scope filter for tags on entities
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    context:
+                                      description: |-
+                                        (String) The origin of the tag, such as AWS or Cloud Foundry. Custom tags use the CONTEXTLESS value
+                                        The origin of the tag, such as AWS or Cloud Foundry. Custom tags use the `CONTEXTLESS` value
+                                      type: string
+                                    key:
+                                      description: |-
+                                        (String) The dimensions key on the metric
+                                        The key of the tag. Custom tags have the tag value here
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value of the tag. Not applicable to custom tags
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  severity:
+                    description: |-
+                      (String) The type of the event to trigger on the threshold violation.  The CUSTOM_ALERT type is not correlated with other alerts. The INFO type does not open a problem
+                      The type of the event to trigger on the threshold violation.  The `CUSTOM_ALERT` type is not correlated with other alerts. The `INFO` type does not open a problem
+                    type: string
+                  strategy:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) A monitoring strategy for a metric event config. This is the base version of the monitoring strategy, depending on the type,  the actual JSON may contain additional fields (see below for nested schema)
+                      A monitoring strategy for a metric event config. This is the base version of the monitoring strategy, depending on the type,  the actual JSON may contain additional fields
+                    items:
+                      properties:
+                        auto:
+                          description: |-
+                            adaptive baseline strategy to detect anomalies within metrics that show a regular change over time, as the baseline is also updated automatically. An example is to detect an anomaly in the number of received network packets or within the number of user actions over time (see below for nested schema)
+                            An auto-adaptive baseline strategy to detect anomalies within metrics that show a regular change over time, as the baseline is also updated automatically. An example is to detect an anomaly in the number of received network packets or within the number of user actions over time
+                          items:
+                            properties:
+                              alertCondition:
+                                description: |-
+                                  (String) The condition for the threshold value check: ABOVE or BELOW
+                                  The condition for the **threshold** value check: `ABOVE` or `BELOW`
+                                type: string
+                              alertingOnMissingData:
+                                description: |-
+                                  minute samples without data are counted as violating samples
+                                  If true, also one-minute samples without data are counted as violating samples
+                                type: boolean
+                              dealertingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must go back to normal to close the event
+                                  The number of one-minute samples within the evaluation window that must go back to normal to close the event
+                                type: number
+                              samples:
+                                description: |-
+                                  minute samples that form the sliding evaluation window
+                                  The number of one-minute samples that form the sliding evaluation window
+                                type: number
+                              signalFluctuations:
+                                description: |-
+                                  (Number) Defines the factor of how many signal fluctuations are valid. Values above the baseline plus the signal fluctuation times the number of tolerated signal fluctuations are alerted
+                                  Defines the factor of how many signal fluctuations are valid. Values above the baseline plus the signal fluctuation times the number of tolerated signal fluctuations are alerted
+                                type: number
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              violatingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must violate the threshold to trigger an event
+                                  The number of one-minute samples within the evaluation window that must violate the threshold to trigger an event
+                                type: number
+                            type: object
+                          type: array
+                        generic:
+                          description: |-
+                            (Block List) A generic monitoring strategy (see below for nested schema)
+                            A generic monitoring strategy
+                          items:
+                            properties:
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        static:
+                          description: |-
+                            (Block List, Max: 1) A static threshold monitoring strategy to alert on hard limits within a given metric. An example is the violation of a critical memory limit (see below for nested schema)
+                            A static threshold monitoring strategy to alert on hard limits within a given metric. An example is the violation of a critical memory limit
+                          items:
+                            properties:
+                              alertCondition:
+                                description: |-
+                                  (String) The condition for the threshold value check: ABOVE or BELOW
+                                  The condition for the **threshold** value check: `ABOVE` or `BELOW`
+                                type: string
+                              alertingOnMissingData:
+                                description: |-
+                                  minute samples without data are counted as violating samples
+                                  If true, also one-minute samples without data are counted as violating samples
+                                type: boolean
+                              dealertingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must go back to normal to close the event
+                                  The number of one-minute samples within the evaluation window that must go back to normal to close the event
+                                type: number
+                              samples:
+                                description: |-
+                                  minute samples that form the sliding evaluation window
+                                  The number of one-minute samples that form the sliding evaluation window
+                                type: number
+                              threshold:
+                                description: |-
+                                  (Number) The value of the static threshold based on the specified unit
+                                  The value of the static threshold based on the specified unit
+                                type: number
+                              unit:
+                                description: |-
+                                  (String) The unit of the threshold, matching the metric definition
+                                  The unit of the threshold, matching the metric definition
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              violatingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must violate the threshold to trigger an event
+                                  The number of one-minute samples within the evaluation window that must violate the threshold to trigger an event
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  unknowns:
+                    description: |-
+                      (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                      allows for configuring properties that are not explicitly supported by the current version of this provider
+                    type: string
+                  warningReason:
+                    description: |-
+                      (String, Deprecated) The reason of a warning set on the config. The NONE means config has no warnings. The other supported value is TOO_MANY_DIMS
+                      The reason of a warning set on the config. The `NONE` means config has no warnings. The other supported value is `TOO_MANY_DIMS`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.description is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.description)
+                || (has(self.initProvider) && has(self.initProvider.description))'
+            - message: spec.forProvider.enabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.enabled)
+                || (has(self.initProvider) && has(self.initProvider.enabled))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.strategy is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.strategy)
+                || (has(self.initProvider) && has(self.initProvider.strategy))'
+          status:
+            description: AnomaliesStatus defines the observed state of Anomalies.
+            properties:
+              atProvider:
+                properties:
+                  aggregationType:
+                    description: |-
+                      (String) How the metric data points are aggregated for the evaluation. The timeseries must support this aggregation
+                      How the metric data points are aggregated for the evaluation. The timeseries must support this aggregation
+                    type: string
+                  description:
+                    description: |-
+                      (String) The description of the metric event
+                      The description of the metric event
+                    type: string
+                  dimensions:
+                    description: |-
+                      (Block List) Defines the dimensions of the metric to alert on. The filters are combined by conjunction (see below for nested schema)
+                      Defines the dimensions of the metric to alert on. The filters are combined by conjunction
+                    items:
+                      properties:
+                        dimension:
+                          description: |-
+                            (Block List) A generic definition for a filter (see below for nested schema)
+                            A generic definition for a filter
+                          items:
+                            properties:
+                              index:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the metric event displayed in the UI
+                                  No documentation available
+                                type: string
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        entity:
+                          description: |-
+                            (Block List) A filter for the metrics entity dimensions (see below for nested schema)
+                            A filter for the metrics entity dimensions
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        string:
+                          description: |-
+                            (Block List) A filter for the metrics string dimensions (see below for nested schema)
+                            A filter for the metrics string dimensions
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              index:
+                                description: |-
+                                  (Number) No documentation available
+                                  No documentation available
+                                type: number
+                              key:
+                                description: |-
+                                  (String) The dimensions key on the metric
+                                  The dimensions key on the metric
+                                type: string
+                              name:
+                                description: |-
+                                  (String) The name of the metric event displayed in the UI
+                                  No documentation available
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  disabledReason:
+                    description: |-
+                      (String, Deprecated) The reason of automatic disabling.  The NONE means config was not disabled automatically. Possible values are METRIC_DEFINITION_INCONSISTENCY, NONE, TOO_MANY_DIMS and TOPX_FORCIBLY_DEACTIVATED
+                      The reason of automatic disabling.  The `NONE` means config was not disabled automatically. Possible values are `METRIC_DEFINITION_INCONSISTENCY`, `NONE`, `TOO_MANY_DIMS` and `TOPX_FORCIBLY_DEACTIVATED`
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) The metric event is enabled (true) or disabled (false)
+                      The metric event is enabled (`true`) or disabled (`false`)
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  metricId:
+                    description: |-
+                      (String) The ID of the metric evaluated by the metric event
+                      The ID of the metric evaluated by the metric event
+                    type: string
+                  metricSelector:
+                    description: |-
+                      (String) The metric selector that should be executed
+                      The metric selector that should be executed
+                    type: string
+                  name:
+                    description: |-
+                      (String) The name of the metric event displayed in the UI
+                      The name of the metric event displayed in the UI
+                    type: string
+                  primaryDimensionKey:
+                    description: |-
+                      (String) Defines which dimension key should be used for the alertingScope
+                      Defines which dimension key should be used for the **alertingScope**
+                    type: string
+                  scopes:
+                    description: |-
+                      (Block List) Defines the scope of the metric event. Only one filter is allowed per filter type, except for tags, where up to 3 are allowed. The filters are combined by conjunction (see below for nested schema)
+                      Defines the scope of the metric event. Only one filter is allowed per filter type, except for tags, where up to 3 are allowed. The filters are combined by conjunction
+                    items:
+                      properties:
+                        customDeviceGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related custom device group name (see below for nested schema)
+                            A scope filter for the related custom device group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        entity:
+                          description: |-
+                            (Block List) A filter for the metrics entity dimensions (see below for nested schema)
+                            A scope filter for a monitored entity identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The monitored entities id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        hostGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related host group name (see below for nested schema)
+                            A scope filter for the related host group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        hostName:
+                          description: |-
+                            (Block List) A scope filter for the related host name (see below for nested schema)
+                            A scope filter for the related host name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        managementZone:
+                          description: |-
+                            (Block List) A scope filter for a management zone identifier (see below for nested schema)
+                            A scope filter for a management zone identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The management zone id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The name of the metric event displayed in the UI
+                            A scope filter for a monitored entity name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        processGroupId:
+                          description: |-
+                            (Block List) A scope filter for a process group identifier (see below for nested schema)
+                            A scope filter for a process group identifier
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) The ID of this resource.
+                                  The process groups id to match on
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        processGroupName:
+                          description: |-
+                            (Block List) A scope filter for the related process group name (see below for nested schema)
+                            A scope filter for the related process group name
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    operator:
+                                      description: |-
+                                        (String) The operator to match on
+                                        The operator to match on
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value to match on
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        scope:
+                          description: |-
+                            (Block List) A generic scope filter (see below for nested schema)
+                            A generic scope filter
+                          items:
+                            properties:
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        tag:
+                          description: |-
+                            (Block List) A scope filter for tags on entities (see below for nested schema)
+                            A scope filter for tags on entities
+                          items:
+                            properties:
+                              filter:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) A filter for a string value based on the given operator (see below for nested schema)
+                                  A filter for a string value based on the given operator
+                                items:
+                                  properties:
+                                    context:
+                                      description: |-
+                                        (String) The origin of the tag, such as AWS or Cloud Foundry. Custom tags use the CONTEXTLESS value
+                                        The origin of the tag, such as AWS or Cloud Foundry. Custom tags use the `CONTEXTLESS` value
+                                      type: string
+                                    key:
+                                      description: |-
+                                        (String) The dimensions key on the metric
+                                        The key of the tag. Custom tags have the tag value here
+                                      type: string
+                                    value:
+                                      description: |-
+                                        (String) The value to match on
+                                        The value of the tag. Not applicable to custom tags
+                                      type: string
+                                  type: object
+                                type: array
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  severity:
+                    description: |-
+                      (String) The type of the event to trigger on the threshold violation.  The CUSTOM_ALERT type is not correlated with other alerts. The INFO type does not open a problem
+                      The type of the event to trigger on the threshold violation.  The `CUSTOM_ALERT` type is not correlated with other alerts. The `INFO` type does not open a problem
+                    type: string
+                  strategy:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) A monitoring strategy for a metric event config. This is the base version of the monitoring strategy, depending on the type,  the actual JSON may contain additional fields (see below for nested schema)
+                      A monitoring strategy for a metric event config. This is the base version of the monitoring strategy, depending on the type,  the actual JSON may contain additional fields
+                    items:
+                      properties:
+                        auto:
+                          description: |-
+                            adaptive baseline strategy to detect anomalies within metrics that show a regular change over time, as the baseline is also updated automatically. An example is to detect an anomaly in the number of received network packets or within the number of user actions over time (see below for nested schema)
+                            An auto-adaptive baseline strategy to detect anomalies within metrics that show a regular change over time, as the baseline is also updated automatically. An example is to detect an anomaly in the number of received network packets or within the number of user actions over time
+                          items:
+                            properties:
+                              alertCondition:
+                                description: |-
+                                  (String) The condition for the threshold value check: ABOVE or BELOW
+                                  The condition for the **threshold** value check: `ABOVE` or `BELOW`
+                                type: string
+                              alertingOnMissingData:
+                                description: |-
+                                  minute samples without data are counted as violating samples
+                                  If true, also one-minute samples without data are counted as violating samples
+                                type: boolean
+                              dealertingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must go back to normal to close the event
+                                  The number of one-minute samples within the evaluation window that must go back to normal to close the event
+                                type: number
+                              samples:
+                                description: |-
+                                  minute samples that form the sliding evaluation window
+                                  The number of one-minute samples that form the sliding evaluation window
+                                type: number
+                              signalFluctuations:
+                                description: |-
+                                  (Number) Defines the factor of how many signal fluctuations are valid. Values above the baseline plus the signal fluctuation times the number of tolerated signal fluctuations are alerted
+                                  Defines the factor of how many signal fluctuations are valid. Values above the baseline plus the signal fluctuation times the number of tolerated signal fluctuations are alerted
+                                type: number
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              violatingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must violate the threshold to trigger an event
+                                  The number of one-minute samples within the evaluation window that must violate the threshold to trigger an event
+                                type: number
+                            type: object
+                          type: array
+                        generic:
+                          description: |-
+                            (Block List) A generic monitoring strategy (see below for nested schema)
+                            A generic monitoring strategy
+                          items:
+                            properties:
+                              type:
+                                description: |-
+                                  (String) Defines the actual set of fields depending on the value
+                                  Defines the actual set of fields depending on the value
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                            type: object
+                          type: array
+                        static:
+                          description: |-
+                            (Block List, Max: 1) A static threshold monitoring strategy to alert on hard limits within a given metric. An example is the violation of a critical memory limit (see below for nested schema)
+                            A static threshold monitoring strategy to alert on hard limits within a given metric. An example is the violation of a critical memory limit
+                          items:
+                            properties:
+                              alertCondition:
+                                description: |-
+                                  (String) The condition for the threshold value check: ABOVE or BELOW
+                                  The condition for the **threshold** value check: `ABOVE` or `BELOW`
+                                type: string
+                              alertingOnMissingData:
+                                description: |-
+                                  minute samples without data are counted as violating samples
+                                  If true, also one-minute samples without data are counted as violating samples
+                                type: boolean
+                              dealertingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must go back to normal to close the event
+                                  The number of one-minute samples within the evaluation window that must go back to normal to close the event
+                                type: number
+                              samples:
+                                description: |-
+                                  minute samples that form the sliding evaluation window
+                                  The number of one-minute samples that form the sliding evaluation window
+                                type: number
+                              threshold:
+                                description: |-
+                                  (Number) The value of the static threshold based on the specified unit
+                                  The value of the static threshold based on the specified unit
+                                type: number
+                              unit:
+                                description: |-
+                                  (String) The unit of the threshold, matching the metric definition
+                                  The unit of the threshold, matching the metric definition
+                                type: string
+                              unknowns:
+                                description: |-
+                                  (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                                  allows for configuring properties that are not explicitly supported by the current version of this provider
+                                type: string
+                              violatingSamples:
+                                description: |-
+                                  minute samples within the evaluation window that must violate the threshold to trigger an event
+                                  The number of one-minute samples within the evaluation window that must violate the threshold to trigger an event
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  unknowns:
+                    description: |-
+                      (String) allows for configuring properties that are not explicitly supported by the current version of this provider
+                      allows for configuring properties that are not explicitly supported by the current version of this provider
+                    type: string
+                  warningReason:
+                    description: |-
+                      (String, Deprecated) The reason of a warning set on the config. The NONE means config has no warnings. The other supported value is TOO_MANY_DIMS
+                      The reason of a warning set on the config. The `NONE` means config has no warnings. The other supported value is `TOO_MANY_DIMS`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

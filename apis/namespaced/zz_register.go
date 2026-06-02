@@ -10,17 +10,289 @@ package namespaced
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane/upjet-provider-template/apis/namespaced/null/v1alpha1"
-	v1alpha1namespaced "github.com/crossplane/upjet-provider-template/apis/namespaced/v1alpha1"
-	v1beta1 "github.com/crossplane/upjet-provider-template/apis/namespaced/v1beta1"
+	v1alpha1 "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/activegate/v1alpha1"
+	v1alpha1ag "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ag/v1alpha1"
+	v1alpha1aix "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/aix/v1alpha1"
+	v1alpha1alerting "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/alerting/v1alpha1"
+	v1alpha1ansible "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ansible/v1alpha1"
+	v1alpha1api "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/api/v1alpha1"
+	v1alpha1app "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/app/v1alpha1"
+	v1alpha1application "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/application/v1alpha1"
+	v1alpha1appsec "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/appsec/v1alpha1"
+	v1alpha1attack "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/attack/v1alpha1"
+	v1alpha1attribute "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/attribute/v1alpha1"
+	v1alpha1attributes "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/attributes/v1alpha1"
+	v1alpha1audit "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/audit/v1alpha1"
+	v1alpha1automation "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/automation/v1alpha1"
+	v1alpha1autotag "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/autotag/v1alpha1"
+	v1alpha1aws "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/aws/v1alpha1"
+	v1alpha1azure "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/azure/v1alpha1"
+	v1alpha1browser "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/browser/v1alpha1"
+	v1alpha1builtin "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/builtin/v1alpha1"
+	v1alpha1business "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/business/v1alpha1"
+	v1alpha1calculated "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/calculated/v1alpha1"
+	v1alpha1cloud "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/cloud/v1alpha1"
+	v1alpha1cloudapp "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/cloudapp/v1alpha1"
+	v1alpha1cloudfoundry "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/cloudfoundry/v1alpha1"
+	v1alpha1connectivity "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/connectivity/v1alpha1"
+	v1alpha1container "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/container/v1alpha1"
+	v1alpha1crashdump "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/crashdump/v1alpha1"
+	v1alpha1credentials "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/credentials/v1alpha1"
+	v1alpha1custom "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/custom/v1alpha1"
+	v1alpha1dashboard "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/dashboard/v1alpha1"
+	v1alpha1dashboards "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/dashboards/v1alpha1"
+	v1alpha1data "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/data/v1alpha1"
+	v1alpha1database "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/database/v1alpha1"
+	v1alpha1davis "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/davis/v1alpha1"
+	v1alpha1db "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/db/v1alpha1"
+	v1alpha1ddu "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ddu/v1alpha1"
+	v1alpha1declarative "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/declarative/v1alpha1"
+	v1alpha1default "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/default/v1alpha1"
+	v1alpha1devobs "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/devobs/v1alpha1"
+	v1alpha1direct "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/direct/v1alpha1"
+	v1alpha1discovery "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/discovery/v1alpha1"
+	v1alpha1disk "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/disk/v1alpha1"
+	v1alpha1document "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/document/v1alpha1"
+	v1alpha1ebpf "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ebpf/v1alpha1"
+	v1alpha1email "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/email/v1alpha1"
+	v1alpha1endpoint "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/endpoint/v1alpha1"
+	v1alpha1environment "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/environment/v1alpha1"
+	v1alpha1eula "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/eula/v1alpha1"
+	v1alpha1event "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/event/v1alpha1"
+	v1alpha1extension "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/extension/v1alpha1"
+	v1alpha1failure "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/failure/v1alpha1"
+	v1alpha1frequent "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/frequent/v1alpha1"
+	v1alpha1generic "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/generic/v1alpha1"
+	v1alpha1geolocation "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/geolocation/v1alpha1"
+	v1alpha1github "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/github/v1alpha1"
+	v1alpha1gitlab "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/gitlab/v1alpha1"
+	v1alpha1golden "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/golden/v1alpha1"
+	v1alpha1grail "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/grail/v1alpha1"
+	v1alpha1histogram "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/histogram/v1alpha1"
+	v1alpha1host "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/host/v1alpha1"
+	v1alpha1http "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/http/v1alpha1"
+	v1alpha1hub "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/hub/v1alpha1"
+	v1alpha1iam "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/iam/v1alpha1"
+	v1alpha1ibm "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ibm/v1alpha1"
+	v1alpha1ims "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ims/v1alpha1"
+	v1alpha1infraops "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/infraops/v1alpha1"
+	v1alpha1ip "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ip/v1alpha1"
+	v1alpha1issue "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/issue/v1alpha1"
+	v1alpha1jenkins "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/jenkins/v1alpha1"
+	v1alpha1jira "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/jira/v1alpha1"
+	v1alpha1json "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/json/v1alpha1"
+	v1alpha1k8s "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/k8s/v1alpha1"
+	v1alpha1key "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/key/v1alpha1"
+	v1alpha1kubernetes "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/kubernetes/v1alpha1"
+	v1alpha1limit "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/limit/v1alpha1"
+	v1alpha1log "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/log/v1alpha1"
+	v1alpha1mainframe "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/mainframe/v1alpha1"
+	v1alpha1maintenance "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/maintenance/v1alpha1"
+	v1alpha1managed "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/managed/v1alpha1"
+	v1alpha1management "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/management/v1alpha1"
+	v1alpha1metric "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/metric/v1alpha1"
+	v1alpha1mgmz "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/mgmz/v1alpha1"
+	v1alpha1mobile "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/mobile/v1alpha1"
+	v1alpha1monitored "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/monitored/v1alpha1"
+	v1alpha1ms365 "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ms365/v1alpha1"
+	v1alpha1msentraid "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/msentraid/v1alpha1"
+	v1alpha1msteams "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/msteams/v1alpha1"
+	v1alpha1muted "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/muted/v1alpha1"
+	v1alpha1nettracer "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/nettracer/v1alpha1"
+	v1alpha1network "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/network/v1alpha1"
+	v1alpha1notification "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/notification/v1alpha1"
+	v1alpha1oneagent "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/oneagent/v1alpha1"
+	v1alpha1openpipeline "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/openpipeline/v1alpha1"
+	v1alpha1opentelemetry "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/opentelemetry/v1alpha1"
+	v1alpha1ops "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ops/v1alpha1"
+	v1alpha1os "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/os/v1alpha1"
+	v1alpha1ownership "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/ownership/v1alpha1"
+	v1alpha1pager "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/pager/v1alpha1"
+	v1alpha1pagerduty "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/pagerduty/v1alpha1"
+	v1alpha1pg "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/pg/v1alpha1"
+	v1alpha1platform "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/platform/v1alpha1"
+	v1alpha1policy "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/policy/v1alpha1"
+	v1alpha1problem "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/problem/v1alpha1"
+	v1alpha1process "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/process/v1alpha1"
+	v1alpha1processgroup "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/processgroup/v1alpha1"
+	v1alpha1queue "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/queue/v1alpha1"
+	v1alpha1remote "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/remote/v1alpha1"
+	v1alpha1report "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/report/v1alpha1"
+	v1alpha1request "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/request/v1alpha1"
+	v1alpha1resource "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/resource/v1alpha1"
+	v1alpha1rpc "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/rpc/v1alpha1"
+	v1alpha1rum "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/rum/v1alpha1"
+	v1alpha1security "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/security/v1alpha1"
+	v1alpha1segment "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/segment/v1alpha1"
+	v1alpha1service "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/service/v1alpha1"
+	v1alpha1servicenow "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/servicenow/v1alpha1"
+	v1alpha1session "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/session/v1alpha1"
+	v1alpha1settings "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/settings/v1alpha1"
+	v1alpha1site "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/site/v1alpha1"
+	v1alpha1slack "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/slack/v1alpha1"
+	v1alpha1slo "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/slo/v1alpha1"
+	v1alpha1span "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/span/v1alpha1"
+	v1alpha1synthetic "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/synthetic/v1alpha1"
+	v1alpha1token "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/token/v1alpha1"
+	v1alpha1transaction "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/transaction/v1alpha1"
+	v1alpha1trello "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/trello/v1alpha1"
+	v1alpha1unified "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/unified/v1alpha1"
+	v1alpha1update "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/update/v1alpha1"
+	v1alpha1url "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/url/v1alpha1"
+	v1alpha1usability "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/usability/v1alpha1"
+	v1alpha1user "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/user/v1alpha1"
+	v1alpha1namespaced "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/v1alpha1"
+	v1beta1 "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/v1beta1"
+	v1alpha1victor "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/victor/v1alpha1"
+	v1alpha1vmware "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/vmware/v1alpha1"
+	v1alpha1vulnerability "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/vulnerability/v1alpha1"
+	v1alpha1web "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/web/v1alpha1"
+	v1alpha1webhook "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/webhook/v1alpha1"
+	v1alpha1xmatters "github.com/vikreinok/provider-dynatrace-all/apis/namespaced/xmatters/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1ag.SchemeBuilder.AddToScheme,
+		v1alpha1aix.SchemeBuilder.AddToScheme,
+		v1alpha1alerting.SchemeBuilder.AddToScheme,
+		v1alpha1ansible.SchemeBuilder.AddToScheme,
+		v1alpha1api.SchemeBuilder.AddToScheme,
+		v1alpha1app.SchemeBuilder.AddToScheme,
+		v1alpha1application.SchemeBuilder.AddToScheme,
+		v1alpha1appsec.SchemeBuilder.AddToScheme,
+		v1alpha1attack.SchemeBuilder.AddToScheme,
+		v1alpha1attribute.SchemeBuilder.AddToScheme,
+		v1alpha1attributes.SchemeBuilder.AddToScheme,
+		v1alpha1audit.SchemeBuilder.AddToScheme,
+		v1alpha1automation.SchemeBuilder.AddToScheme,
+		v1alpha1autotag.SchemeBuilder.AddToScheme,
+		v1alpha1aws.SchemeBuilder.AddToScheme,
+		v1alpha1azure.SchemeBuilder.AddToScheme,
+		v1alpha1browser.SchemeBuilder.AddToScheme,
+		v1alpha1builtin.SchemeBuilder.AddToScheme,
+		v1alpha1business.SchemeBuilder.AddToScheme,
+		v1alpha1calculated.SchemeBuilder.AddToScheme,
+		v1alpha1cloud.SchemeBuilder.AddToScheme,
+		v1alpha1cloudapp.SchemeBuilder.AddToScheme,
+		v1alpha1cloudfoundry.SchemeBuilder.AddToScheme,
+		v1alpha1connectivity.SchemeBuilder.AddToScheme,
+		v1alpha1container.SchemeBuilder.AddToScheme,
+		v1alpha1crashdump.SchemeBuilder.AddToScheme,
+		v1alpha1credentials.SchemeBuilder.AddToScheme,
+		v1alpha1custom.SchemeBuilder.AddToScheme,
+		v1alpha1dashboard.SchemeBuilder.AddToScheme,
+		v1alpha1dashboards.SchemeBuilder.AddToScheme,
+		v1alpha1data.SchemeBuilder.AddToScheme,
+		v1alpha1database.SchemeBuilder.AddToScheme,
+		v1alpha1davis.SchemeBuilder.AddToScheme,
+		v1alpha1db.SchemeBuilder.AddToScheme,
+		v1alpha1ddu.SchemeBuilder.AddToScheme,
+		v1alpha1declarative.SchemeBuilder.AddToScheme,
+		v1alpha1default.SchemeBuilder.AddToScheme,
+		v1alpha1devobs.SchemeBuilder.AddToScheme,
+		v1alpha1direct.SchemeBuilder.AddToScheme,
+		v1alpha1discovery.SchemeBuilder.AddToScheme,
+		v1alpha1disk.SchemeBuilder.AddToScheme,
+		v1alpha1document.SchemeBuilder.AddToScheme,
+		v1alpha1ebpf.SchemeBuilder.AddToScheme,
+		v1alpha1email.SchemeBuilder.AddToScheme,
+		v1alpha1endpoint.SchemeBuilder.AddToScheme,
+		v1alpha1environment.SchemeBuilder.AddToScheme,
+		v1alpha1eula.SchemeBuilder.AddToScheme,
+		v1alpha1event.SchemeBuilder.AddToScheme,
+		v1alpha1extension.SchemeBuilder.AddToScheme,
+		v1alpha1failure.SchemeBuilder.AddToScheme,
+		v1alpha1frequent.SchemeBuilder.AddToScheme,
+		v1alpha1generic.SchemeBuilder.AddToScheme,
+		v1alpha1geolocation.SchemeBuilder.AddToScheme,
+		v1alpha1github.SchemeBuilder.AddToScheme,
+		v1alpha1gitlab.SchemeBuilder.AddToScheme,
+		v1alpha1golden.SchemeBuilder.AddToScheme,
+		v1alpha1grail.SchemeBuilder.AddToScheme,
+		v1alpha1histogram.SchemeBuilder.AddToScheme,
+		v1alpha1host.SchemeBuilder.AddToScheme,
+		v1alpha1http.SchemeBuilder.AddToScheme,
+		v1alpha1hub.SchemeBuilder.AddToScheme,
+		v1alpha1iam.SchemeBuilder.AddToScheme,
+		v1alpha1ibm.SchemeBuilder.AddToScheme,
+		v1alpha1ims.SchemeBuilder.AddToScheme,
+		v1alpha1infraops.SchemeBuilder.AddToScheme,
+		v1alpha1ip.SchemeBuilder.AddToScheme,
+		v1alpha1issue.SchemeBuilder.AddToScheme,
+		v1alpha1jenkins.SchemeBuilder.AddToScheme,
+		v1alpha1jira.SchemeBuilder.AddToScheme,
+		v1alpha1json.SchemeBuilder.AddToScheme,
+		v1alpha1k8s.SchemeBuilder.AddToScheme,
+		v1alpha1key.SchemeBuilder.AddToScheme,
+		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
+		v1alpha1limit.SchemeBuilder.AddToScheme,
+		v1alpha1log.SchemeBuilder.AddToScheme,
+		v1alpha1mainframe.SchemeBuilder.AddToScheme,
+		v1alpha1maintenance.SchemeBuilder.AddToScheme,
+		v1alpha1managed.SchemeBuilder.AddToScheme,
+		v1alpha1management.SchemeBuilder.AddToScheme,
+		v1alpha1metric.SchemeBuilder.AddToScheme,
+		v1alpha1mgmz.SchemeBuilder.AddToScheme,
+		v1alpha1mobile.SchemeBuilder.AddToScheme,
+		v1alpha1monitored.SchemeBuilder.AddToScheme,
+		v1alpha1ms365.SchemeBuilder.AddToScheme,
+		v1alpha1msentraid.SchemeBuilder.AddToScheme,
+		v1alpha1msteams.SchemeBuilder.AddToScheme,
+		v1alpha1muted.SchemeBuilder.AddToScheme,
+		v1alpha1nettracer.SchemeBuilder.AddToScheme,
+		v1alpha1network.SchemeBuilder.AddToScheme,
+		v1alpha1notification.SchemeBuilder.AddToScheme,
+		v1alpha1oneagent.SchemeBuilder.AddToScheme,
+		v1alpha1openpipeline.SchemeBuilder.AddToScheme,
+		v1alpha1opentelemetry.SchemeBuilder.AddToScheme,
+		v1alpha1ops.SchemeBuilder.AddToScheme,
+		v1alpha1os.SchemeBuilder.AddToScheme,
+		v1alpha1ownership.SchemeBuilder.AddToScheme,
+		v1alpha1pager.SchemeBuilder.AddToScheme,
+		v1alpha1pagerduty.SchemeBuilder.AddToScheme,
+		v1alpha1pg.SchemeBuilder.AddToScheme,
+		v1alpha1platform.SchemeBuilder.AddToScheme,
+		v1alpha1policy.SchemeBuilder.AddToScheme,
+		v1alpha1problem.SchemeBuilder.AddToScheme,
+		v1alpha1process.SchemeBuilder.AddToScheme,
+		v1alpha1processgroup.SchemeBuilder.AddToScheme,
+		v1alpha1queue.SchemeBuilder.AddToScheme,
+		v1alpha1remote.SchemeBuilder.AddToScheme,
+		v1alpha1report.SchemeBuilder.AddToScheme,
+		v1alpha1request.SchemeBuilder.AddToScheme,
+		v1alpha1resource.SchemeBuilder.AddToScheme,
+		v1alpha1rpc.SchemeBuilder.AddToScheme,
+		v1alpha1rum.SchemeBuilder.AddToScheme,
+		v1alpha1security.SchemeBuilder.AddToScheme,
+		v1alpha1segment.SchemeBuilder.AddToScheme,
+		v1alpha1service.SchemeBuilder.AddToScheme,
+		v1alpha1servicenow.SchemeBuilder.AddToScheme,
+		v1alpha1session.SchemeBuilder.AddToScheme,
+		v1alpha1settings.SchemeBuilder.AddToScheme,
+		v1alpha1site.SchemeBuilder.AddToScheme,
+		v1alpha1slack.SchemeBuilder.AddToScheme,
+		v1alpha1slo.SchemeBuilder.AddToScheme,
+		v1alpha1span.SchemeBuilder.AddToScheme,
+		v1alpha1synthetic.SchemeBuilder.AddToScheme,
+		v1alpha1token.SchemeBuilder.AddToScheme,
+		v1alpha1transaction.SchemeBuilder.AddToScheme,
+		v1alpha1trello.SchemeBuilder.AddToScheme,
+		v1alpha1unified.SchemeBuilder.AddToScheme,
+		v1alpha1update.SchemeBuilder.AddToScheme,
+		v1alpha1url.SchemeBuilder.AddToScheme,
+		v1alpha1usability.SchemeBuilder.AddToScheme,
+		v1alpha1user.SchemeBuilder.AddToScheme,
 		v1alpha1namespaced.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
+		v1alpha1victor.SchemeBuilder.AddToScheme,
+		v1alpha1vmware.SchemeBuilder.AddToScheme,
+		v1alpha1vulnerability.SchemeBuilder.AddToScheme,
+		v1alpha1web.SchemeBuilder.AddToScheme,
+		v1alpha1webhook.SchemeBuilder.AddToScheme,
+		v1alpha1xmatters.SchemeBuilder.AddToScheme,
 	)
 }
 

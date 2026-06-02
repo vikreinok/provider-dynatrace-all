@@ -1,0 +1,491 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: oneagents.log.dynatrace.m.crossplane.io
+spec:
+  group: log.dynatrace.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - dynatrace
+    kind: Oneagent
+    listKind: OneagentList
+    plural: oneagents
+    singular: oneagent
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Oneagent is the Schema for the Oneagents API. The resource
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: OneagentSpec defines the desired state of Oneagent
+            properties:
+              forProvider:
+                properties:
+                  containerTimezoneHeuristicEnabled:
+                    description: |-
+                      (Boolean) Enables automatic detection of timezone in container's logs if it is not explicitly defined in content or configured.
+                      Enables automatic detection of timezone in container's logs if it is not explicitly defined in content or configured.
+                    type: boolean
+                  containersLogsDetectionEnabled:
+                    description: |-
+                      (Boolean) Allows detection of log messages written to the containerized application's stdout/stderr streams.
+                      Allows detection of log messages written to the containerized application's stdout/stderr streams.
+                    type: boolean
+                  dateSearchLimitBytes:
+                    description: |-
+                      (Number) Defines the number of characters in every log line (starting from the first character in the line) where the timestamp is searched.
+                      Defines the number of characters in every log line (starting from the first character in the line) where the timestamp is searched.
+                    type: number
+                  defaultTimezone:
+                    description: |-
+                      (String) Default timezone for agent if more specific configurations is not defined.
+                      Default timezone for agent if more specific configurations is not defined.
+                    type: string
+                  eventLogQueryTimeoutSec:
+                    description: |-
+                      (Number) Defines the maximum timeout value, in seconds, for the query extracting Windows Event Logs
+                      Defines the maximum timeout value, in seconds, for the query extracting Windows Event Logs
+                    type: number
+                  iisdetectionEnabled:
+                    description: |-
+                      (Boolean) Allows detection of logs and event logs written by IIS server.
+                      Allows detection of logs and event logs written by IIS server.
+                    type: boolean
+                  logScannerLinuxNfsEnabled:
+                    description: |-
+                      (Boolean) Allows detection of logs written to mounted network storage drives. Applies only to Linux hosts. For other OSes it's always enabled.
+                      Allows detection of logs written to mounted network storage drives. Applies only to Linux hosts. For other OSes it's always enabled.
+                    type: boolean
+                  maxLgisPerEntityCount:
+                    description: |-
+                      (Number) Defines the maximum number of log group instances per entity after which, the new automatic ones wouldn't be added.
+                      Defines the maximum number of log group instances per entity after which, the new automatic ones wouldn't be added.
+                    type: number
+                  minBinaryDetectionLimitBytes:
+                    description: |-
+                      (Number) Defines the minimum number of bytes in log file required for binary detection.
+                      Defines the minimum number of bytes in log file required for binary detection.
+                    type: number
+                  monitorOwnLogsEnabled:
+                    description: |-
+                      (Boolean) Enabling this option may affect your licensing costs. For more details, see documentation.
+                      Enabling this option may affect your licensing costs. For more details, see [documentation](https://dt-url.net/4l02yi8).
+                    type: boolean
+                  openLogFilesDetectionEnabled:
+                    description: |-
+                      (Boolean) Automatically detect logs written by important processes. For more details, check our documentation
+                      Automatically detect logs written by important processes. For more details, check our [documentation](https://dt-url.net/7v02z76)
+                    type: boolean
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                  severityDetectionLimitBytes:
+                    description: |-
+                      (Number) Defines the number of characters in every log line (starting from the first character in the line) where severity is searched.
+                      Defines the number of characters in every log line (starting from the first character in the line) where severity is searched.
+                    type: number
+                  severityDetectionLinesLimit:
+                    description: |-
+                      (Number) Defines the number of the first lines of every log entry where severity is searched.
+                      Defines the number of the first lines of every log entry where severity is searched.
+                    type: number
+                  systemLogsDetectionEnabled:
+                    description: |-
+                      (Boolean) Linux: syslog, message log Windows: system, application, security event logs
+                      Linux: syslog, message log Windows: system, application, security event logs
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  containerTimezoneHeuristicEnabled:
+                    description: |-
+                      (Boolean) Enables automatic detection of timezone in container's logs if it is not explicitly defined in content or configured.
+                      Enables automatic detection of timezone in container's logs if it is not explicitly defined in content or configured.
+                    type: boolean
+                  containersLogsDetectionEnabled:
+                    description: |-
+                      (Boolean) Allows detection of log messages written to the containerized application's stdout/stderr streams.
+                      Allows detection of log messages written to the containerized application's stdout/stderr streams.
+                    type: boolean
+                  dateSearchLimitBytes:
+                    description: |-
+                      (Number) Defines the number of characters in every log line (starting from the first character in the line) where the timestamp is searched.
+                      Defines the number of characters in every log line (starting from the first character in the line) where the timestamp is searched.
+                    type: number
+                  defaultTimezone:
+                    description: |-
+                      (String) Default timezone for agent if more specific configurations is not defined.
+                      Default timezone for agent if more specific configurations is not defined.
+                    type: string
+                  eventLogQueryTimeoutSec:
+                    description: |-
+                      (Number) Defines the maximum timeout value, in seconds, for the query extracting Windows Event Logs
+                      Defines the maximum timeout value, in seconds, for the query extracting Windows Event Logs
+                    type: number
+                  iisdetectionEnabled:
+                    description: |-
+                      (Boolean) Allows detection of logs and event logs written by IIS server.
+                      Allows detection of logs and event logs written by IIS server.
+                    type: boolean
+                  logScannerLinuxNfsEnabled:
+                    description: |-
+                      (Boolean) Allows detection of logs written to mounted network storage drives. Applies only to Linux hosts. For other OSes it's always enabled.
+                      Allows detection of logs written to mounted network storage drives. Applies only to Linux hosts. For other OSes it's always enabled.
+                    type: boolean
+                  maxLgisPerEntityCount:
+                    description: |-
+                      (Number) Defines the maximum number of log group instances per entity after which, the new automatic ones wouldn't be added.
+                      Defines the maximum number of log group instances per entity after which, the new automatic ones wouldn't be added.
+                    type: number
+                  minBinaryDetectionLimitBytes:
+                    description: |-
+                      (Number) Defines the minimum number of bytes in log file required for binary detection.
+                      Defines the minimum number of bytes in log file required for binary detection.
+                    type: number
+                  monitorOwnLogsEnabled:
+                    description: |-
+                      (Boolean) Enabling this option may affect your licensing costs. For more details, see documentation.
+                      Enabling this option may affect your licensing costs. For more details, see [documentation](https://dt-url.net/4l02yi8).
+                    type: boolean
+                  openLogFilesDetectionEnabled:
+                    description: |-
+                      (Boolean) Automatically detect logs written by important processes. For more details, check our documentation
+                      Automatically detect logs written by important processes. For more details, check our [documentation](https://dt-url.net/7v02z76)
+                    type: boolean
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                  severityDetectionLimitBytes:
+                    description: |-
+                      (Number) Defines the number of characters in every log line (starting from the first character in the line) where severity is searched.
+                      Defines the number of characters in every log line (starting from the first character in the line) where severity is searched.
+                    type: number
+                  severityDetectionLinesLimit:
+                    description: |-
+                      (Number) Defines the number of the first lines of every log entry where severity is searched.
+                      Defines the number of the first lines of every log entry where severity is searched.
+                    type: number
+                  systemLogsDetectionEnabled:
+                    description: |-
+                      (Boolean) Linux: syslog, message log Windows: system, application, security event logs
+                      Linux: syslog, message log Windows: system, application, security event logs
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.containerTimezoneHeuristicEnabled is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.containerTimezoneHeuristicEnabled)
+                || (has(self.initProvider) && has(self.initProvider.containerTimezoneHeuristicEnabled))'
+            - message: spec.forProvider.containersLogsDetectionEnabled is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.containersLogsDetectionEnabled)
+                || (has(self.initProvider) && has(self.initProvider.containersLogsDetectionEnabled))'
+            - message: spec.forProvider.dateSearchLimitBytes is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dateSearchLimitBytes)
+                || (has(self.initProvider) && has(self.initProvider.dateSearchLimitBytes))'
+            - message: spec.forProvider.defaultTimezone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.defaultTimezone)
+                || (has(self.initProvider) && has(self.initProvider.defaultTimezone))'
+            - message: spec.forProvider.eventLogQueryTimeoutSec is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.eventLogQueryTimeoutSec)
+                || (has(self.initProvider) && has(self.initProvider.eventLogQueryTimeoutSec))'
+            - message: spec.forProvider.iisdetectionEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.iisdetectionEnabled)
+                || (has(self.initProvider) && has(self.initProvider.iisdetectionEnabled))'
+            - message: spec.forProvider.logScannerLinuxNfsEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.logScannerLinuxNfsEnabled)
+                || (has(self.initProvider) && has(self.initProvider.logScannerLinuxNfsEnabled))'
+            - message: spec.forProvider.maxLgisPerEntityCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.maxLgisPerEntityCount)
+                || (has(self.initProvider) && has(self.initProvider.maxLgisPerEntityCount))'
+            - message: spec.forProvider.minBinaryDetectionLimitBytes is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.minBinaryDetectionLimitBytes)
+                || (has(self.initProvider) && has(self.initProvider.minBinaryDetectionLimitBytes))'
+            - message: spec.forProvider.monitorOwnLogsEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.monitorOwnLogsEnabled)
+                || (has(self.initProvider) && has(self.initProvider.monitorOwnLogsEnabled))'
+            - message: spec.forProvider.openLogFilesDetectionEnabled is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.openLogFilesDetectionEnabled)
+                || (has(self.initProvider) && has(self.initProvider.openLogFilesDetectionEnabled))'
+            - message: spec.forProvider.severityDetectionLimitBytes is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.severityDetectionLimitBytes)
+                || (has(self.initProvider) && has(self.initProvider.severityDetectionLimitBytes))'
+            - message: spec.forProvider.severityDetectionLinesLimit is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.severityDetectionLinesLimit)
+                || (has(self.initProvider) && has(self.initProvider.severityDetectionLinesLimit))'
+            - message: spec.forProvider.systemLogsDetectionEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.systemLogsDetectionEnabled)
+                || (has(self.initProvider) && has(self.initProvider.systemLogsDetectionEnabled))'
+          status:
+            description: OneagentStatus defines the observed state of Oneagent.
+            properties:
+              atProvider:
+                properties:
+                  containerTimezoneHeuristicEnabled:
+                    description: |-
+                      (Boolean) Enables automatic detection of timezone in container's logs if it is not explicitly defined in content or configured.
+                      Enables automatic detection of timezone in container's logs if it is not explicitly defined in content or configured.
+                    type: boolean
+                  containersLogsDetectionEnabled:
+                    description: |-
+                      (Boolean) Allows detection of log messages written to the containerized application's stdout/stderr streams.
+                      Allows detection of log messages written to the containerized application's stdout/stderr streams.
+                    type: boolean
+                  dateSearchLimitBytes:
+                    description: |-
+                      (Number) Defines the number of characters in every log line (starting from the first character in the line) where the timestamp is searched.
+                      Defines the number of characters in every log line (starting from the first character in the line) where the timestamp is searched.
+                    type: number
+                  defaultTimezone:
+                    description: |-
+                      (String) Default timezone for agent if more specific configurations is not defined.
+                      Default timezone for agent if more specific configurations is not defined.
+                    type: string
+                  eventLogQueryTimeoutSec:
+                    description: |-
+                      (Number) Defines the maximum timeout value, in seconds, for the query extracting Windows Event Logs
+                      Defines the maximum timeout value, in seconds, for the query extracting Windows Event Logs
+                    type: number
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  iisdetectionEnabled:
+                    description: |-
+                      (Boolean) Allows detection of logs and event logs written by IIS server.
+                      Allows detection of logs and event logs written by IIS server.
+                    type: boolean
+                  logScannerLinuxNfsEnabled:
+                    description: |-
+                      (Boolean) Allows detection of logs written to mounted network storage drives. Applies only to Linux hosts. For other OSes it's always enabled.
+                      Allows detection of logs written to mounted network storage drives. Applies only to Linux hosts. For other OSes it's always enabled.
+                    type: boolean
+                  maxLgisPerEntityCount:
+                    description: |-
+                      (Number) Defines the maximum number of log group instances per entity after which, the new automatic ones wouldn't be added.
+                      Defines the maximum number of log group instances per entity after which, the new automatic ones wouldn't be added.
+                    type: number
+                  minBinaryDetectionLimitBytes:
+                    description: |-
+                      (Number) Defines the minimum number of bytes in log file required for binary detection.
+                      Defines the minimum number of bytes in log file required for binary detection.
+                    type: number
+                  monitorOwnLogsEnabled:
+                    description: |-
+                      (Boolean) Enabling this option may affect your licensing costs. For more details, see documentation.
+                      Enabling this option may affect your licensing costs. For more details, see [documentation](https://dt-url.net/4l02yi8).
+                    type: boolean
+                  openLogFilesDetectionEnabled:
+                    description: |-
+                      (Boolean) Automatically detect logs written by important processes. For more details, check our documentation
+                      Automatically detect logs written by important processes. For more details, check our [documentation](https://dt-url.net/7v02z76)
+                    type: boolean
+                  scope:
+                    description: |-
+                      (String) The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                      The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
+                    type: string
+                  severityDetectionLimitBytes:
+                    description: |-
+                      (Number) Defines the number of characters in every log line (starting from the first character in the line) where severity is searched.
+                      Defines the number of characters in every log line (starting from the first character in the line) where severity is searched.
+                    type: number
+                  severityDetectionLinesLimit:
+                    description: |-
+                      (Number) Defines the number of the first lines of every log entry where severity is searched.
+                      Defines the number of the first lines of every log entry where severity is searched.
+                    type: number
+                  systemLogsDetectionEnabled:
+                    description: |-
+                      (Boolean) Linux: syslog, message log Windows: system, application, security event logs
+                      Linux: syslog, message log Windows: system, application, security event logs
+                    type: boolean
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
