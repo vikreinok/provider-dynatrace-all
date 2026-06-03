@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main
+      # - main GitHub runner is too small to handle the build and CI
       - release-*
   pull_request: {}
   workflow_dispatch: {}

@@ -39,6 +39,7 @@ import (
 	"github.com/vikreinok/provider-dynatrace-all/config"
 	"github.com/vikreinok/provider-dynatrace-all/internal/clients"
 	controllerCluster "github.com/vikreinok/provider-dynatrace-all/internal/controller/cluster"
+	costcenter "github.com/vikreinok/provider-dynatrace-all/internal/controller/cluster/iam/costcenter"
 	controllerNamespaced "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced"
 	"github.com/vikreinok/provider-dynatrace-all/internal/features"
 	"github.com/vikreinok/provider-dynatrace-all/internal/version"
@@ -227,10 +228,12 @@ func main() {
 		}), "Cannot setup CRD gate")
 		kingpin.FatalIfError(controllerCluster.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped Dynatrace controllers")
 		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced Dynatrace controllers")
+		kingpin.FatalIfError(costcenter.SetupGated(mgr, clusterOpts), "Cannot setup custom CostCenter controller")
 	} else {
 		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
 		kingpin.FatalIfError(controllerCluster.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped Dynatrace controllers")
 		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, namespacedOpts), "Cannot setup namespaced Dynatrace controllers")
+		kingpin.FatalIfError(costcenter.Setup(mgr, clusterOpts), "Cannot setup custom CostCenter controller")
 	}
 
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
