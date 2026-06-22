@@ -16,18 +16,11 @@ import (
 
 type ApprovalInitParameters struct {
 
-	// Allow external systems to trigger approval responses via webhook handlers.
-	ExternalApprovalsEnabled *bool `json:"externalApprovalsEnabled,omitempty" tf:"external_approvals_enabled,omitempty"`
-
 	// Allow on tenant level anyone with access to the app can respond to requests via an approval link.
 	WorkflowAppAccessApprovalEnabled *bool `json:"workflowAppAccessApprovalEnabled,omitempty" tf:"workflow_app_access_approval_enabled,omitempty"`
 }
 
 type ApprovalObservation struct {
-
-	// Allow external systems to trigger approval responses via webhook handlers.
-	ExternalApprovalsEnabled *bool `json:"externalApprovalsEnabled,omitempty" tf:"external_approvals_enabled,omitempty"`
-
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Allow on tenant level anyone with access to the app can respond to requests via an approval link.
@@ -35,10 +28,6 @@ type ApprovalObservation struct {
 }
 
 type ApprovalParameters struct {
-
-	// Allow external systems to trigger approval responses via webhook handlers.
-	// +kubebuilder:validation:Optional
-	ExternalApprovalsEnabled *bool `json:"externalApprovalsEnabled,omitempty" tf:"external_approvals_enabled,omitempty"`
 
 	// Allow on tenant level anyone with access to the app can respond to requests via an approval link.
 	// +kubebuilder:validation:Optional

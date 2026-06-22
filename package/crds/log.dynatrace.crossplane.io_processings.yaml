@@ -86,6 +86,7 @@ spec:
                     description: |-
                       (Block List, Min: 1, Max: 1) ## Processor definition (see below for nested schema)
                       ## Processor definition
+                      Add a rule definition using our syntax. [In our documentation](https://dt-url.net/8k03xm2) you will find instructions and application [examples](https://dt-url.net/m24305t).
                     items:
                       properties:
                         rule:
@@ -147,6 +148,7 @@ spec:
                     description: |-
                       (Block List, Min: 1, Max: 1) ## Processor definition (see below for nested schema)
                       ## Processor definition
+                      Add a rule definition using our syntax. [In our documentation](https://dt-url.net/8k03xm2) you will find instructions and application [examples](https://dt-url.net/m24305t).
                     items:
                       properties:
                         rule:
@@ -310,6 +312,7 @@ spec:
                     description: |-
                       (Block List, Min: 1, Max: 1) ## Processor definition (see below for nested schema)
                       ## Processor definition
+                      Add a rule definition using our syntax. [In our documentation](https://dt-url.net/8k03xm2) you will find instructions and application [examples](https://dt-url.net/m24305t).
                     items:
                       properties:
                         rule:

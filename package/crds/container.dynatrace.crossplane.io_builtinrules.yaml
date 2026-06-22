@@ -87,36 +87,6 @@ spec:
                       (Boolean) Disable monitoring of intermediate containers created during image build.
                       Disable monitoring of intermediate containers created during image build.
                     type: boolean
-                  ignoreOpenShiftEtcdNamespace:
-                    description: |-
-                      etcd namespace.
-                      Disable monitoring of platform internal containers in the openshift-etcd namespace.
-                    type: boolean
-                  ignoreOpenShiftIngressCanaryNamespace:
-                    description: |-
-                      ingress-canary namespace.
-                      Disable monitoring of platform internal containers in the openshift-ingress-canary namespace.
-                    type: boolean
-                  ignoreOpenShiftKubeApiserverNamespace:
-                    description: |-
-                      kube-apiserver namespace.
-                      Disable monitoring of platform internal containers in the openshift-kube-apiserver namespace.
-                    type: boolean
-                  ignoreOpenShiftMachineConfigOperatorNamespace:
-                    description: |-
-                      machine-config-operator namespace.
-                      Disable monitoring of platform internal containers in the openshift-machine-config-operator namespace.
-                    type: boolean
-                  ignoreOpenShiftMonitoringNamespace:
-                    description: |-
-                      monitoring namespace.
-                      Disable monitoring of platform internal containers in the openshift-monitoring namespace.
-                    type: boolean
-                  ignoreOpenShiftOvnKubernetesNamespace:
-                    description: |-
-                      ovn-kubernetes namespace.
-                      Disable monitoring of platform internal containers in the openshift-ovn-kubernetes namespace.
-                    type: boolean
                   ignoreOpenShiftSdnNamespace:
                     description: |-
                       sdn namespace.
@@ -150,36 +120,6 @@ spec:
                     description: |-
                       (Boolean) Disable monitoring of intermediate containers created during image build.
                       Disable monitoring of intermediate containers created during image build.
-                    type: boolean
-                  ignoreOpenShiftEtcdNamespace:
-                    description: |-
-                      etcd namespace.
-                      Disable monitoring of platform internal containers in the openshift-etcd namespace.
-                    type: boolean
-                  ignoreOpenShiftIngressCanaryNamespace:
-                    description: |-
-                      ingress-canary namespace.
-                      Disable monitoring of platform internal containers in the openshift-ingress-canary namespace.
-                    type: boolean
-                  ignoreOpenShiftKubeApiserverNamespace:
-                    description: |-
-                      kube-apiserver namespace.
-                      Disable monitoring of platform internal containers in the openshift-kube-apiserver namespace.
-                    type: boolean
-                  ignoreOpenShiftMachineConfigOperatorNamespace:
-                    description: |-
-                      machine-config-operator namespace.
-                      Disable monitoring of platform internal containers in the openshift-machine-config-operator namespace.
-                    type: boolean
-                  ignoreOpenShiftMonitoringNamespace:
-                    description: |-
-                      monitoring namespace.
-                      Disable monitoring of platform internal containers in the openshift-monitoring namespace.
-                    type: boolean
-                  ignoreOpenShiftOvnKubernetesNamespace:
-                    description: |-
-                      ovn-kubernetes namespace.
-                      Disable monitoring of platform internal containers in the openshift-ovn-kubernetes namespace.
                     type: boolean
                   ignoreOpenShiftSdnNamespace:
                     description: |-
@@ -315,36 +255,6 @@ spec:
                     description: |-
                       (Boolean) Disable monitoring of intermediate containers created during image build.
                       Disable monitoring of intermediate containers created during image build.
-                    type: boolean
-                  ignoreOpenShiftEtcdNamespace:
-                    description: |-
-                      etcd namespace.
-                      Disable monitoring of platform internal containers in the openshift-etcd namespace.
-                    type: boolean
-                  ignoreOpenShiftIngressCanaryNamespace:
-                    description: |-
-                      ingress-canary namespace.
-                      Disable monitoring of platform internal containers in the openshift-ingress-canary namespace.
-                    type: boolean
-                  ignoreOpenShiftKubeApiserverNamespace:
-                    description: |-
-                      kube-apiserver namespace.
-                      Disable monitoring of platform internal containers in the openshift-kube-apiserver namespace.
-                    type: boolean
-                  ignoreOpenShiftMachineConfigOperatorNamespace:
-                    description: |-
-                      machine-config-operator namespace.
-                      Disable monitoring of platform internal containers in the openshift-machine-config-operator namespace.
-                    type: boolean
-                  ignoreOpenShiftMonitoringNamespace:
-                    description: |-
-                      monitoring namespace.
-                      Disable monitoring of platform internal containers in the openshift-monitoring namespace.
-                    type: boolean
-                  ignoreOpenShiftOvnKubernetesNamespace:
-                    description: |-
-                      ovn-kubernetes namespace.
-                      Disable monitoring of platform internal containers in the openshift-ovn-kubernetes namespace.
                     type: boolean
                   ignoreOpenShiftSdnNamespace:
                     description: |-

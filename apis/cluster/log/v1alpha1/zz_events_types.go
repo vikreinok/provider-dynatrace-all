@@ -24,11 +24,11 @@ type EventTemplateInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) The event type to trigger. Possible values: AVAILABILITY, CUSTOM_ALERT, CUSTOM_ANNOTATION, CUSTOM_CONFIGURATION, CUSTOM_DEPLOYMENT, ERROR, INFO, MARKED_FOR_TERMINATION, RESOURCE, SLOWDOWN, WARNING
-	// The event type to trigger. Possible values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
+	// Possible Values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
 	EventType *string `json:"eventType,omitempty" tf:"event_type,omitempty"`
 
 	// value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. (see below for nested schema)
-	// Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w).
+	// Set of additional key-value properties to be attached to the triggered event.
 	Metadata []MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (String) The title of the event to trigger.
@@ -47,11 +47,11 @@ type EventTemplateObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) The event type to trigger. Possible values: AVAILABILITY, CUSTOM_ALERT, CUSTOM_ANNOTATION, CUSTOM_CONFIGURATION, CUSTOM_DEPLOYMENT, ERROR, INFO, MARKED_FOR_TERMINATION, RESOURCE, SLOWDOWN, WARNING
-	// The event type to trigger. Possible values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
+	// Possible Values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
 	EventType *string `json:"eventType,omitempty" tf:"event_type,omitempty"`
 
 	// value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. (see below for nested schema)
-	// Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w).
+	// Set of additional key-value properties to be attached to the triggered event.
 	Metadata []MetadataObservation `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (String) The title of the event to trigger.
@@ -72,12 +72,12 @@ type EventTemplateParameters struct {
 	Description *string `json:"description" tf:"description,omitempty"`
 
 	// (String) The event type to trigger. Possible values: AVAILABILITY, CUSTOM_ALERT, CUSTOM_ANNOTATION, CUSTOM_CONFIGURATION, CUSTOM_DEPLOYMENT, ERROR, INFO, MARKED_FOR_TERMINATION, RESOURCE, SLOWDOWN, WARNING
-	// The event type to trigger. Possible values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
+	// Possible Values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
 	// +kubebuilder:validation:Optional
 	EventType *string `json:"eventType" tf:"event_type,omitempty"`
 
 	// value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. (see below for nested schema)
-	// Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w).
+	// Set of additional key-value properties to be attached to the triggered event.
 	// +kubebuilder:validation:Optional
 	Metadata []MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
@@ -98,7 +98,7 @@ type EventsInitParameters struct {
 	EventTemplate []EventTemplateInitParameters `json:"eventTemplate,omitempty" tf:"event_template,omitempty"`
 
 	// (String) Matcher
-	// Matcher
+	// Log query
 	Query *string `json:"query,omitempty" tf:"query,omitempty"`
 
 	// (String) The textual summary of the log event entry
@@ -120,7 +120,7 @@ type EventsObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) Matcher
-	// Matcher
+	// Log query
 	Query *string `json:"query,omitempty" tf:"query,omitempty"`
 
 	// (String) The textual summary of the log event entry
@@ -141,7 +141,7 @@ type EventsParameters struct {
 	EventTemplate []EventTemplateParameters `json:"eventTemplate,omitempty" tf:"event_template,omitempty"`
 
 	// (String) Matcher
-	// Matcher
+	// Log query
 	// +kubebuilder:validation:Optional
 	Query *string `json:"query,omitempty" tf:"query,omitempty"`
 

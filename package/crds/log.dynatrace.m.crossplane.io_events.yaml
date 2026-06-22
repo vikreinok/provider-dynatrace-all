@@ -82,12 +82,12 @@ spec:
                         eventType:
                           description: |-
                             (String) The event type to trigger. Possible values: AVAILABILITY, CUSTOM_ALERT, CUSTOM_ANNOTATION, CUSTOM_CONFIGURATION, CUSTOM_DEPLOYMENT, ERROR, INFO, MARKED_FOR_TERMINATION, RESOURCE, SLOWDOWN, WARNING
-                            The event type to trigger. Possible values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
+                            Possible Values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
                           type: string
                         metadata:
                           description: |-
                             value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. (see below for nested schema)
-                            Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w).
+                            Set of additional key-value properties to be attached to the triggered event.
                           items:
                             properties:
                               item:
@@ -119,7 +119,7 @@ spec:
                   query:
                     description: |-
                       (String) Matcher
-                      Matcher
+                      Log query
                     type: string
                   summary:
                     description: |-
@@ -164,12 +164,12 @@ spec:
                         eventType:
                           description: |-
                             (String) The event type to trigger. Possible values: AVAILABILITY, CUSTOM_ALERT, CUSTOM_ANNOTATION, CUSTOM_CONFIGURATION, CUSTOM_DEPLOYMENT, ERROR, INFO, MARKED_FOR_TERMINATION, RESOURCE, SLOWDOWN, WARNING
-                            The event type to trigger. Possible values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
+                            Possible Values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
                           type: string
                         metadata:
                           description: |-
                             value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. (see below for nested schema)
-                            Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w).
+                            Set of additional key-value properties to be attached to the triggered event.
                           items:
                             properties:
                               item:
@@ -201,7 +201,7 @@ spec:
                   query:
                     description: |-
                       (String) Matcher
-                      Matcher
+                      Log query
                     type: string
                   summary:
                     description: |-
@@ -313,12 +313,12 @@ spec:
                         eventType:
                           description: |-
                             (String) The event type to trigger. Possible values: AVAILABILITY, CUSTOM_ALERT, CUSTOM_ANNOTATION, CUSTOM_CONFIGURATION, CUSTOM_DEPLOYMENT, ERROR, INFO, MARKED_FOR_TERMINATION, RESOURCE, SLOWDOWN, WARNING
-                            The event type to trigger. Possible values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
+                            Possible Values: `AVAILABILITY`, `CUSTOM_ALERT`, `CUSTOM_ANNOTATION`, `CUSTOM_CONFIGURATION`, `CUSTOM_DEPLOYMENT`, `ERROR`, `INFO`, `MARKED_FOR_TERMINATION`, `RESOURCE`, `SLOWDOWN`, `WARNING`
                           type: string
                         metadata:
                           description: |-
                             value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. (see below for nested schema)
-                            Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w).
+                            Set of additional key-value properties to be attached to the triggered event.
                           items:
                             properties:
                               item:
@@ -353,7 +353,7 @@ spec:
                   query:
                     description: |-
                       (String) Matcher
-                      Matcher
+                      Log query
                     type: string
                   summary:
                     description: |-

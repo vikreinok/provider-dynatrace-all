@@ -58,10 +58,6 @@ spec:
             properties:
               forProvider:
                 properties:
-                  externalApprovalsEnabled:
-                    description: Allow external systems to trigger approval responses
-                      via webhook handlers.
-                    type: boolean
                   workflowAppAccessApprovalEnabled:
                     description: Allow on tenant level anyone with access to the app
                       can respond to requests via an approval link.
@@ -80,10 +76,6 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  externalApprovalsEnabled:
-                    description: Allow external systems to trigger approval responses
-                      via webhook handlers.
-                    type: boolean
                   workflowAppAccessApprovalEnabled:
                     description: Allow on tenant level anyone with access to the app
                       can respond to requests via an approval link.
@@ -158,10 +150,6 @@ spec:
             properties:
               atProvider:
                 properties:
-                  externalApprovalsEnabled:
-                    description: Allow external systems to trigger approval responses
-                      via webhook handlers.
-                    type: boolean
                   id:
                     type: string
                   workflowAppAccessApprovalEnabled:

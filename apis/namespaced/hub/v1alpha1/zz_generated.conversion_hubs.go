@@ -13,9 +13,6 @@ func (tr *ExtensionActiveVersion) Hub() {}
 func (tr *ExtensionConfig) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *ExtensionV2Config) Hub() {}
-
-// Hub marks this type as a conversion hub.
 func (tr *Permissions) Hub() {}
 
 // Hub marks this type as a conversion hub.

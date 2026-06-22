@@ -73,7 +73,7 @@ spec:
                               sampleCountThresholds:
                                 description: |-
                                   (Block List, Max: 1) No documentation available (see below for nested schema)
-                                  No documentation available
+                                  no documentation available
                                 items:
                                   properties:
                                     dealertingEvaluationWindow:
@@ -101,7 +101,7 @@ spec:
                               sampleCountThresholdsImmediately:
                                 description: |-
                                   (Block List, Max: 1) No documentation available (see below for nested schema)
-                                  No documentation available
+                                  no documentation available
                                 items:
                                   properties:
                                     dealertingEvaluationWindow:
@@ -129,143 +129,27 @@ spec:
                               thresholdMebibytes:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdMilliseconds:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdNumber:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdPercent:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               trigger:
                                 description: |-
                                   (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
                                   Possible values: `AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW`, `AVAILABLE_DISK_SPACE_PERCENT_BELOW`, `AVAILABLE_INODES_NUMBER_BELOW`, `AVAILABLE_INODES_PERCENT_BELOW`, `READ_ONLY_FILE_SYSTEM`, `READ_TIME_EXCEEDING`, `WRITE_TIME_EXCEEDING`
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  detectionConditions:
-                    description: |-
-                      (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
-                      Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
-                    items:
-                      properties:
-                        detectionCondition:
-                          description: '(Block List, Min: 1) (see below for nested
-                            schema)'
-                          items:
-                            properties:
-                              diskFilesystemCondition:
-                                description: |-
-                                  (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
-                                  Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
-
-                                  - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-                                  - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
-                                  - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
-                                  - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
-                                  - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
-
-                                  Available logic operations:
-                                  - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
-                                  - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
-                                  - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
-
-                                  Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
-                                type: string
-                              diskTotalCondition:
-                                description: |-
-                                  (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
-                                  Specify disk total space range in GiB
-                                items:
-                                  properties:
-                                    thresholdAbove:
-                                      description: |-
-                                        (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
-                                        If this field is empty then there is no lower limit. Minimum total disk space in GiB
-                                      type: number
-                                    thresholdBelow:
-                                      description: |-
-                                        (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
-                                        If this field is empty then there is no upper limit. Maximum total disk space in GiB
-                                      type: number
-                                  type: object
-                                type: array
-                              hostMetadataCondition:
-                                description: |-
-                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-
-                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
-
-                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
-
-                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
-                                items:
-                                  properties:
-                                    hostMetadataCondition:
-                                      description: |-
-                                        defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-                                        No documentation available
-                                      items:
-                                        properties:
-                                          keyMustExist:
-                                            description: |-
-                                              (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
-                                              When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
-                                            type: boolean
-                                          metadataCondition:
-                                            description: |-
-                                              (String) This string has to match a required format.
-                                              This string has to match a required format.
-
-                                              - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-                                              - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
-                                              - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
-                                              - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
-                                              - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
-
-                                              Available logic operations:
-                                              - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
-                                              - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
-                                              - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
-
-                                              Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
-                                            type: string
-                                          metadataKey:
-                                            description: |-
-                                              (String) Key
-                                              Key
-                                            type: string
-                                        type: object
-                                      type: array
-                                  type: object
-                                type: array
-                              localDiskCondition:
-                                description: |-
-                                  (String) Possible values: LOCAL, REMOTE
-                                  Possible values: `LOCAL`, `REMOTE`
-                                type: string
-                              property:
-                                description: |-
-                                  (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
-                                  Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
-                                type: string
-                              ruleType:
-                                description: |-
-                                  (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
-                                  Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
                                 type: string
                             type: object
                           type: array
@@ -303,8 +187,64 @@ spec:
                               metadataValue:
                                 description: |-
                                   (String) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  hostMetadataConditions:
+                    description: |-
+                      Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                      By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                      See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                      Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                    items:
+                      properties:
+                        hostMetadataCondition:
+                          description: defined key-value pairs that you can assign
+                            to hosts monitored by Dynatrace.
+                          items:
+                            properties:
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  no documentation available
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
                             type: object
                           type: array
                       type: object
@@ -360,7 +300,7 @@ spec:
                               sampleCountThresholds:
                                 description: |-
                                   (Block List, Max: 1) No documentation available (see below for nested schema)
-                                  No documentation available
+                                  no documentation available
                                 items:
                                   properties:
                                     dealertingEvaluationWindow:
@@ -388,7 +328,7 @@ spec:
                               sampleCountThresholdsImmediately:
                                 description: |-
                                   (Block List, Max: 1) No documentation available (see below for nested schema)
-                                  No documentation available
+                                  no documentation available
                                 items:
                                   properties:
                                     dealertingEvaluationWindow:
@@ -416,143 +356,27 @@ spec:
                               thresholdMebibytes:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdMilliseconds:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdNumber:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdPercent:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               trigger:
                                 description: |-
                                   (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
                                   Possible values: `AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW`, `AVAILABLE_DISK_SPACE_PERCENT_BELOW`, `AVAILABLE_INODES_NUMBER_BELOW`, `AVAILABLE_INODES_PERCENT_BELOW`, `READ_ONLY_FILE_SYSTEM`, `READ_TIME_EXCEEDING`, `WRITE_TIME_EXCEEDING`
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  detectionConditions:
-                    description: |-
-                      (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
-                      Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
-                    items:
-                      properties:
-                        detectionCondition:
-                          description: '(Block List, Min: 1) (see below for nested
-                            schema)'
-                          items:
-                            properties:
-                              diskFilesystemCondition:
-                                description: |-
-                                  (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
-                                  Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
-
-                                  - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-                                  - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
-                                  - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
-                                  - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
-                                  - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
-
-                                  Available logic operations:
-                                  - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
-                                  - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
-                                  - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
-
-                                  Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
-                                type: string
-                              diskTotalCondition:
-                                description: |-
-                                  (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
-                                  Specify disk total space range in GiB
-                                items:
-                                  properties:
-                                    thresholdAbove:
-                                      description: |-
-                                        (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
-                                        If this field is empty then there is no lower limit. Minimum total disk space in GiB
-                                      type: number
-                                    thresholdBelow:
-                                      description: |-
-                                        (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
-                                        If this field is empty then there is no upper limit. Maximum total disk space in GiB
-                                      type: number
-                                  type: object
-                                type: array
-                              hostMetadataCondition:
-                                description: |-
-                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-
-                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
-
-                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
-
-                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
-                                items:
-                                  properties:
-                                    hostMetadataCondition:
-                                      description: |-
-                                        defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-                                        No documentation available
-                                      items:
-                                        properties:
-                                          keyMustExist:
-                                            description: |-
-                                              (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
-                                              When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
-                                            type: boolean
-                                          metadataCondition:
-                                            description: |-
-                                              (String) This string has to match a required format.
-                                              This string has to match a required format.
-
-                                              - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-                                              - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
-                                              - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
-                                              - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
-                                              - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
-
-                                              Available logic operations:
-                                              - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
-                                              - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
-                                              - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
-
-                                              Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
-                                            type: string
-                                          metadataKey:
-                                            description: |-
-                                              (String) Key
-                                              Key
-                                            type: string
-                                        type: object
-                                      type: array
-                                  type: object
-                                type: array
-                              localDiskCondition:
-                                description: |-
-                                  (String) Possible values: LOCAL, REMOTE
-                                  Possible values: `LOCAL`, `REMOTE`
-                                type: string
-                              property:
-                                description: |-
-                                  (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
-                                  Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
-                                type: string
-                              ruleType:
-                                description: |-
-                                  (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
-                                  Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
                                 type: string
                             type: object
                           type: array
@@ -590,8 +414,64 @@ spec:
                               metadataValue:
                                 description: |-
                                   (String) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  hostMetadataConditions:
+                    description: |-
+                      Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                      By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                      See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                      Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                    items:
+                      properties:
+                        hostMetadataCondition:
+                          description: defined key-value pairs that you can assign
+                            to hosts monitored by Dynatrace.
+                          items:
+                            properties:
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  no documentation available
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
                             type: object
                           type: array
                       type: object
@@ -707,7 +587,7 @@ spec:
                               sampleCountThresholds:
                                 description: |-
                                   (Block List, Max: 1) No documentation available (see below for nested schema)
-                                  No documentation available
+                                  no documentation available
                                 items:
                                   properties:
                                     dealertingEvaluationWindow:
@@ -735,7 +615,7 @@ spec:
                               sampleCountThresholdsImmediately:
                                 description: |-
                                   (Block List, Max: 1) No documentation available (see below for nested schema)
-                                  No documentation available
+                                  no documentation available
                                 items:
                                   properties:
                                     dealertingEvaluationWindow:
@@ -763,143 +643,27 @@ spec:
                               thresholdMebibytes:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdMilliseconds:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdNumber:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               thresholdPercent:
                                 description: |-
                                   (Number) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: number
                               trigger:
                                 description: |-
                                   (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
                                   Possible values: `AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW`, `AVAILABLE_DISK_SPACE_PERCENT_BELOW`, `AVAILABLE_INODES_NUMBER_BELOW`, `AVAILABLE_INODES_PERCENT_BELOW`, `READ_ONLY_FILE_SYSTEM`, `READ_TIME_EXCEEDING`, `WRITE_TIME_EXCEEDING`
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  detectionConditions:
-                    description: |-
-                      (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
-                      Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
-                    items:
-                      properties:
-                        detectionCondition:
-                          description: '(Block List, Min: 1) (see below for nested
-                            schema)'
-                          items:
-                            properties:
-                              diskFilesystemCondition:
-                                description: |-
-                                  (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
-                                  Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
-
-                                  - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-                                  - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
-                                  - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
-                                  - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
-                                  - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
-
-                                  Available logic operations:
-                                  - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
-                                  - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
-                                  - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
-
-                                  Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
-                                type: string
-                              diskTotalCondition:
-                                description: |-
-                                  (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
-                                  Specify disk total space range in GiB
-                                items:
-                                  properties:
-                                    thresholdAbove:
-                                      description: |-
-                                        (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
-                                        If this field is empty then there is no lower limit. Minimum total disk space in GiB
-                                      type: number
-                                    thresholdBelow:
-                                      description: |-
-                                        (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
-                                        If this field is empty then there is no upper limit. Maximum total disk space in GiB
-                                      type: number
-                                  type: object
-                                type: array
-                              hostMetadataCondition:
-                                description: |-
-                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-                                  Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-
-                                  By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
-
-                                  See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
-
-                                  Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
-                                items:
-                                  properties:
-                                    hostMetadataCondition:
-                                      description: |-
-                                        defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-                                        No documentation available
-                                      items:
-                                        properties:
-                                          keyMustExist:
-                                            description: |-
-                                              (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
-                                              When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
-                                            type: boolean
-                                          metadataCondition:
-                                            description: |-
-                                              (String) This string has to match a required format.
-                                              This string has to match a required format.
-
-                                              - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-                                              - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
-                                              - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
-                                              - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
-                                              - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
-
-                                              Available logic operations:
-                                              - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
-                                              - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
-                                              - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
-
-                                              Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
-                                            type: string
-                                          metadataKey:
-                                            description: |-
-                                              (String) Key
-                                              Key
-                                            type: string
-                                        type: object
-                                      type: array
-                                  type: object
-                                type: array
-                              localDiskCondition:
-                                description: |-
-                                  (String) Possible values: LOCAL, REMOTE
-                                  Possible values: `LOCAL`, `REMOTE`
-                                type: string
-                              property:
-                                description: |-
-                                  (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
-                                  Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
-                                type: string
-                              ruleType:
-                                description: |-
-                                  (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
-                                  Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
                                 type: string
                             type: object
                           type: array
@@ -937,8 +701,64 @@ spec:
                               metadataValue:
                                 description: |-
                                   (String) No documentation available
-                                  No documentation available
+                                  no documentation available
                                 type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  hostMetadataConditions:
+                    description: |-
+                      Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+
+                      By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+
+                      See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+
+                      Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+                    items:
+                      properties:
+                        hostMetadataCondition:
+                          description: defined key-value pairs that you can assign
+                            to hosts monitored by Dynatrace.
+                          items:
+                            properties:
+                              hostMetadataCondition:
+                                description: |-
+                                  defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+                                  no documentation available
+                                items:
+                                  properties:
+                                    keyMustExist:
+                                      description: |-
+                                        (Boolean) When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                        When enabled, the condition requires a resource attribute to exist and match the constraints; when disabled, the key is optional but must still match the constrains if it is present.
+                                      type: boolean
+                                    metadataCondition:
+                                      description: |-
+                                        (String) This string has to match a required format.
+                                        This string has to match a required format.
+
+                                        - `$match(ver*_1.2.?)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
+                                        - `$contains(production)` – Matches if `production` appears anywhere in the host metadata value.
+                                        - `$eq(production)` – Matches if `production` matches the host metadata value exactly.
+                                        - `$prefix(production)` – Matches if `production` matches the prefix of the host metadata value.
+                                        - `$suffix(production)` – Matches if `production` matches the suffix of the host metadata value.
+
+                                        Available logic operations:
+                                        - `$not($eq(production))` – Matches if the host metadata value is different from `production`.
+                                        - `$and($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` and ends with `main`.
+                                        - `$or($prefix(production),$suffix(main))` – Matches if host metadata value starts with `production` or ends with `main`.
+
+                                        Brackets **(** and **)** that are part of the matched property **must be escaped with a tilde (~)**
+                                      type: string
+                                    metadataKey:
+                                      description: |-
+                                        (String) Key
+                                        Key
+                                      type: string
+                                  type: object
+                                type: array
                             type: object
                           type: array
                       type: object

@@ -106,7 +106,7 @@ spec:
                         consumers:
                           description: |-
                             (List of String) Dynatrace integrations that can use this connection. Possible values: DA, NONE, SVC:com.dynatrace.da
-                            Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+                            Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
                           items:
                             type: string
                           type: array
@@ -186,7 +186,7 @@ spec:
                         consumers:
                           description: |-
                             (List of String) Dynatrace integrations that can use this connection. Possible values: DA, NONE, SVC:com.dynatrace.da
-                            Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+                            Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
                           items:
                             type: string
                           type: array
@@ -309,7 +309,7 @@ spec:
                         consumers:
                           description: |-
                             (List of String) Dynatrace integrations that can use this connection. Possible values: DA, NONE, SVC:com.dynatrace.da
-                            Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+                            Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
                           items:
                             type: string
                           type: array

@@ -157,7 +157,6 @@ import (
 	monitorscript "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/http/monitorscript"
 	extensionactiveversion "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/hub/extensionactiveversion"
 	extensionconfig "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/hub/extensionconfig"
-	extensionv2config "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/hub/extensionv2config"
 	permissions "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/hub/permissions"
 	subscriptions "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/hub/subscriptions"
 	group "github.com/vikreinok/provider-dynatrace-all/internal/controller/namespaced/iam/group"
@@ -595,7 +594,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		monitorscript.Setup,
 		extensionactiveversion.Setup,
 		extensionconfig.Setup,
-		extensionv2config.Setup,
 		permissions.Setup,
 		subscriptions.Setup,
 		group.Setup,
@@ -1039,7 +1037,6 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		monitorscript.SetupGated,
 		extensionactiveversion.SetupGated,
 		extensionconfig.SetupGated,
-		extensionv2config.SetupGated,
 		permissions.SetupGated,
 		subscriptions.SetupGated,
 		group.SetupGated,

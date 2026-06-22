@@ -1,0 +1,89 @@
+// SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
+package v1alpha1
+
+import (
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+
+	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+)
+
+type HostEntityInitParameters struct {
+	// The type of the entity, e.g. "HOST"
+	Type *string `json:"type,omitempty"`
+
+	// The name of the entity, e.g. "ip-172-31-21-198.eu-central-1.compute.internal"
+	Name *string `json:"name,omitempty"`
+}
+
+type HostEntityObservation struct {
+	// The resolved Dynatrace ID of the entity, e.g. "HOST-D6E60CF7996C2E61"
+	EntityID *string `json:"entityId,omitempty"`
+}
+
+type HostEntityParameters struct {
+	// The type of the entity, e.g. "HOST"
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty"`
+
+	// The name of the entity, e.g. "ip-172-31-21-198.eu-central-1.compute.internal"
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty"`
+}
+
+// HostEntitySpec defines the desired state of HostEntity
+type HostEntitySpec struct {
+	v1.ResourceSpec `json:",inline"`
+	ForProvider     HostEntityParameters `json:"forProvider"`
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields.
+	InitProvider HostEntityInitParameters `json:"initProvider,omitempty"`
+}
+
+// HostEntityStatus defines the observed state of HostEntity.
+type HostEntityStatus struct {
+	v1.ResourceStatus `json:",inline"`
+	AtProvider        HostEntityObservation `json:"atProvider,omitempty"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
+
+// HostEntity is the Schema for the HostEntities API.
+// +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,dynatrace}
+type HostEntity struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	Spec   HostEntitySpec   `json:"spec"`
+	Status HostEntityStatus `json:"status,omitempty"`
+}
+
+// +kubebuilder:object:root=true
+
+// HostEntityList contains a list of HostEntities
+type HostEntityList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []HostEntity `json:"items"`
+}
+
+// Repository type metadata.
+var (
+	HostEntity_Kind             = "HostEntity"
+	HostEntity_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: HostEntity_Kind}.String()
+	HostEntity_KindAPIVersion   = HostEntity_Kind + "." + CRDGroupVersion.String()
+	HostEntity_GroupVersionKind = CRDGroupVersion.WithKind(HostEntity_Kind)
+)
+
+func init() {
+	SchemeBuilder.Register(&HostEntity{}, &HostEntityList{})
+}

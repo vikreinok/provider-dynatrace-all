@@ -17,7 +17,7 @@ import (
 type ExecutionRemoteInitParameters struct {
 
 	// (String) Select performance profile for Extension Execution Controller Documentation. Possible values: DEDICATED, DEFAULT, HIGH
-	// Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles"). Possible values: `DEDICATED`, `DEFAULT`, `HIGH`
+	// Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles")
 	PerformanceProfile *string `json:"performanceProfile,omitempty" tf:"performance_profile,omitempty"`
 
 	// (String) The scope of this setting (ENVIRONMENT_ACTIVE_GATE)
@@ -31,7 +31,7 @@ type ExecutionRemoteObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) Select performance profile for Extension Execution Controller Documentation. Possible values: DEDICATED, DEFAULT, HIGH
-	// Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles"). Possible values: `DEDICATED`, `DEFAULT`, `HIGH`
+	// Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles")
 	PerformanceProfile *string `json:"performanceProfile,omitempty" tf:"performance_profile,omitempty"`
 
 	// (String) The scope of this setting (ENVIRONMENT_ACTIVE_GATE)
@@ -42,7 +42,7 @@ type ExecutionRemoteObservation struct {
 type ExecutionRemoteParameters struct {
 
 	// (String) Select performance profile for Extension Execution Controller Documentation. Possible values: DEDICATED, DEFAULT, HIGH
-	// Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles"). Possible values: `DEDICATED`, `DEFAULT`, `HIGH`
+	// Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles")
 	// +kubebuilder:validation:Optional
 	PerformanceProfile *string `json:"performanceProfile,omitempty" tf:"performance_profile,omitempty"`
 

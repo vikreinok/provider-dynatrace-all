@@ -35,7 +35,7 @@ type AgentFeatureFlagsInitParameters struct {
 	NewContainerLogDetector *bool `json:"newContainerLogDetector,omitempty" tf:"new_container_log_detector,omitempty"`
 
 	// (Boolean) Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
-	// Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
+	// Enabling OneAgent to unambiguously assign logs to the appropriate IIS application pools
 	PlainIisconfigurationDetector *bool `json:"plainIisconfigurationDetector,omitempty" tf:"plain_iisconfiguration_detector,omitempty"`
 
 	// (String) The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
@@ -72,7 +72,7 @@ type AgentFeatureFlagsObservation struct {
 	NewContainerLogDetector *bool `json:"newContainerLogDetector,omitempty" tf:"new_container_log_detector,omitempty"`
 
 	// (Boolean) Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
-	// Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
+	// Enabling OneAgent to unambiguously assign logs to the appropriate IIS application pools
 	PlainIisconfigurationDetector *bool `json:"plainIisconfigurationDetector,omitempty" tf:"plain_iisconfiguration_detector,omitempty"`
 
 	// (String) The scope of this setting (HOST, KUBERNETES_CLUSTER, HOST_GROUP). Omit this property if you want to cover the whole environment.
@@ -108,7 +108,7 @@ type AgentFeatureFlagsParameters struct {
 	NewContainerLogDetector *bool `json:"newContainerLogDetector,omitempty" tf:"new_container_log_detector,omitempty"`
 
 	// (Boolean) Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
-	// Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
+	// Enabling OneAgent to unambiguously assign logs to the appropriate IIS application pools
 	// +kubebuilder:validation:Optional
 	PlainIisconfigurationDetector *bool `json:"plainIisconfigurationDetector,omitempty" tf:"plain_iisconfiguration_detector,omitempty"`
 

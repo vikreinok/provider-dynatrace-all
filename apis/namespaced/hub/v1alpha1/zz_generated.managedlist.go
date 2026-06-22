@@ -26,15 +26,6 @@ func (l *ExtensionConfigList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this ExtensionV2ConfigList.
-func (l *ExtensionV2ConfigList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
 // GetItems of this PermissionsList.
 func (l *PermissionsList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

@@ -21,11 +21,11 @@ type ConnectionInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// Configuration required for authenticating via AWS Role Based Authentication
 	RoleBasedAuth []RoleBasedAuthInitParameters `json:"roleBasedAuth,omitempty" tf:"role_based_auth,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// Configuration required for authenticating via AWS Web Identity
 	WebIdentity []WebIdentityInitParameters `json:"webIdentity,omitempty" tf:"web_identity,omitempty"`
 }
 
@@ -39,11 +39,11 @@ type ConnectionObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// Configuration required for authenticating via AWS Role Based Authentication
 	RoleBasedAuth []RoleBasedAuthObservation `json:"roleBasedAuth,omitempty" tf:"role_based_auth,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// Configuration required for authenticating via AWS Web Identity
 	WebIdentity []WebIdentityObservation `json:"webIdentity,omitempty" tf:"web_identity,omitempty"`
 }
 
@@ -55,12 +55,12 @@ type ConnectionParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// Configuration required for authenticating via AWS Role Based Authentication
 	// +kubebuilder:validation:Optional
 	RoleBasedAuth []RoleBasedAuthParameters `json:"roleBasedAuth,omitempty" tf:"role_based_auth,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// Configuration required for authenticating via AWS Web Identity
 	// +kubebuilder:validation:Optional
 	WebIdentity []WebIdentityParameters `json:"webIdentity,omitempty" tf:"web_identity,omitempty"`
 }
@@ -68,7 +68,7 @@ type ConnectionParameters struct {
 type RoleBasedAuthInitParameters struct {
 
 	// (Set of String) Dynatrace integrations that can use this connection. Possible values: APP:dynatrace.biz.carbon, DA, NONE, SVC:com.dynatrace.bo, SVC:com.dynatrace.da, SVC:com.dynatrace.grail, SVC:com.dynatrace.openpipeline
-	// Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+	// Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
 	// +listType=set
 	Consumers []*string `json:"consumers,omitempty" tf:"consumers,omitempty"`
 }
@@ -76,7 +76,7 @@ type RoleBasedAuthInitParameters struct {
 type RoleBasedAuthObservation struct {
 
 	// (Set of String) Dynatrace integrations that can use this connection. Possible values: APP:dynatrace.biz.carbon, DA, NONE, SVC:com.dynatrace.bo, SVC:com.dynatrace.da, SVC:com.dynatrace.grail, SVC:com.dynatrace.openpipeline
-	// Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+	// Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
 	// +listType=set
 	Consumers []*string `json:"consumers,omitempty" tf:"consumers,omitempty"`
 }
@@ -84,7 +84,7 @@ type RoleBasedAuthObservation struct {
 type RoleBasedAuthParameters struct {
 
 	// (Set of String) Dynatrace integrations that can use this connection. Possible values: APP:dynatrace.biz.carbon, DA, NONE, SVC:com.dynatrace.bo, SVC:com.dynatrace.da, SVC:com.dynatrace.grail, SVC:com.dynatrace.openpipeline
-	// Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+	// Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Consumers []*string `json:"consumers,omitempty" tf:"consumers,omitempty"`

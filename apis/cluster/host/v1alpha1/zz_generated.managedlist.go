@@ -26,6 +26,15 @@ func (l *AnomaliesV2List) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this HostEntityList.
+func (l *HostEntityList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this MonitoringAdvancedList.
 func (l *MonitoringAdvancedList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

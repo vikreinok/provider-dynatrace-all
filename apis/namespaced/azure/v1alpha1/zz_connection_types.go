@@ -138,21 +138,21 @@ type ConnectionParameters struct {
 type FederatedIdentityCredentialInitParameters struct {
 
 	// (List of String) Dynatrace integrations that can use this connection. Possible values: DA, NONE, SVC:com.dynatrace.da
-	// Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+	// Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
 	Consumers []*string `json:"consumers,omitempty" tf:"consumers,omitempty"`
 }
 
 type FederatedIdentityCredentialObservation struct {
 
 	// (List of String) Dynatrace integrations that can use this connection. Possible values: DA, NONE, SVC:com.dynatrace.da
-	// Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+	// Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
 	Consumers []*string `json:"consumers,omitempty" tf:"consumers,omitempty"`
 }
 
 type FederatedIdentityCredentialParameters struct {
 
 	// (List of String) Dynatrace integrations that can use this connection. Possible values: DA, NONE, SVC:com.dynatrace.da
-	// Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+	// Consumers that can use the connection. Possible values: `APP:dynatrace.microsoft.azure.connector`, `DA`, `NONE`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
 	// +kubebuilder:validation:Optional
 	Consumers []*string `json:"consumers,omitempty" tf:"consumers,omitempty"`
 }

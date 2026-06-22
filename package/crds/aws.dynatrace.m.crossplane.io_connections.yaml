@@ -66,13 +66,13 @@ spec:
                   roleBasedAuth:
                     description: |-
                       (Block List, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      Configuration required for authenticating via AWS Role Based Authentication
                     items:
                       properties:
                         consumers:
                           description: |-
                             (Set of String) Dynatrace integrations that can use this connection. Possible values: APP:dynatrace.biz.carbon, DA, NONE, SVC:com.dynatrace.bo, SVC:com.dynatrace.da, SVC:com.dynatrace.grail, SVC:com.dynatrace.openpipeline
-                            Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+                            Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
                           items:
                             type: string
                           type: array
@@ -82,7 +82,7 @@ spec:
                   webIdentity:
                     description: |-
                       (Block List, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      Configuration required for authenticating via AWS Web Identity
                     items:
                       properties:
                         consumers:
@@ -117,13 +117,13 @@ spec:
                   roleBasedAuth:
                     description: |-
                       (Block List, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      Configuration required for authenticating via AWS Role Based Authentication
                     items:
                       properties:
                         consumers:
                           description: |-
                             (Set of String) Dynatrace integrations that can use this connection. Possible values: APP:dynatrace.biz.carbon, DA, NONE, SVC:com.dynatrace.bo, SVC:com.dynatrace.da, SVC:com.dynatrace.grail, SVC:com.dynatrace.openpipeline
-                            Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+                            Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
                           items:
                             type: string
                           type: array
@@ -133,7 +133,7 @@ spec:
                   webIdentity:
                     description: |-
                       (Block List, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      Configuration required for authenticating via AWS Web Identity
                     items:
                       properties:
                         consumers:
@@ -226,13 +226,13 @@ spec:
                   roleBasedAuth:
                     description: |-
                       (Block List, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      Configuration required for authenticating via AWS Role Based Authentication
                     items:
                       properties:
                         consumers:
                           description: |-
                             (Set of String) Dynatrace integrations that can use this connection. Possible values: APP:dynatrace.biz.carbon, DA, NONE, SVC:com.dynatrace.bo, SVC:com.dynatrace.da, SVC:com.dynatrace.grail, SVC:com.dynatrace.openpipeline
-                            Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.grail`, `SVC:com.dynatrace.openpipeline`
+                            Dynatrace integrations that can use this connection. Possible values: `APP:dynatrace.biz.carbon`, `DA`, `NONE`, `SVC:com.dynatrace.bo`, `SVC:com.dynatrace.da`, `SVC:com.dynatrace.openpipeline`
                           items:
                             type: string
                           type: array
@@ -242,7 +242,7 @@ spec:
                   webIdentity:
                     description: |-
                       (Block List, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      Configuration required for authenticating via AWS Web Identity
                     items:
                       properties:
                         consumers:

@@ -62,7 +62,7 @@ spec:
                   performanceProfile:
                     description: |-
                       (String) Select performance profile for Extension Execution Controller Documentation. Possible values: DEDICATED, DEFAULT, HIGH
-                      Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles"). Possible values: `DEDICATED`, `DEFAULT`, `HIGH`
+                      Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles")
                     type: string
                   scope:
                     description: |-
@@ -86,7 +86,7 @@ spec:
                   performanceProfile:
                     description: |-
                       (String) Select performance profile for Extension Execution Controller Documentation. Possible values: DEDICATED, DEFAULT, HIGH
-                      Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles"). Possible values: `DEDICATED`, `DEFAULT`, `HIGH`
+                      Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles")
                     type: string
                   scope:
                     description: |-
@@ -172,7 +172,7 @@ spec:
                   performanceProfile:
                     description: |-
                       (String) Select performance profile for Extension Execution Controller Documentation. Possible values: DEDICATED, DEFAULT, HIGH
-                      Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles"). Possible values: `DEDICATED`, `DEFAULT`, `HIGH`
+                      Select performance profile for Extension Execution Controller [Documentation](https://www.dynatrace.com/support/help/shortlink/extensions-concepts#resource-consumption "More about performance profiles")
                     type: string
                   scope:
                     description: |-

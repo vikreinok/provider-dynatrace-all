@@ -28,30 +28,6 @@ type BuiltinRuleInitParameters struct {
 	// Disable monitoring of intermediate containers created during image build.
 	IgnoreOpenShiftBuildPodName *bool `json:"ignoreOpenShiftBuildPodName,omitempty" tf:"ignore_open_shift_build_pod_name,omitempty"`
 
-	// etcd namespace.
-	// Disable monitoring of platform internal containers in the openshift-etcd namespace.
-	IgnoreOpenShiftEtcdNamespace *bool `json:"ignoreOpenShiftEtcdNamespace,omitempty" tf:"ignore_open_shift_etcd_namespace,omitempty"`
-
-	// ingress-canary namespace.
-	// Disable monitoring of platform internal containers in the openshift-ingress-canary namespace.
-	IgnoreOpenShiftIngressCanaryNamespace *bool `json:"ignoreOpenShiftIngressCanaryNamespace,omitempty" tf:"ignore_open_shift_ingress_canary_namespace,omitempty"`
-
-	// kube-apiserver namespace.
-	// Disable monitoring of platform internal containers in the openshift-kube-apiserver namespace.
-	IgnoreOpenShiftKubeApiserverNamespace *bool `json:"ignoreOpenShiftKubeApiserverNamespace,omitempty" tf:"ignore_open_shift_kube_apiserver_namespace,omitempty"`
-
-	// machine-config-operator namespace.
-	// Disable monitoring of platform internal containers in the openshift-machine-config-operator namespace.
-	IgnoreOpenShiftMachineConfigOperatorNamespace *bool `json:"ignoreOpenShiftMachineConfigOperatorNamespace,omitempty" tf:"ignore_open_shift_machine_config_operator_namespace,omitempty"`
-
-	// monitoring namespace.
-	// Disable monitoring of platform internal containers in the openshift-monitoring namespace.
-	IgnoreOpenShiftMonitoringNamespace *bool `json:"ignoreOpenShiftMonitoringNamespace,omitempty" tf:"ignore_open_shift_monitoring_namespace,omitempty"`
-
-	// ovn-kubernetes namespace.
-	// Disable monitoring of platform internal containers in the openshift-ovn-kubernetes namespace.
-	IgnoreOpenShiftOvnKubernetesNamespace *bool `json:"ignoreOpenShiftOvnKubernetesNamespace,omitempty" tf:"ignore_open_shift_ovn_kubernetes_namespace,omitempty"`
-
 	// sdn namespace.
 	// Disable monitoring of platform internal containers in the openshift-sdn namespace.
 	IgnoreOpenShiftSdnNamespace *bool `json:"ignoreOpenShiftSdnNamespace,omitempty" tf:"ignore_open_shift_sdn_namespace,omitempty"`
@@ -74,30 +50,6 @@ type BuiltinRuleObservation struct {
 	// Disable monitoring of intermediate containers created during image build.
 	IgnoreOpenShiftBuildPodName *bool `json:"ignoreOpenShiftBuildPodName,omitempty" tf:"ignore_open_shift_build_pod_name,omitempty"`
 
-	// etcd namespace.
-	// Disable monitoring of platform internal containers in the openshift-etcd namespace.
-	IgnoreOpenShiftEtcdNamespace *bool `json:"ignoreOpenShiftEtcdNamespace,omitempty" tf:"ignore_open_shift_etcd_namespace,omitempty"`
-
-	// ingress-canary namespace.
-	// Disable monitoring of platform internal containers in the openshift-ingress-canary namespace.
-	IgnoreOpenShiftIngressCanaryNamespace *bool `json:"ignoreOpenShiftIngressCanaryNamespace,omitempty" tf:"ignore_open_shift_ingress_canary_namespace,omitempty"`
-
-	// kube-apiserver namespace.
-	// Disable monitoring of platform internal containers in the openshift-kube-apiserver namespace.
-	IgnoreOpenShiftKubeApiserverNamespace *bool `json:"ignoreOpenShiftKubeApiserverNamespace,omitempty" tf:"ignore_open_shift_kube_apiserver_namespace,omitempty"`
-
-	// machine-config-operator namespace.
-	// Disable monitoring of platform internal containers in the openshift-machine-config-operator namespace.
-	IgnoreOpenShiftMachineConfigOperatorNamespace *bool `json:"ignoreOpenShiftMachineConfigOperatorNamespace,omitempty" tf:"ignore_open_shift_machine_config_operator_namespace,omitempty"`
-
-	// monitoring namespace.
-	// Disable monitoring of platform internal containers in the openshift-monitoring namespace.
-	IgnoreOpenShiftMonitoringNamespace *bool `json:"ignoreOpenShiftMonitoringNamespace,omitempty" tf:"ignore_open_shift_monitoring_namespace,omitempty"`
-
-	// ovn-kubernetes namespace.
-	// Disable monitoring of platform internal containers in the openshift-ovn-kubernetes namespace.
-	IgnoreOpenShiftOvnKubernetesNamespace *bool `json:"ignoreOpenShiftOvnKubernetesNamespace,omitempty" tf:"ignore_open_shift_ovn_kubernetes_namespace,omitempty"`
-
 	// sdn namespace.
 	// Disable monitoring of platform internal containers in the openshift-sdn namespace.
 	IgnoreOpenShiftSdnNamespace *bool `json:"ignoreOpenShiftSdnNamespace,omitempty" tf:"ignore_open_shift_sdn_namespace,omitempty"`
@@ -119,36 +71,6 @@ type BuiltinRuleParameters struct {
 	// Disable monitoring of intermediate containers created during image build.
 	// +kubebuilder:validation:Optional
 	IgnoreOpenShiftBuildPodName *bool `json:"ignoreOpenShiftBuildPodName,omitempty" tf:"ignore_open_shift_build_pod_name,omitempty"`
-
-	// etcd namespace.
-	// Disable monitoring of platform internal containers in the openshift-etcd namespace.
-	// +kubebuilder:validation:Optional
-	IgnoreOpenShiftEtcdNamespace *bool `json:"ignoreOpenShiftEtcdNamespace,omitempty" tf:"ignore_open_shift_etcd_namespace,omitempty"`
-
-	// ingress-canary namespace.
-	// Disable monitoring of platform internal containers in the openshift-ingress-canary namespace.
-	// +kubebuilder:validation:Optional
-	IgnoreOpenShiftIngressCanaryNamespace *bool `json:"ignoreOpenShiftIngressCanaryNamespace,omitempty" tf:"ignore_open_shift_ingress_canary_namespace,omitempty"`
-
-	// kube-apiserver namespace.
-	// Disable monitoring of platform internal containers in the openshift-kube-apiserver namespace.
-	// +kubebuilder:validation:Optional
-	IgnoreOpenShiftKubeApiserverNamespace *bool `json:"ignoreOpenShiftKubeApiserverNamespace,omitempty" tf:"ignore_open_shift_kube_apiserver_namespace,omitempty"`
-
-	// machine-config-operator namespace.
-	// Disable monitoring of platform internal containers in the openshift-machine-config-operator namespace.
-	// +kubebuilder:validation:Optional
-	IgnoreOpenShiftMachineConfigOperatorNamespace *bool `json:"ignoreOpenShiftMachineConfigOperatorNamespace,omitempty" tf:"ignore_open_shift_machine_config_operator_namespace,omitempty"`
-
-	// monitoring namespace.
-	// Disable monitoring of platform internal containers in the openshift-monitoring namespace.
-	// +kubebuilder:validation:Optional
-	IgnoreOpenShiftMonitoringNamespace *bool `json:"ignoreOpenShiftMonitoringNamespace,omitempty" tf:"ignore_open_shift_monitoring_namespace,omitempty"`
-
-	// ovn-kubernetes namespace.
-	// Disable monitoring of platform internal containers in the openshift-ovn-kubernetes namespace.
-	// +kubebuilder:validation:Optional
-	IgnoreOpenShiftOvnKubernetesNamespace *bool `json:"ignoreOpenShiftOvnKubernetesNamespace,omitempty" tf:"ignore_open_shift_ovn_kubernetes_namespace,omitempty"`
 
 	// sdn namespace.
 	// Disable monitoring of platform internal containers in the openshift-sdn namespace.

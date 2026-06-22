@@ -76,7 +76,7 @@ spec:
                   cpuRequestsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -112,7 +112,7 @@ spec:
                   memoryRequestsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -148,7 +148,7 @@ spec:
                   monitoringIssues:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -179,7 +179,7 @@ spec:
                   podsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -265,7 +265,7 @@ spec:
                   cpuRequestsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -301,7 +301,7 @@ spec:
                   memoryRequestsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -337,7 +337,7 @@ spec:
                   monitoringIssues:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -368,7 +368,7 @@ spec:
                   podsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -553,7 +553,7 @@ spec:
                   cpuRequestsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -592,7 +592,7 @@ spec:
                   memoryRequestsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -628,7 +628,7 @@ spec:
                   monitoringIssues:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:
@@ -659,7 +659,7 @@ spec:
                   podsSaturation:
                     description: |-
                       (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-                      No documentation available
+                      no documentation available
                     items:
                       properties:
                         configuration:

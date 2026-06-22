@@ -97,7 +97,7 @@ spec:
                   plainIisconfigurationDetector:
                     description: |-
                       (Boolean) Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
-                      Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
+                      Enabling OneAgent to unambiguously assign logs to the appropriate IIS application pools
                     type: boolean
                   scope:
                     description: |-
@@ -147,7 +147,7 @@ spec:
                   plainIisconfigurationDetector:
                     description: |-
                       (Boolean) Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
-                      Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
+                      Enabling OneAgent to unambiguously assign logs to the appropriate IIS application pools
                     type: boolean
                   scope:
                     description: |-
@@ -283,7 +283,7 @@ spec:
                   plainIisconfigurationDetector:
                     description: |-
                       (Boolean) Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
-                      Enable OneAgent to assign logs to the appropriate IIS application pools when an unambiguous IIS configuration is detected.
+                      Enabling OneAgent to unambiguously assign logs to the appropriate IIS application pools
                     type: boolean
                   scope:
                     description: |-

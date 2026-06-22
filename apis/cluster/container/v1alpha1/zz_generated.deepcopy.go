@@ -57,36 +57,6 @@ func (in *BuiltinRuleInitParameters) DeepCopyInto(out *BuiltinRuleInitParameters
 		*out = new(bool)
 		**out = **in
 	}
-	if in.IgnoreOpenShiftEtcdNamespace != nil {
-		in, out := &in.IgnoreOpenShiftEtcdNamespace, &out.IgnoreOpenShiftEtcdNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftIngressCanaryNamespace != nil {
-		in, out := &in.IgnoreOpenShiftIngressCanaryNamespace, &out.IgnoreOpenShiftIngressCanaryNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftKubeApiserverNamespace != nil {
-		in, out := &in.IgnoreOpenShiftKubeApiserverNamespace, &out.IgnoreOpenShiftKubeApiserverNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftMachineConfigOperatorNamespace != nil {
-		in, out := &in.IgnoreOpenShiftMachineConfigOperatorNamespace, &out.IgnoreOpenShiftMachineConfigOperatorNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftMonitoringNamespace != nil {
-		in, out := &in.IgnoreOpenShiftMonitoringNamespace, &out.IgnoreOpenShiftMonitoringNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftOvnKubernetesNamespace != nil {
-		in, out := &in.IgnoreOpenShiftOvnKubernetesNamespace, &out.IgnoreOpenShiftOvnKubernetesNamespace
-		*out = new(bool)
-		**out = **in
-	}
 	if in.IgnoreOpenShiftSdnNamespace != nil {
 		in, out := &in.IgnoreOpenShiftSdnNamespace, &out.IgnoreOpenShiftSdnNamespace
 		*out = new(bool)
@@ -159,36 +129,6 @@ func (in *BuiltinRuleObservation) DeepCopyInto(out *BuiltinRuleObservation) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.IgnoreOpenShiftEtcdNamespace != nil {
-		in, out := &in.IgnoreOpenShiftEtcdNamespace, &out.IgnoreOpenShiftEtcdNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftIngressCanaryNamespace != nil {
-		in, out := &in.IgnoreOpenShiftIngressCanaryNamespace, &out.IgnoreOpenShiftIngressCanaryNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftKubeApiserverNamespace != nil {
-		in, out := &in.IgnoreOpenShiftKubeApiserverNamespace, &out.IgnoreOpenShiftKubeApiserverNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftMachineConfigOperatorNamespace != nil {
-		in, out := &in.IgnoreOpenShiftMachineConfigOperatorNamespace, &out.IgnoreOpenShiftMachineConfigOperatorNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftMonitoringNamespace != nil {
-		in, out := &in.IgnoreOpenShiftMonitoringNamespace, &out.IgnoreOpenShiftMonitoringNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftOvnKubernetesNamespace != nil {
-		in, out := &in.IgnoreOpenShiftOvnKubernetesNamespace, &out.IgnoreOpenShiftOvnKubernetesNamespace
-		*out = new(bool)
-		**out = **in
-	}
 	if in.IgnoreOpenShiftSdnNamespace != nil {
 		in, out := &in.IgnoreOpenShiftSdnNamespace, &out.IgnoreOpenShiftSdnNamespace
 		*out = new(bool)
@@ -221,36 +161,6 @@ func (in *BuiltinRuleParameters) DeepCopyInto(out *BuiltinRuleParameters) {
 	}
 	if in.IgnoreOpenShiftBuildPodName != nil {
 		in, out := &in.IgnoreOpenShiftBuildPodName, &out.IgnoreOpenShiftBuildPodName
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftEtcdNamespace != nil {
-		in, out := &in.IgnoreOpenShiftEtcdNamespace, &out.IgnoreOpenShiftEtcdNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftIngressCanaryNamespace != nil {
-		in, out := &in.IgnoreOpenShiftIngressCanaryNamespace, &out.IgnoreOpenShiftIngressCanaryNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftKubeApiserverNamespace != nil {
-		in, out := &in.IgnoreOpenShiftKubeApiserverNamespace, &out.IgnoreOpenShiftKubeApiserverNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftMachineConfigOperatorNamespace != nil {
-		in, out := &in.IgnoreOpenShiftMachineConfigOperatorNamespace, &out.IgnoreOpenShiftMachineConfigOperatorNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftMonitoringNamespace != nil {
-		in, out := &in.IgnoreOpenShiftMonitoringNamespace, &out.IgnoreOpenShiftMonitoringNamespace
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IgnoreOpenShiftOvnKubernetesNamespace != nil {
-		in, out := &in.IgnoreOpenShiftOvnKubernetesNamespace, &out.IgnoreOpenShiftOvnKubernetesNamespace
 		*out = new(bool)
 		**out = **in
 	}

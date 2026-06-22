@@ -17,27 +17,27 @@ import (
 type AlertInitParameters struct {
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	SampleCountThresholds []SampleCountThresholdsInitParameters `json:"sampleCountThresholds,omitempty" tf:"sample_count_thresholds,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	SampleCountThresholdsImmediately []SampleCountThresholdsImmediatelyInitParameters `json:"sampleCountThresholdsImmediately,omitempty" tf:"sample_count_thresholds_immediately,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdMebibytes *float64 `json:"thresholdMebibytes,omitempty" tf:"threshold_mebibytes,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdMilliseconds *float64 `json:"thresholdMilliseconds,omitempty" tf:"threshold_milliseconds,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdNumber *float64 `json:"thresholdNumber,omitempty" tf:"threshold_number,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdPercent *float64 `json:"thresholdPercent,omitempty" tf:"threshold_percent,omitempty"`
 
 	// (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
@@ -48,27 +48,27 @@ type AlertInitParameters struct {
 type AlertObservation struct {
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	SampleCountThresholds []SampleCountThresholdsObservation `json:"sampleCountThresholds,omitempty" tf:"sample_count_thresholds,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	SampleCountThresholdsImmediately []SampleCountThresholdsImmediatelyObservation `json:"sampleCountThresholdsImmediately,omitempty" tf:"sample_count_thresholds_immediately,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdMebibytes *float64 `json:"thresholdMebibytes,omitempty" tf:"threshold_mebibytes,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdMilliseconds *float64 `json:"thresholdMilliseconds,omitempty" tf:"threshold_milliseconds,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdNumber *float64 `json:"thresholdNumber,omitempty" tf:"threshold_number,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	ThresholdPercent *float64 `json:"thresholdPercent,omitempty" tf:"threshold_percent,omitempty"`
 
 	// (String) Possible values: AVAILABLE_DISK_SPACE_MEBIBYTES_BELOW, AVAILABLE_DISK_SPACE_PERCENT_BELOW, AVAILABLE_INODES_NUMBER_BELOW, AVAILABLE_INODES_PERCENT_BELOW, READ_ONLY_FILE_SYSTEM, READ_TIME_EXCEEDING, WRITE_TIME_EXCEEDING
@@ -79,32 +79,32 @@ type AlertObservation struct {
 type AlertParameters struct {
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	SampleCountThresholds []SampleCountThresholdsParameters `json:"sampleCountThresholds,omitempty" tf:"sample_count_thresholds,omitempty"`
 
 	// (Block List, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	SampleCountThresholdsImmediately []SampleCountThresholdsImmediatelyParameters `json:"sampleCountThresholdsImmediately,omitempty" tf:"sample_count_thresholds_immediately,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	ThresholdMebibytes *float64 `json:"thresholdMebibytes,omitempty" tf:"threshold_mebibytes,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	ThresholdMilliseconds *float64 `json:"thresholdMilliseconds,omitempty" tf:"threshold_milliseconds,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	ThresholdNumber *float64 `json:"thresholdNumber,omitempty" tf:"threshold_number,omitempty"`
 
 	// (Number) No documentation available
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	ThresholdPercent *float64 `json:"thresholdPercent,omitempty" tf:"threshold_percent,omitempty"`
 
@@ -133,213 +133,11 @@ type AlertsParameters struct {
 	Alert []AlertParameters `json:"alert" tf:"alert,omitempty"`
 }
 
-type DetectionConditionInitParameters struct {
-
-	// (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
-	// Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
-	//
-	// - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-	// - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
-	// - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
-	// - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
-	// - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
-	//
-	// Available logic operations:
-	// - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
-	// - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
-	// - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
-	//
-	// Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
-	DiskFilesystemCondition *string `json:"diskFilesystemCondition,omitempty" tf:"disk_filesystem_condition,omitempty"`
-
-	// (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
-	// Specify disk total space range in GiB
-	DiskTotalCondition []DiskTotalConditionInitParameters `json:"diskTotalCondition,omitempty" tf:"disk_total_condition,omitempty"`
-
-	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	// Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	//
-	// By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
-	//
-	// See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
-	//
-	// Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
-	HostMetadataCondition []HostMetadataConditionInitParameters `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
-
-	// (String) Possible values: LOCAL, REMOTE
-	// Possible values: `LOCAL`, `REMOTE`
-	LocalDiskCondition *string `json:"localDiskCondition,omitempty" tf:"local_disk_condition,omitempty"`
-
-	// (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
-	// Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
-	Property *string `json:"property,omitempty" tf:"property,omitempty"`
-
-	// (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
-	// Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
-	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
-}
-
-type DetectionConditionObservation struct {
-
-	// (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
-	// Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
-	//
-	// - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-	// - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
-	// - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
-	// - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
-	// - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
-	//
-	// Available logic operations:
-	// - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
-	// - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
-	// - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
-	//
-	// Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
-	DiskFilesystemCondition *string `json:"diskFilesystemCondition,omitempty" tf:"disk_filesystem_condition,omitempty"`
-
-	// (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
-	// Specify disk total space range in GiB
-	DiskTotalCondition []DiskTotalConditionObservation `json:"diskTotalCondition,omitempty" tf:"disk_total_condition,omitempty"`
-
-	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	// Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	//
-	// By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
-	//
-	// See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
-	//
-	// Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
-	HostMetadataCondition []HostMetadataConditionObservation `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
-
-	// (String) Possible values: LOCAL, REMOTE
-	// Possible values: `LOCAL`, `REMOTE`
-	LocalDiskCondition *string `json:"localDiskCondition,omitempty" tf:"local_disk_condition,omitempty"`
-
-	// (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
-	// Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
-	Property *string `json:"property,omitempty" tf:"property,omitempty"`
-
-	// (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
-	// Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
-	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
-}
-
-type DetectionConditionParameters struct {
-
-	// (String) Disk filesystem will be included in this policy if any of the filters match. Disk filesystem has to match a required format.
-	// Disk filesystem will be included in this policy if **any** of the filters match. Disk filesystem has to match a required format.
-	//
-	// - `$match(ext*)` – Matches string with wildcards: `*` any number (including zero) of characters and `?` exactly one character.
-	// - `$contains(fs)` – Matches if `fs` appears anywhere in the filesystem type.
-	// - `$eq(ext4)` – Matches if `ext4` matches the filesystem type exactly.
-	// - `$prefix(ext)` – Matches if `ext` matches the prefix of the filesystem type.
-	// - `$suffix(fs)` – Matches if `fs` matches the suffix of the filesystem type.
-	//
-	// Available logic operations:
-	// - `$not($eq(tmpfs))` – Matches if the filesystem type is different from `tmpfs`.
-	// - `$and($prefix(ext),$suffix(4))` – Matches if filesystem type starts with `ext` and ends with `4`.
-	// - `$or($eq(xfs),$eq(btrfs))` – Matches if filesystem type equals `xfs` or `btrfs`.
-	//
-	// Brackets **(** and **)** that are part of the matched filesystem type **must be escaped with a tilde (~)**
-	// +kubebuilder:validation:Optional
-	DiskFilesystemCondition *string `json:"diskFilesystemCondition,omitempty" tf:"disk_filesystem_condition,omitempty"`
-
-	// (Block List, Max: 1) Specify disk total space range in GiB (see below for nested schema)
-	// Specify disk total space range in GiB
-	// +kubebuilder:validation:Optional
-	DiskTotalCondition []DiskTotalConditionParameters `json:"diskTotalCondition,omitempty" tf:"disk_total_condition,omitempty"`
-
-	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	// Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	//
-	// By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
-	//
-	// See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
-	//
-	// Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
-	// +kubebuilder:validation:Optional
-	HostMetadataCondition []HostMetadataConditionParameters `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
-
-	// (String) Possible values: LOCAL, REMOTE
-	// Possible values: `LOCAL`, `REMOTE`
-	// +kubebuilder:validation:Optional
-	LocalDiskCondition *string `json:"localDiskCondition,omitempty" tf:"local_disk_condition,omitempty"`
-
-	// (String) Disk property. Possible values: DiskFilesystem, DiskTotalSpace, DiskType
-	// Disk property. Possible values: `DiskFilesystem`, `DiskTotalSpace`, `DiskType`
-	// +kubebuilder:validation:Optional
-	Property *string `json:"property,omitempty" tf:"property,omitempty"`
-
-	// (String) Starting from agent 1.335 disk detection rules are supported. Possible values: RuleTypeDisk, RuleTypeHost
-	// Starting from agent 1.335 **disk** detection rules are supported. Possible values: `RuleTypeDisk`, `RuleTypeHost`
-	// +kubebuilder:validation:Optional
-	RuleType *string `json:"ruleType" tf:"rule_type,omitempty"`
-}
-
-type DetectionConditionsInitParameters struct {
-
-	// (Block List, Min: 1) (see below for nested schema)
-	DetectionCondition []DetectionConditionInitParameters `json:"detectionCondition,omitempty" tf:"detection_condition,omitempty"`
-}
-
-type DetectionConditionsObservation struct {
-
-	// (Block List, Min: 1) (see below for nested schema)
-	DetectionCondition []DetectionConditionObservation `json:"detectionCondition,omitempty" tf:"detection_condition,omitempty"`
-}
-
-type DetectionConditionsParameters struct {
-
-	// (Block List, Min: 1) (see below for nested schema)
-	// +kubebuilder:validation:Optional
-	DetectionCondition []DetectionConditionParameters `json:"detectionCondition" tf:"detection_condition,omitempty"`
-}
-
-type DiskTotalConditionInitParameters struct {
-
-	// (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
-	// If this field is empty then there is no lower limit. Minimum total disk space in GiB
-	ThresholdAbove *float64 `json:"thresholdAbove,omitempty" tf:"threshold_above,omitempty"`
-
-	// (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
-	// If this field is empty then there is no upper limit. Maximum total disk space in GiB
-	ThresholdBelow *float64 `json:"thresholdBelow,omitempty" tf:"threshold_below,omitempty"`
-}
-
-type DiskTotalConditionObservation struct {
-
-	// (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
-	// If this field is empty then there is no lower limit. Minimum total disk space in GiB
-	ThresholdAbove *float64 `json:"thresholdAbove,omitempty" tf:"threshold_above,omitempty"`
-
-	// (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
-	// If this field is empty then there is no upper limit. Maximum total disk space in GiB
-	ThresholdBelow *float64 `json:"thresholdBelow,omitempty" tf:"threshold_below,omitempty"`
-}
-
-type DiskTotalConditionParameters struct {
-
-	// (Number) If this field is empty then there is no lower limit. Minimum total disk space in GiB
-	// If this field is empty then there is no lower limit. Minimum total disk space in GiB
-	// +kubebuilder:validation:Optional
-	ThresholdAbove *float64 `json:"thresholdAbove,omitempty" tf:"threshold_above,omitempty"`
-
-	// (Number) If this field is empty then there is no upper limit. Maximum total disk space in GiB
-	// If this field is empty then there is no upper limit. Maximum total disk space in GiB
-	// +kubebuilder:validation:Optional
-	ThresholdBelow *float64 `json:"thresholdBelow,omitempty" tf:"threshold_below,omitempty"`
-}
-
 type EdgeAnomalyDetectorsInitParameters struct {
 
 	// (Block List, Max: 1) Alerts (see below for nested schema)
 	// Alerts
 	Alerts []AlertsInitParameters `json:"alerts,omitempty" tf:"alerts,omitempty"`
-
-	// (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
-	// Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
-	DetectionConditions []DetectionConditionsInitParameters `json:"detectionConditions,omitempty" tf:"detection_conditions,omitempty"`
 
 	// (Set of String) Disk will be included in this policy if any of the filters match
 	// Disk will be included in this policy if **any** of the filters match
@@ -353,6 +151,15 @@ type EdgeAnomalyDetectorsInitParameters struct {
 	// value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+) (see below for nested schema)
 	// Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+)
 	EventProperties []EventPropertiesInitParameters `json:"eventProperties,omitempty" tf:"event_properties,omitempty"`
+
+	// Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+	//
+	// By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+	//
+	// See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+	//
+	// Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+	HostMetadataConditions []HostMetadataConditionsInitParameters `json:"hostMetadataConditions,omitempty" tf:"host_metadata_conditions,omitempty"`
 
 	// (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
 	// Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
@@ -378,10 +185,6 @@ type EdgeAnomalyDetectorsObservation struct {
 	// Alerts
 	Alerts []AlertsObservation `json:"alerts,omitempty" tf:"alerts,omitempty"`
 
-	// (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
-	// Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
-	DetectionConditions []DetectionConditionsObservation `json:"detectionConditions,omitempty" tf:"detection_conditions,omitempty"`
-
 	// (Set of String) Disk will be included in this policy if any of the filters match
 	// Disk will be included in this policy if **any** of the filters match
 	// +listType=set
@@ -394,6 +197,15 @@ type EdgeAnomalyDetectorsObservation struct {
 	// value properties to be attached to the triggered event. You can retrieve the available property keys using the Events API v2. Additionally any Host resource attribute can be dynamically substituted (agent 1.325+) (see below for nested schema)
 	// Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+)
 	EventProperties []EventPropertiesObservation `json:"eventProperties,omitempty" tf:"event_properties,omitempty"`
+
+	// Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+	//
+	// By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+	//
+	// See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+	//
+	// Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+	HostMetadataConditions []HostMetadataConditionsObservation `json:"hostMetadataConditions,omitempty" tf:"host_metadata_conditions,omitempty"`
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -423,11 +235,6 @@ type EdgeAnomalyDetectorsParameters struct {
 	// +kubebuilder:validation:Optional
 	Alerts []AlertsParameters `json:"alerts,omitempty" tf:"alerts,omitempty"`
 
-	// (Block List, Max: 1) Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy. (see below for nested schema)
-	// Set of rules to scope which disks the policy applies to. Rules can match based on disk properties (total space, filesystem, disk type) or host resource attributes. Each disk property type can be defined at most once per policy.
-	// +kubebuilder:validation:Optional
-	DetectionConditions []DetectionConditionsParameters `json:"detectionConditions,omitempty" tf:"detection_conditions,omitempty"`
-
 	// (Set of String) Disk will be included in this policy if any of the filters match
 	// Disk will be included in this policy if **any** of the filters match
 	// +kubebuilder:validation:Optional
@@ -443,6 +250,16 @@ type EdgeAnomalyDetectorsParameters struct {
 	// Set of additional key-value properties to be attached to the triggered event. You can retrieve the available property keys using the [Events API v2](https://dt-url.net/9622g1w). Additionally any Host resource attribute can be dynamically substituted (agent 1.325+)
 	// +kubebuilder:validation:Optional
 	EventProperties []EventPropertiesParameters `json:"eventProperties,omitempty" tf:"event_properties,omitempty"`
+
+	// Host resource attributes are dimensions enriching the host including custom metadata which are user-defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+	//
+	// By defining custom metadata, you can enrich the monitoring data with context specific to your organization's needs, such as environment names, team ownership, application versions, or any other relevant details.
+	//
+	// See [Define tags and metadata for hosts](https://dt-url.net/w3hv0kbw).
+	//
+	// Note: Starting from version 1.325 host resource attributes are supported in addition to host custom metadata.
+	// +kubebuilder:validation:Optional
+	HostMetadataConditions []HostMetadataConditionsParameters `json:"hostMetadataConditions,omitempty" tf:"host_metadata_conditions,omitempty"`
 
 	// (String) Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
 	// Because this resource allows for ordering you may specify the ID of the resource instance that comes before this instance regarding order. If not specified when creating the setting will be added to the end of the list. If not specified during update the order will remain untouched
@@ -473,7 +290,7 @@ type EventPropertieInitParameters struct {
 	MetadataKey *string `json:"metadataKey,omitempty" tf:"metadata_key,omitempty"`
 
 	// (String) No documentation available
-	// No documentation available
+	// no documentation available
 	MetadataValue *string `json:"metadataValue,omitempty" tf:"metadata_value,omitempty"`
 }
 
@@ -484,7 +301,7 @@ type EventPropertieObservation struct {
 	MetadataKey *string `json:"metadataKey,omitempty" tf:"metadata_key,omitempty"`
 
 	// (String) No documentation available
-	// No documentation available
+	// no documentation available
 	MetadataValue *string `json:"metadataValue,omitempty" tf:"metadata_value,omitempty"`
 }
 
@@ -496,7 +313,7 @@ type EventPropertieParameters struct {
 	MetadataKey *string `json:"metadataKey" tf:"metadata_key,omitempty"`
 
 	// (String) No documentation available
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	MetadataValue *string `json:"metadataValue" tf:"metadata_value,omitempty"`
 }
@@ -610,23 +427,42 @@ type HostMetadataConditionHostMetadataConditionParameters struct {
 type HostMetadataConditionInitParameters struct {
 
 	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	// No documentation available
+	// no documentation available
 	HostMetadataCondition []HostMetadataConditionHostMetadataConditionInitParameters `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
 }
 
 type HostMetadataConditionObservation struct {
 
 	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	// No documentation available
+	// no documentation available
 	HostMetadataCondition []HostMetadataConditionHostMetadataConditionObservation `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
 }
 
 type HostMetadataConditionParameters struct {
 
 	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	HostMetadataCondition []HostMetadataConditionHostMetadataConditionParameters `json:"hostMetadataCondition" tf:"host_metadata_condition,omitempty"`
+}
+
+type HostMetadataConditionsInitParameters struct {
+
+	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+	HostMetadataCondition []HostMetadataConditionInitParameters `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
+}
+
+type HostMetadataConditionsObservation struct {
+
+	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+	HostMetadataCondition []HostMetadataConditionObservation `json:"hostMetadataCondition,omitempty" tf:"host_metadata_condition,omitempty"`
+}
+
+type HostMetadataConditionsParameters struct {
+
+	// defined key-value pairs that you can assign to hosts monitored by Dynatrace.
+	// +kubebuilder:validation:Optional
+	HostMetadataCondition []HostMetadataConditionParameters `json:"hostMetadataCondition" tf:"host_metadata_condition,omitempty"`
 }
 
 type SampleCountThresholdsImmediatelyInitParameters struct {

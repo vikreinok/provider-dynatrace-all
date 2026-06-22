@@ -51,19 +51,19 @@ type CPURequestsSaturationParameters struct {
 type ClusterAnomaliesInitParameters struct {
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	CPURequestsSaturation []CPURequestsSaturationInitParameters `json:"cpuRequestsSaturation,omitempty" tf:"cpu_requests_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	MemoryRequestsSaturation []MemoryRequestsSaturationInitParameters `json:"memoryRequestsSaturation,omitempty" tf:"memory_requests_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	MonitoringIssues []MonitoringIssuesInitParameters `json:"monitoringIssues,omitempty" tf:"monitoring_issues,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	PodsSaturation []PodsSaturationInitParameters `json:"podsSaturation,omitempty" tf:"pods_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) Alerts if cluster has not been ready for a given amount of time (see below for nested schema)
@@ -78,22 +78,22 @@ type ClusterAnomaliesInitParameters struct {
 type ClusterAnomaliesObservation struct {
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	CPURequestsSaturation []CPURequestsSaturationObservation `json:"cpuRequestsSaturation,omitempty" tf:"cpu_requests_saturation,omitempty"`
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	MemoryRequestsSaturation []MemoryRequestsSaturationObservation `json:"memoryRequestsSaturation,omitempty" tf:"memory_requests_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	MonitoringIssues []MonitoringIssuesObservation `json:"monitoringIssues,omitempty" tf:"monitoring_issues,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	PodsSaturation []PodsSaturationObservation `json:"podsSaturation,omitempty" tf:"pods_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) Alerts if cluster has not been ready for a given amount of time (see below for nested schema)
@@ -108,22 +108,22 @@ type ClusterAnomaliesObservation struct {
 type ClusterAnomaliesParameters struct {
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	CPURequestsSaturation []CPURequestsSaturationParameters `json:"cpuRequestsSaturation,omitempty" tf:"cpu_requests_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	MemoryRequestsSaturation []MemoryRequestsSaturationParameters `json:"memoryRequestsSaturation,omitempty" tf:"memory_requests_saturation,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	MonitoringIssues []MonitoringIssuesParameters `json:"monitoringIssues,omitempty" tf:"monitoring_issues,omitempty"`
 
 	// (Block List, Min: 1, Max: 1) No documentation available (see below for nested schema)
-	// No documentation available
+	// no documentation available
 	// +kubebuilder:validation:Optional
 	PodsSaturation []PodsSaturationParameters `json:"podsSaturation,omitempty" tf:"pods_saturation,omitempty"`
 

@@ -25,6 +25,7 @@ type ProcessingInitParameters struct {
 
 	// (Block List, Min: 1, Max: 1) ## Processor definition (see below for nested schema)
 	// ## Processor definition
+	// Add a rule definition using our syntax. [In our documentation](https://dt-url.net/8k03xm2) you will find instructions and application [examples](https://dt-url.net/m24305t).
 	ProcessorDefinition []ProcessorDefinitionInitParameters `json:"processorDefinition,omitempty" tf:"processor_definition,omitempty"`
 
 	// (String) Matcher
@@ -56,6 +57,7 @@ type ProcessingObservation struct {
 
 	// (Block List, Min: 1, Max: 1) ## Processor definition (see below for nested schema)
 	// ## Processor definition
+	// Add a rule definition using our syntax. [In our documentation](https://dt-url.net/8k03xm2) you will find instructions and application [examples](https://dt-url.net/m24305t).
 	ProcessorDefinition []ProcessorDefinitionObservation `json:"processorDefinition,omitempty" tf:"processor_definition,omitempty"`
 
 	// (String) Matcher
@@ -86,6 +88,7 @@ type ProcessingParameters struct {
 
 	// (Block List, Min: 1, Max: 1) ## Processor definition (see below for nested schema)
 	// ## Processor definition
+	// Add a rule definition using our syntax. [In our documentation](https://dt-url.net/8k03xm2) you will find instructions and application [examples](https://dt-url.net/m24305t).
 	// +kubebuilder:validation:Optional
 	ProcessorDefinition []ProcessorDefinitionParameters `json:"processorDefinition,omitempty" tf:"processor_definition,omitempty"`
 
