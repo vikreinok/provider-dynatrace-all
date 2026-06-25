@@ -9,7 +9,9 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 const (
@@ -117,6 +119,14 @@ func DefaultResourceConfigurations() ujconfig.ResourceOption {
 			} else {
 				r.ShortGroup = "dynatrace"
 			}
+		}
+
+		// Register custom lookup initializer for dynatrace_iam_group, dynatrace_iam_policy_boundary, and dynatrace_iam_policy_bindings_v2
+		switch r.Name {
+		case "dynatrace_iam_group", "dynatrace_iam_policy_boundary", "dynatrace_iam_policy_bindings_v2":
+			r.InitializerFns = append(r.InitializerFns, func(client client.Client) managed.Initializer {
+				return NewDynatraceImportInitializer(client, r.Name)
+			})
 		}
 
 		// Apply custom kind/reference overrides to ensure compatibility with old manifests and references
