@@ -130,7 +130,7 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		}, nil
 	}
 
-	id, count, err := e.service.Lookup(ctx, entityType, entityName)
+	id, tags, count, err := e.service.Lookup(ctx, entityType, entityName)
 	if err != nil {
 		cr.SetConditions(xpv1.ReconcileError(err))
 		return managed.ExternalObservation{}, err
@@ -138,6 +138,7 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 
 	if id != "" {
 		cr.Status.AtProvider.EntityID = &id
+		cr.Status.AtProvider.Tags = tags
 		meta.SetExternalName(cr, id)
 		if count > 1 {
 			cr.SetConditions(xpv1.Available().WithMessage(fmt.Sprintf("Warning: Multiple entities (%d) matched query. Using first match: %s", count, id)))
@@ -146,6 +147,7 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		}
 	} else {
 		cr.Status.AtProvider.EntityID = nil
+		cr.Status.AtProvider.Tags = nil
 		cr.SetConditions(xpv1.Unavailable().WithMessage(fmt.Sprintf("Entity %s not found in Dynatrace yet", entityName)))
 	}
 
@@ -172,7 +174,7 @@ func (e *external) Disconnect(ctx context.Context) error {
 }
 
 type service interface {
-	Lookup(ctx context.Context, entityType, entityName string) (string, int, error)
+	Lookup(ctx context.Context, entityType, entityName string) (string, []v1alpha1.HostEntityTag, int, error)
 }
 
 type apiService struct {
@@ -190,12 +192,13 @@ func newService(ctx context.Context, envURL, apiToken string) (service, error) {
 }
 
 type entityItem struct {
-	EntityID    string `json:"entityId"`
-	Type        string `json:"type"`
-	DisplayName string `json:"displayName"`
+	EntityID    string                   `json:"entityId"`
+	Type        string                   `json:"type"`
+	DisplayName string                   `json:"displayName"`
+	Tags        []v1alpha1.HostEntityTag `json:"tags"`
 }
 
-func (s *apiService) Lookup(ctx context.Context, entityType, entityName string) (string, int, error) {
+func (s *apiService) Lookup(ctx context.Context, entityType, entityName string) (string, []v1alpha1.HostEntityTag, int, error) {
 	var selector string
 	if entityName == "*" {
 		selector = fmt.Sprintf(`type("%s")`, entityType)
@@ -205,35 +208,35 @@ func (s *apiService) Lookup(ctx context.Context, entityType, entityName string) 
 	} else {
 		selector = fmt.Sprintf(`type("%s"),entityName.equals("%s")`, entityType, entityName)
 	}
-	queryURL := fmt.Sprintf("%s/api/v2/entities?entitySelector=%s", s.envURL, url.QueryEscape(selector))
+	queryURL := fmt.Sprintf("%s/api/v2/entities?entitySelector=%s&fields=tags", s.envURL, url.QueryEscape(selector))
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, queryURL, nil)
 	if err != nil {
-		return "", 0, err
+		return "", nil, 0, err
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Api-Token %s", s.apiToken))
 
 	resp, err := s.client.Do(req)
 	if err != nil {
-		return "", 0, err
+		return "", nil, 0, err
 	}
 	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		b, _ := io.ReadAll(resp.Body)
-		return "", 0, fmt.Errorf("unexpected status code %d: %s", resp.StatusCode, string(b))
+		return "", nil, 0, fmt.Errorf("unexpected status code %d: %s", resp.StatusCode, string(b))
 	}
 
 	var response struct {
 		Entities []entityItem `json:"entities"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-		return "", 0, err
+		return "", nil, 0, err
 	}
 
 	if len(response.Entities) > 0 {
-		return response.Entities[0].EntityID, len(response.Entities), nil
+		return response.Entities[0].EntityID, response.Entities[0].Tags, len(response.Entities), nil
 	}
 
-	return "", 0, nil
+	return "", nil, 0, nil
 }

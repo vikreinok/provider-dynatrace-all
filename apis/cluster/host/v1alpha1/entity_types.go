@@ -22,6 +22,16 @@ type HostEntityInitParameters struct {
 type HostEntityObservation struct {
 	// The resolved Dynatrace ID of the entity, e.g. "HOST-D6E60CF7996C2E61"
 	EntityID *string `json:"entityId,omitempty"`
+
+	// The tags of the entity in Dynatrace.
+	Tags []HostEntityTag `json:"tags,omitempty"`
+}
+
+type HostEntityTag struct {
+	Context              *string `json:"context,omitempty"`
+	Key                  *string `json:"key,omitempty"`
+	Value                *string `json:"value,omitempty"`
+	StringRepresentation *string `json:"stringRepresentation,omitempty"`
 }
 
 type HostEntityParameters struct {

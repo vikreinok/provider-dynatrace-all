@@ -191,6 +191,20 @@ spec:
                   entityId:
                     description: The resolved Dynatrace ID of the entity, e.g. "HOST-D6E60CF7996C2E61"
                     type: string
+                  tags:
+                    description: The tags of the entity in Dynatrace.
+                    items:
+                      properties:
+                        context:
+                          type: string
+                        key:
+                          type: string
+                        stringRepresentation:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
