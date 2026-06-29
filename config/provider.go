@@ -121,9 +121,9 @@ func DefaultResourceConfigurations() ujconfig.ResourceOption {
 			}
 		}
 
-		// Register custom lookup initializer for dynatrace_iam_group, dynatrace_iam_policy_boundary, and dynatrace_iam_policy_bindings_v2
+		// Register custom lookup initializer for dynatrace_iam_group and dynatrace_iam_policy_boundary
 		switch r.Name {
-		case "dynatrace_iam_group", "dynatrace_iam_policy_boundary", "dynatrace_iam_policy_bindings_v2":
+		case "dynatrace_iam_group", "dynatrace_iam_policy_boundary":
 			r.InitializerFns = append(r.InitializerFns, func(client client.Client) managed.Initializer {
 				return NewDynatraceImportInitializer(client, r.Name)
 			})
