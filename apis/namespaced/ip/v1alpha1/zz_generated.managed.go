@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this AddressMasking.
-func (mg *AddressMasking) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *AddressMasking) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this AddressMasking.
-func (mg *AddressMasking) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *AddressMasking) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this AddressMasking.
-func (mg *AddressMasking) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *AddressMasking) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this AddressMasking.
-func (mg *AddressMasking) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *AddressMasking) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this AddressMasking.
-func (mg *AddressMasking) SetConditions(c ...xpv1.Condition) {
+func (mg *AddressMasking) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this AddressMasking.
-func (mg *AddressMasking) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *AddressMasking) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this AddressMasking.
-func (mg *AddressMasking) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *AddressMasking) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this AddressMasking.
-func (mg *AddressMasking) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *AddressMasking) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

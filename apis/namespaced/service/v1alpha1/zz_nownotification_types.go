@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type NowNotificationInitParameters struct {
@@ -76,7 +75,7 @@ type NowNotificationInitParameters struct {
 
 	// (String, Sensitive) The password to the ServiceNow account.
 	// The password to the ServiceNow account.
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) The ID of the associated alerting profile
 	// The ID of the associated alerting profile
@@ -246,7 +245,7 @@ type NowNotificationParameters struct {
 	// (String, Sensitive) The password to the ServiceNow account.
 	// The password to the ServiceNow account.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) The ID of the associated alerting profile
 	// The ID of the associated alerting profile
@@ -287,8 +286,8 @@ type NowNotificationSpec struct {
 
 // NowNotificationStatus defines the observed state of NowNotification.
 type NowNotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        NowNotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               NowNotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type VmwareInitParameters struct {
@@ -38,7 +37,7 @@ type VmwareInitParameters struct {
 
 	// (String, Sensitive) no documentation available
 	// no documentation available
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Provide user credentials for the vCenter or standalone ESXi host:
 	// Provide user credentials for the vCenter or standalone ESXi host:
@@ -104,7 +103,7 @@ type VmwareParameters struct {
 	// (String, Sensitive) no documentation available
 	// no documentation available
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Provide user credentials for the vCenter or standalone ESXi host:
 	// Provide user credentials for the vCenter or standalone ESXi host:
@@ -131,8 +130,8 @@ type VmwareSpec struct {
 
 // VmwareStatus defines the observed state of Vmware.
 type VmwareStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        VmwareObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               VmwareObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

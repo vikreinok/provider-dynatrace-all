@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type WorkflowJiraInitParameters struct {
@@ -26,11 +25,11 @@ type WorkflowJiraInitParameters struct {
 
 	// (String, Sensitive) Password of the Jira user
 	// Password of the Jira user
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Token for the selected authentication type
 	// Token for the selected authentication type
-	TokenSecretRef *v1.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Basic, Cloud_token, Pat
 	// Possible Values: `Basic`, `Cloud_token`, `Pat`
@@ -86,12 +85,12 @@ type WorkflowJiraParameters struct {
 	// (String, Sensitive) Password of the Jira user
 	// Password of the Jira user
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Token for the selected authentication type
 	// Token for the selected authentication type
 	// +kubebuilder:validation:Optional
-	TokenSecretRef *v1.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Basic, Cloud_token, Pat
 	// Possible Values: `Basic`, `Cloud_token`, `Pat`
@@ -128,8 +127,8 @@ type WorkflowJiraSpec struct {
 
 // WorkflowJiraStatus defines the observed state of WorkflowJira.
 type WorkflowJiraStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WorkflowJiraObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WorkflowJiraObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

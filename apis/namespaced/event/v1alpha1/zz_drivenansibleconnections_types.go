@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type DrivenAnsibleConnectionsInitParameters struct {
@@ -26,7 +25,7 @@ type DrivenAnsibleConnectionsInitParameters struct {
 
 	// Driven Ansible Controller. Please note that this token is not refreshed and can expire.
 	// API access token for the Event-Driven Ansible Controller. Please note that this token is not refreshed and can expire.
-	TokenSecretRef *v1.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Api_token
 	// Possible Values: `Api_token`
@@ -74,7 +73,7 @@ type DrivenAnsibleConnectionsParameters struct {
 	// Driven Ansible Controller. Please note that this token is not refreshed and can expire.
 	// API access token for the Event-Driven Ansible Controller. Please note that this token is not refreshed and can expire.
 	// +kubebuilder:validation:Optional
-	TokenSecretRef *v1.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Api_token
 	// Possible Values: `Api_token`
@@ -106,8 +105,8 @@ type DrivenAnsibleConnectionsSpec struct {
 
 // DrivenAnsibleConnectionsStatus defines the observed state of DrivenAnsibleConnections.
 type DrivenAnsibleConnectionsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        DrivenAnsibleConnectionsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               DrivenAnsibleConnectionsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

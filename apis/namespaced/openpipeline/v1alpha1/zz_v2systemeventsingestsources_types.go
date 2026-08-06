@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AzureLogForwardingFieldExtractionIncludeFieldExtractionEntryInitParameters struct {
@@ -4246,8 +4245,8 @@ type V2SystemEventsIngestsourcesSpec struct {
 
 // V2SystemEventsIngestsourcesStatus defines the observed state of V2SystemEventsIngestsources.
 type V2SystemEventsIngestsourcesStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2SystemEventsIngestsourcesObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2SystemEventsIngestsourcesObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

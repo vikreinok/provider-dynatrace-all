@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type RequestsInitParameters struct {
@@ -61,8 +61,8 @@ type RequestsParameters struct {
 
 // RequestsSpec defines the desired state of Requests
 type RequestsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     RequestsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   RequestsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -78,8 +78,8 @@ type RequestsSpec struct {
 
 // RequestsStatus defines the observed state of Requests.
 type RequestsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RequestsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RequestsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

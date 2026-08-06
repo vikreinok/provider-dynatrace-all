@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AlertingInitParameters struct {
@@ -30,11 +30,11 @@ type AlertingInitParameters struct {
 
 	// Reference to a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneRef *v1.Reference `json:"managementZoneRef,omitempty" tf:"-"`
+	ManagementZoneRef *v2.Reference `json:"managementZoneRef,omitempty" tf:"-"`
 
 	// Selector for a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneSelector *v1.Selector `json:"managementZoneSelector,omitempty" tf:"-"`
+	ManagementZoneSelector *v2.Selector `json:"managementZoneSelector,omitempty" tf:"-"`
 
 	// (String) The name of the alerting profile, displayed in the UI
 	// The name of the alerting profile, displayed in the UI
@@ -91,11 +91,11 @@ type AlertingParameters struct {
 
 	// Reference to a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneRef *v1.Reference `json:"managementZoneRef,omitempty" tf:"-"`
+	ManagementZoneRef *v2.Reference `json:"managementZoneRef,omitempty" tf:"-"`
 
 	// Selector for a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneSelector *v1.Selector `json:"managementZoneSelector,omitempty" tf:"-"`
+	ManagementZoneSelector *v2.Selector `json:"managementZoneSelector,omitempty" tf:"-"`
 
 	// (String) The name of the alerting profile, displayed in the UI
 	// The name of the alerting profile, displayed in the UI
@@ -573,8 +573,8 @@ type TitleParameters struct {
 
 // AlertingSpec defines the desired state of Alerting
 type AlertingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AlertingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AlertingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -590,8 +590,8 @@ type AlertingSpec struct {
 
 // AlertingStatus defines the observed state of Alerting.
 type AlertingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AlertingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AlertingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

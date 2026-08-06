@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PolicyBindingsV2InitParameters struct {
@@ -30,11 +30,11 @@ type PolicyBindingsV2InitParameters struct {
 
 	// Reference to a Group to populate group.
 	// +kubebuilder:validation:Optional
-	GroupRef *v1.Reference `json:"groupRef,omitempty" tf:"-"`
+	GroupRef *v2.Reference `json:"groupRef,omitempty" tf:"-"`
 
 	// Selector for a Group to populate group.
 	// +kubebuilder:validation:Optional
-	GroupSelector *v1.Selector `json:"groupSelector,omitempty" tf:"-"`
+	GroupSelector *v2.Selector `json:"groupSelector,omitempty" tf:"-"`
 
 	// (Block Set) A list of Policies (ID and parameters/metadata) referring to policies bound to that group. It's not possible to mix policies here that are defined for different scopes (different accounts or environments) than specified via attributes account or environment. (see below for nested schema)
 	// A list of Policies (ID and parameters/metadata) referring to policies bound to that group. It's not possible to mix policies here that are defined for different scopes (different accounts or environments) than specified via attributes `account` or `environment`.
@@ -83,11 +83,11 @@ type PolicyBindingsV2Parameters struct {
 
 	// Reference to a Group to populate group.
 	// +kubebuilder:validation:Optional
-	GroupRef *v1.Reference `json:"groupRef,omitempty" tf:"-"`
+	GroupRef *v2.Reference `json:"groupRef,omitempty" tf:"-"`
 
 	// Selector for a Group to populate group.
 	// +kubebuilder:validation:Optional
-	GroupSelector *v1.Selector `json:"groupSelector,omitempty" tf:"-"`
+	GroupSelector *v2.Selector `json:"groupSelector,omitempty" tf:"-"`
 
 	// (Block Set) A list of Policies (ID and parameters/metadata) referring to policies bound to that group. It's not possible to mix policies here that are defined for different scopes (different accounts or environments) than specified via attributes account or environment. (see below for nested schema)
 	// A list of Policies (ID and parameters/metadata) referring to policies bound to that group. It's not possible to mix policies here that are defined for different scopes (different accounts or environments) than specified via attributes `account` or `environment`.
@@ -104,11 +104,11 @@ type PolicyBindingsV2PolicyInitParameters struct {
 
 	// References to PolicyBoundary to populate boundaries.
 	// +kubebuilder:validation:Optional
-	BoundariesRefs []v1.Reference `json:"boundariesRefs,omitempty" tf:"-"`
+	BoundariesRefs []v2.Reference `json:"boundariesRefs,omitempty" tf:"-"`
 
 	// Selector for a list of PolicyBoundary to populate boundaries.
 	// +kubebuilder:validation:Optional
-	BoundariesSelector *v1.Selector `json:"boundariesSelector,omitempty" tf:"-"`
+	BoundariesSelector *v2.Selector `json:"boundariesSelector,omitempty" tf:"-"`
 
 	// (String) The ID of this resource.
 	// Either the attribute `id` or the attribute `uuid` of a `dynatrace_iam_policy`. Initially just the `id` attribute was supported (which is a concatenation of several configuration settings) - and is still supported for backwards compatibility
@@ -117,11 +117,11 @@ type PolicyBindingsV2PolicyInitParameters struct {
 
 	// Reference to a Policy to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Policy to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 
 	// (Map of String)
 	// +mapType=granular
@@ -161,11 +161,11 @@ type PolicyBindingsV2PolicyParameters struct {
 
 	// References to PolicyBoundary to populate boundaries.
 	// +kubebuilder:validation:Optional
-	BoundariesRefs []v1.Reference `json:"boundariesRefs,omitempty" tf:"-"`
+	BoundariesRefs []v2.Reference `json:"boundariesRefs,omitempty" tf:"-"`
 
 	// Selector for a list of PolicyBoundary to populate boundaries.
 	// +kubebuilder:validation:Optional
-	BoundariesSelector *v1.Selector `json:"boundariesSelector,omitempty" tf:"-"`
+	BoundariesSelector *v2.Selector `json:"boundariesSelector,omitempty" tf:"-"`
 
 	// (String) The ID of this resource.
 	// Either the attribute `id` or the attribute `uuid` of a `dynatrace_iam_policy`. Initially just the `id` attribute was supported (which is a concatenation of several configuration settings) - and is still supported for backwards compatibility
@@ -175,11 +175,11 @@ type PolicyBindingsV2PolicyParameters struct {
 
 	// Reference to a Policy to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Policy to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 
 	// (Map of String)
 	// +kubebuilder:validation:Optional
@@ -194,8 +194,8 @@ type PolicyBindingsV2PolicyParameters struct {
 
 // PolicyBindingsV2Spec defines the desired state of PolicyBindingsV2
 type PolicyBindingsV2Spec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     PolicyBindingsV2Parameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   PolicyBindingsV2Parameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -211,8 +211,8 @@ type PolicyBindingsV2Spec struct {
 
 // PolicyBindingsV2Status defines the observed state of PolicyBindingsV2.
 type PolicyBindingsV2Status struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PolicyBindingsV2Observation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PolicyBindingsV2Observation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

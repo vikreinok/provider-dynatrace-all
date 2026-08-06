@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ProcessGroupMonitoringInitParameters struct {
@@ -66,8 +66,8 @@ type ProcessGroupMonitoringParameters struct {
 
 // ProcessGroupMonitoringSpec defines the desired state of ProcessGroupMonitoring
 type ProcessGroupMonitoringSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ProcessGroupMonitoringParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ProcessGroupMonitoringParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -83,8 +83,8 @@ type ProcessGroupMonitoringSpec struct {
 
 // ProcessGroupMonitoringStatus defines the observed state of ProcessGroupMonitoring.
 type ProcessGroupMonitoringStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ProcessGroupMonitoringObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ProcessGroupMonitoringObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

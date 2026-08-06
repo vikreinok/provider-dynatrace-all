@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MqFiltersInitParameters struct {
@@ -123,8 +123,8 @@ type MqFiltersParameters struct {
 
 // MqFiltersSpec defines the desired state of MqFilters
 type MqFiltersSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     MqFiltersParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   MqFiltersParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -140,8 +140,8 @@ type MqFiltersSpec struct {
 
 // MqFiltersStatus defines the observed state of MqFilters.
 type MqFiltersStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MqFiltersObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MqFiltersObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

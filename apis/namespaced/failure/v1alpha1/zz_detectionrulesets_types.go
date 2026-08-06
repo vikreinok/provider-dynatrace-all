@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type DetectionRuleSetsInitParameters struct {
@@ -651,8 +650,8 @@ type DetectionRuleSetsSpec struct {
 
 // DetectionRuleSetsStatus defines the observed state of DetectionRuleSets.
 type DetectionRuleSetsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        DetectionRuleSetsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               DetectionRuleSetsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

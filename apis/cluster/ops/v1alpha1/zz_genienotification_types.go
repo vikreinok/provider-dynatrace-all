@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type GenieNotificationInitParameters struct {
@@ -19,7 +19,7 @@ type GenieNotificationInitParameters struct {
 	// The API key to access OpsGenie.
 	//
 	// Go to OpsGenie-Integrations and create a new Dynatrace integration. Copy the newly created API key.
-	APIKeySecretRef *v1.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
+	APIKeySecretRef *v2.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
 
 	// (Boolean) This setting is enabled (true) or disabled (false)
 	// This setting is enabled (`true`) or disabled (`false`)
@@ -107,7 +107,7 @@ type GenieNotificationParameters struct {
 	//
 	// Go to OpsGenie-Integrations and create a new Dynatrace integration. Copy the newly created API key.
 	// +kubebuilder:validation:Optional
-	APIKeySecretRef *v1.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
+	APIKeySecretRef *v2.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
 
 	// (Boolean) This setting is enabled (true) or disabled (false)
 	// This setting is enabled (`true`) or disabled (`false`)
@@ -154,8 +154,8 @@ type GenieNotificationParameters struct {
 
 // GenieNotificationSpec defines the desired state of GenieNotification
 type GenieNotificationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     GenieNotificationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   GenieNotificationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -171,8 +171,8 @@ type GenieNotificationSpec struct {
 
 // GenieNotificationStatus defines the observed state of GenieNotification.
 type GenieNotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        GenieNotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               GenieNotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

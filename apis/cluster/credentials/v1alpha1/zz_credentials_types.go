@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AllowedEntitiesInitParameters struct {
@@ -110,7 +110,7 @@ type CredentialsInitParameters struct {
 
 	// -empty--.
 	// The password of the credential. If you want to set an empty password, use the value `--empty--`.
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) For certificate authentication specifies whether it's public certificate auth (true) or not (false).
 	// For certificate authentication specifies whether it's public certificate auth (`true`) or not (`false`).
@@ -127,11 +127,11 @@ type CredentialsInitParameters struct {
 
 	// (String, Sensitive) Token in the string format. Specifying a token implies Token Authentication.
 	// Token in the string format. Specifying a token implies `Token Authentication`.
-	TokenSecretRef *v1.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The username of the credentials set.
 	// The username of the credentials set.
-	UsernameSecretRef *v1.SecretKeySelector `json:"usernameSecretRef,omitempty" tf:"-"`
+	UsernameSecretRef *v2.SecretKeySelector `json:"usernameSecretRef,omitempty" tf:"-"`
 }
 
 type CredentialsObservation struct {
@@ -239,7 +239,7 @@ type CredentialsParameters struct {
 	// -empty--.
 	// The password of the credential. If you want to set an empty password, use the value `--empty--`.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) For certificate authentication specifies whether it's public certificate auth (true) or not (false).
 	// For certificate authentication specifies whether it's public certificate auth (`true`) or not (`false`).
@@ -260,12 +260,12 @@ type CredentialsParameters struct {
 	// (String, Sensitive) Token in the string format. Specifying a token implies Token Authentication.
 	// Token in the string format. Specifying a token implies `Token Authentication`.
 	// +kubebuilder:validation:Optional
-	TokenSecretRef *v1.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The username of the credentials set.
 	// The username of the credentials set.
 	// +kubebuilder:validation:Optional
-	UsernameSecretRef *v1.SecretKeySelector `json:"usernameSecretRef,omitempty" tf:"-"`
+	UsernameSecretRef *v2.SecretKeySelector `json:"usernameSecretRef,omitempty" tf:"-"`
 }
 
 type EntityInitParameters struct {
@@ -551,8 +551,8 @@ type ExternalParameters struct {
 
 // CredentialsSpec defines the desired state of Credentials
 type CredentialsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     CredentialsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   CredentialsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -568,8 +568,8 @@ type CredentialsSpec struct {
 
 // CredentialsStatus defines the observed state of Credentials.
 type CredentialsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CredentialsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CredentialsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

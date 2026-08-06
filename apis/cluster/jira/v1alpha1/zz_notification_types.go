@@ -10,14 +10,14 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type NotificationInitParameters struct {
 
 	// (String, Sensitive) The API token for the Jira profile. Using password authentication was deprecated by Jira
 	// The API token for the Jira profile. Using password authentication [was deprecated by Jira](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-basic-auth-and-cookie-based-auth/)
-	APITokenSecretRef *v1.SecretKeySelector `json:"apiTokenSecretRef,omitempty" tf:"-"`
+	APITokenSecretRef *v2.SecretKeySelector `json:"apiTokenSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) This setting is enabled (true) or disabled (false)
 	// This setting is enabled (`true`) or disabled (`false`)
@@ -207,7 +207,7 @@ type NotificationParameters struct {
 	// (String, Sensitive) The API token for the Jira profile. Using password authentication was deprecated by Jira
 	// The API token for the Jira profile. Using password authentication [was deprecated by Jira](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-basic-auth-and-cookie-based-auth/)
 	// +kubebuilder:validation:Optional
-	APITokenSecretRef *v1.SecretKeySelector `json:"apiTokenSecretRef,omitempty" tf:"-"`
+	APITokenSecretRef *v2.SecretKeySelector `json:"apiTokenSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) This setting is enabled (true) or disabled (false)
 	// This setting is enabled (`true`) or disabled (`false`)
@@ -310,8 +310,8 @@ type NotificationParameters struct {
 
 // NotificationSpec defines the desired state of Notification
 type NotificationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     NotificationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   NotificationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -327,8 +327,8 @@ type NotificationSpec struct {
 
 // NotificationStatus defines the observed state of Notification.
 type NotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        NotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               NotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

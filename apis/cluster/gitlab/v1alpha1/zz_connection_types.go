@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionInitParameters struct {
@@ -21,7 +21,7 @@ type ConnectionInitParameters struct {
 
 	// (String, Sensitive) The GitLab token to use for authentication. Please note that this token is not refreshed and can expire.
 	// The GitLab token to use for authentication. Please note that this token is not refreshed and can expire.
-	TokenSecretRef v1.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
 
 	// (String) The GitLab URL instance you want to connect. For example, https://gitlab.com
 	// The GitLab URL instance you want to connect. For example, https://gitlab.com
@@ -52,7 +52,7 @@ type ConnectionParameters struct {
 	// (String, Sensitive) The GitLab token to use for authentication. Please note that this token is not refreshed and can expire.
 	// The GitLab token to use for authentication. Please note that this token is not refreshed and can expire.
 	// +kubebuilder:validation:Optional
-	TokenSecretRef v1.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
 
 	// (String) The GitLab URL instance you want to connect. For example, https://gitlab.com
 	// The GitLab URL instance you want to connect. For example, https://gitlab.com
@@ -62,8 +62,8 @@ type ConnectionParameters struct {
 
 // ConnectionSpec defines the desired state of Connection
 type ConnectionSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConnectionParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ConnectionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -79,8 +79,8 @@ type ConnectionSpec struct {
 
 // ConnectionStatus defines the observed state of Connection.
 type ConnectionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConnectionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

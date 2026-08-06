@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppBeaconOriginsInitParameters struct {
@@ -45,8 +45,8 @@ type AppBeaconOriginsParameters struct {
 
 // AppBeaconOriginsSpec defines the desired state of AppBeaconOrigins
 type AppBeaconOriginsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AppBeaconOriginsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AppBeaconOriginsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -62,8 +62,8 @@ type AppBeaconOriginsSpec struct {
 
 // AppBeaconOriginsStatus defines the observed state of AppBeaconOrigins.
 type AppBeaconOriginsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AppBeaconOriginsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AppBeaconOriginsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -6,54 +6,54 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this AddressMasking.
-func (mg *AddressMasking) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *AddressMasking) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this AddressMasking.
-func (mg *AddressMasking) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *AddressMasking) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this AddressMasking.
-func (mg *AddressMasking) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *AddressMasking) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this AddressMasking.
-func (mg *AddressMasking) GetProviderConfigReference() *xpv1.Reference {
+func (mg *AddressMasking) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this AddressMasking.
-func (mg *AddressMasking) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *AddressMasking) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this AddressMasking.
-func (mg *AddressMasking) SetConditions(c ...xpv1.Condition) {
+func (mg *AddressMasking) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this AddressMasking.
-func (mg *AddressMasking) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *AddressMasking) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this AddressMasking.
-func (mg *AddressMasking) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *AddressMasking) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this AddressMasking.
-func (mg *AddressMasking) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *AddressMasking) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this AddressMasking.
-func (mg *AddressMasking) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *AddressMasking) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

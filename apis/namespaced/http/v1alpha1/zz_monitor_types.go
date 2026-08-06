@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AnomalyDetectionInitParameters struct {
@@ -120,7 +119,7 @@ type ConfigurationInitParameters struct {
 
 	// eg. CREDENTIALS_VAULT-XXXXXXXXXXXXXXXX
 	// The client certificate, if applicable - eg. CREDENTIALS_VAULT-XXXXXXXXXXXXXXXX
-	ClientCertificateSecretRef *v1.LocalSecretKeySelector `json:"clientCertificateSecretRef,omitempty" tf:"-"`
+	ClientCertificateSecretRef *v2.LocalSecretKeySelector `json:"clientCertificateSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) If set to false, redirects are reported as successful requests with response code 3xx.
 	// If set to `false`, redirects are reported as successful requests with response code 3xx.
@@ -180,7 +179,7 @@ type ConfigurationParameters struct {
 	// eg. CREDENTIALS_VAULT-XXXXXXXXXXXXXXXX
 	// The client certificate, if applicable - eg. CREDENTIALS_VAULT-XXXXXXXXXXXXXXXX
 	// +kubebuilder:validation:Optional
-	ClientCertificateSecretRef *v1.LocalSecretKeySelector `json:"clientCertificateSecretRef,omitempty" tf:"-"`
+	ClientCertificateSecretRef *v2.LocalSecretKeySelector `json:"clientCertificateSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) If set to false, redirects are reported as successful requests with response code 3xx.
 	// If set to `false`, redirects are reported as successful requests with response code 3xx.
@@ -1097,8 +1096,8 @@ type MonitorSpec struct {
 
 // MonitorStatus defines the observed state of Monitor.
 type MonitorStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MonitorObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MonitorObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

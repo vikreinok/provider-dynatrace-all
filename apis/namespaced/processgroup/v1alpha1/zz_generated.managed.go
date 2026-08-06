@@ -6,84 +6,84 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Naming.
-func (mg *Naming) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Naming) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Naming.
-func (mg *Naming) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Naming) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Naming.
-func (mg *Naming) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Naming) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Naming.
-func (mg *Naming) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Naming) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Naming.
-func (mg *Naming) SetConditions(c ...xpv1.Condition) {
+func (mg *Naming) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Naming.
-func (mg *Naming) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Naming) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Naming.
-func (mg *Naming) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Naming) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Naming.
-func (mg *Naming) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Naming) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this NamingOrder.
-func (mg *NamingOrder) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *NamingOrder) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this NamingOrder.
-func (mg *NamingOrder) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *NamingOrder) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this NamingOrder.
-func (mg *NamingOrder) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *NamingOrder) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this NamingOrder.
-func (mg *NamingOrder) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *NamingOrder) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this NamingOrder.
-func (mg *NamingOrder) SetConditions(c ...xpv1.Condition) {
+func (mg *NamingOrder) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this NamingOrder.
-func (mg *NamingOrder) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *NamingOrder) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this NamingOrder.
-func (mg *NamingOrder) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *NamingOrder) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this NamingOrder.
-func (mg *NamingOrder) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *NamingOrder) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

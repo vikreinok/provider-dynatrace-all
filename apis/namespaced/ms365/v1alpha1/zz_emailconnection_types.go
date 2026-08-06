@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type EmailConnectionInitParameters struct {
@@ -22,7 +21,7 @@ type EmailConnectionInitParameters struct {
 
 	// (String, Sensitive) Client secret of your app registered in Microsoft Azure App registrations
 	// Client secret of your app registered in Microsoft Azure App registrations
-	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The email address from which the messages will be sent
 	// The email address from which the messages will be sent
@@ -77,7 +76,7 @@ type EmailConnectionParameters struct {
 	// (String, Sensitive) Client secret of your app registered in Microsoft Azure App registrations
 	// Client secret of your app registered in Microsoft Azure App registrations
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The email address from which the messages will be sent
 	// The email address from which the messages will be sent
@@ -119,8 +118,8 @@ type EmailConnectionSpec struct {
 
 // EmailConnectionStatus defines the observed state of EmailConnection.
 type EmailConnectionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        EmailConnectionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               EmailConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

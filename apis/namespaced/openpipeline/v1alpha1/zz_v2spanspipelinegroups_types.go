@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2SpansPipelinegroupsCompositionInitParameters struct {
@@ -153,11 +152,11 @@ type V2SpansPipelinegroupsInitParameters struct {
 
 	// References to V2SpansPipelines to populate memberPipelines.
 	// +kubebuilder:validation:Optional
-	MemberPipelinesRefs []v1.NamespacedReference `json:"memberPipelinesRefs,omitempty" tf:"-"`
+	MemberPipelinesRefs []v2.NamespacedReference `json:"memberPipelinesRefs,omitempty" tf:"-"`
 
 	// Selector for a list of V2SpansPipelines to populate memberPipelines.
 	// +kubebuilder:validation:Optional
-	MemberPipelinesSelector *v1.NamespacedSelector `json:"memberPipelinesSelector,omitempty" tf:"-"`
+	MemberPipelinesSelector *v2.NamespacedSelector `json:"memberPipelinesSelector,omitempty" tf:"-"`
 
 	// (Block List, Min: 1, Max: 1) stage configuration of the member pipelines (see below for nested schema)
 	// stage configuration of the member pipelines
@@ -262,11 +261,11 @@ type V2SpansPipelinegroupsParameters struct {
 
 	// References to V2SpansPipelines to populate memberPipelines.
 	// +kubebuilder:validation:Optional
-	MemberPipelinesRefs []v1.NamespacedReference `json:"memberPipelinesRefs,omitempty" tf:"-"`
+	MemberPipelinesRefs []v2.NamespacedReference `json:"memberPipelinesRefs,omitempty" tf:"-"`
 
 	// Selector for a list of V2SpansPipelines to populate memberPipelines.
 	// +kubebuilder:validation:Optional
-	MemberPipelinesSelector *v1.NamespacedSelector `json:"memberPipelinesSelector,omitempty" tf:"-"`
+	MemberPipelinesSelector *v2.NamespacedSelector `json:"memberPipelinesSelector,omitempty" tf:"-"`
 
 	// (Block List, Min: 1, Max: 1) stage configuration of the member pipelines (see below for nested schema)
 	// stage configuration of the member pipelines
@@ -293,8 +292,8 @@ type V2SpansPipelinegroupsSpec struct {
 
 // V2SpansPipelinegroupsStatus defines the observed state of V2SpansPipelinegroups.
 type V2SpansPipelinegroupsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2SpansPipelinegroupsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2SpansPipelinegroupsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

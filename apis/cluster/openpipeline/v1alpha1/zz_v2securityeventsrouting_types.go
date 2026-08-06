@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2SecurityEventsRoutingInitParameters struct {
@@ -146,8 +146,8 @@ type V2SecurityEventsRoutingRoutingEntriesRoutingEntryParameters struct {
 
 // V2SecurityEventsRoutingSpec defines the desired state of V2SecurityEventsRouting
 type V2SecurityEventsRoutingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     V2SecurityEventsRoutingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   V2SecurityEventsRoutingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -163,8 +163,8 @@ type V2SecurityEventsRoutingSpec struct {
 
 // V2SecurityEventsRoutingStatus defines the observed state of V2SecurityEventsRouting.
 type V2SecurityEventsRoutingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2SecurityEventsRoutingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2SecurityEventsRoutingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

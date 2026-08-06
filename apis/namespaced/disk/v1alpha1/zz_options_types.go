@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ExclusionInitParameters struct {
@@ -246,8 +245,8 @@ type OptionsSpec struct {
 
 // OptionsStatus defines the observed state of Options.
 type OptionsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OptionsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OptionsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

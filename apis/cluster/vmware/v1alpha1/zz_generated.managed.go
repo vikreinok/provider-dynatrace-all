@@ -6,104 +6,104 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Anomalies.
-func (mg *Anomalies) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Anomalies) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Anomalies.
-func (mg *Anomalies) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Anomalies) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Anomalies.
-func (mg *Anomalies) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Anomalies) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Anomalies.
-func (mg *Anomalies) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Anomalies) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Anomalies.
-func (mg *Anomalies) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Anomalies) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Anomalies.
-func (mg *Anomalies) SetConditions(c ...xpv1.Condition) {
+func (mg *Anomalies) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Anomalies.
-func (mg *Anomalies) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Anomalies) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Anomalies.
-func (mg *Anomalies) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Anomalies) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Anomalies.
-func (mg *Anomalies) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Anomalies) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Anomalies.
-func (mg *Anomalies) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Anomalies) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this Vmware.
-func (mg *Vmware) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Vmware) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Vmware.
-func (mg *Vmware) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Vmware) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Vmware.
-func (mg *Vmware) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Vmware) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Vmware.
-func (mg *Vmware) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Vmware) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Vmware.
-func (mg *Vmware) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Vmware) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Vmware.
-func (mg *Vmware) SetConditions(c ...xpv1.Condition) {
+func (mg *Vmware) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Vmware.
-func (mg *Vmware) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Vmware) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Vmware.
-func (mg *Vmware) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Vmware) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Vmware.
-func (mg *Vmware) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Vmware) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Vmware.
-func (mg *Vmware) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Vmware) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

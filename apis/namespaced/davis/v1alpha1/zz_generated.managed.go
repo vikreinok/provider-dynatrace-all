@@ -6,84 +6,84 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this AnomalyDetectors.
-func (mg *AnomalyDetectors) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *AnomalyDetectors) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this AnomalyDetectors.
-func (mg *AnomalyDetectors) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *AnomalyDetectors) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this AnomalyDetectors.
-func (mg *AnomalyDetectors) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *AnomalyDetectors) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this AnomalyDetectors.
-func (mg *AnomalyDetectors) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *AnomalyDetectors) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this AnomalyDetectors.
-func (mg *AnomalyDetectors) SetConditions(c ...xpv1.Condition) {
+func (mg *AnomalyDetectors) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this AnomalyDetectors.
-func (mg *AnomalyDetectors) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *AnomalyDetectors) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this AnomalyDetectors.
-func (mg *AnomalyDetectors) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *AnomalyDetectors) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this AnomalyDetectors.
-func (mg *AnomalyDetectors) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *AnomalyDetectors) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this Copilot.
-func (mg *Copilot) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Copilot) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Copilot.
-func (mg *Copilot) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Copilot) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Copilot.
-func (mg *Copilot) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Copilot) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Copilot.
-func (mg *Copilot) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Copilot) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Copilot.
-func (mg *Copilot) SetConditions(c ...xpv1.Condition) {
+func (mg *Copilot) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Copilot.
-func (mg *Copilot) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Copilot) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Copilot.
-func (mg *Copilot) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Copilot) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Copilot.
-func (mg *Copilot) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Copilot) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

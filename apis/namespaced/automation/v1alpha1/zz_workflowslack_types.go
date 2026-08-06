@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type WorkflowSlackInitParameters struct {
@@ -26,7 +25,7 @@ type WorkflowSlackInitParameters struct {
 
 	// (String, Sensitive) The bot token obtained from the Slack App Management UI
 	// The bot token obtained from the Slack App Management UI
-	TokenSecretRef v1.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
 }
 
 type WorkflowSlackObservation struct {
@@ -58,7 +57,7 @@ type WorkflowSlackParameters struct {
 	// (String, Sensitive) The bot token obtained from the Slack App Management UI
 	// The bot token obtained from the Slack App Management UI
 	// +kubebuilder:validation:Optional
-	TokenSecretRef v1.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
 }
 
 // WorkflowSlackSpec defines the desired state of WorkflowSlack
@@ -80,8 +79,8 @@ type WorkflowSlackSpec struct {
 
 // WorkflowSlackStatus defines the observed state of WorkflowSlack.
 type WorkflowSlackStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WorkflowSlackObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WorkflowSlackObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

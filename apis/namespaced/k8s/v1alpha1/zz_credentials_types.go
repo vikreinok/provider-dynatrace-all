@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CredentialsInitParameters struct {
@@ -26,7 +25,7 @@ type CredentialsInitParameters struct {
 
 	// (String, Sensitive) The service account bearer token for the Kubernetes API server.  Submit your token on creation or update of the configuration. For security reasons, GET requests return this field as null.  If the field is omitted during an update, the old value remains unaffected.
 	// The service account bearer token for the Kubernetes API server.  Submit your token on creation or update of the configuration. For security reasons, GET requests return this field as `null`.  If the field is omitted during an update, the old value remains unaffected.
-	AuthTokenSecretRef *v1.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
+	AuthTokenSecretRef *v2.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) The check of SSL certificates is enabled (true) or disabled (false) for the Kubernetes cluster.  If not set on creation, the true value is used.  If the field is omitted during an update, the old value remains unaffected.
 	// The check of SSL certificates is enabled (`true`) or disabled (`false`) for the Kubernetes cluster.  If not set on creation, the `true` value is used.  If the field is omitted during an update, the old value remains unaffected.
@@ -146,7 +145,7 @@ type CredentialsParameters struct {
 	// (String, Sensitive) The service account bearer token for the Kubernetes API server.  Submit your token on creation or update of the configuration. For security reasons, GET requests return this field as null.  If the field is omitted during an update, the old value remains unaffected.
 	// The service account bearer token for the Kubernetes API server.  Submit your token on creation or update of the configuration. For security reasons, GET requests return this field as `null`.  If the field is omitted during an update, the old value remains unaffected.
 	// +kubebuilder:validation:Optional
-	AuthTokenSecretRef *v1.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
+	AuthTokenSecretRef *v2.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) The check of SSL certificates is enabled (true) or disabled (false) for the Kubernetes cluster.  If not set on creation, the true value is used.  If the field is omitted during an update, the old value remains unaffected.
 	// The check of SSL certificates is enabled (`true`) or disabled (`false`) for the Kubernetes cluster.  If not set on creation, the `true` value is used.  If the field is omitted during an update, the old value remains unaffected.
@@ -284,8 +283,8 @@ type CredentialsSpec struct {
 
 // CredentialsStatus defines the observed state of Credentials.
 type CredentialsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CredentialsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CredentialsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

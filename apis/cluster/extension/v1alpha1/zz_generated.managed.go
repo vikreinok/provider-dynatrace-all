@@ -6,104 +6,104 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this ExecutionController.
-func (mg *ExecutionController) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ExecutionController) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this ExecutionController.
-func (mg *ExecutionController) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *ExecutionController) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this ExecutionController.
-func (mg *ExecutionController) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ExecutionController) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ExecutionController.
-func (mg *ExecutionController) GetProviderConfigReference() *xpv1.Reference {
+func (mg *ExecutionController) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ExecutionController.
-func (mg *ExecutionController) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *ExecutionController) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ExecutionController.
-func (mg *ExecutionController) SetConditions(c ...xpv1.Condition) {
+func (mg *ExecutionController) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this ExecutionController.
-func (mg *ExecutionController) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *ExecutionController) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this ExecutionController.
-func (mg *ExecutionController) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ExecutionController) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ExecutionController.
-func (mg *ExecutionController) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *ExecutionController) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ExecutionController.
-func (mg *ExecutionController) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *ExecutionController) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this ExecutionRemote.
-func (mg *ExecutionRemote) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ExecutionRemote) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this ExecutionRemote.
-func (mg *ExecutionRemote) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *ExecutionRemote) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this ExecutionRemote.
-func (mg *ExecutionRemote) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ExecutionRemote) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ExecutionRemote.
-func (mg *ExecutionRemote) GetProviderConfigReference() *xpv1.Reference {
+func (mg *ExecutionRemote) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ExecutionRemote.
-func (mg *ExecutionRemote) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *ExecutionRemote) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ExecutionRemote.
-func (mg *ExecutionRemote) SetConditions(c ...xpv1.Condition) {
+func (mg *ExecutionRemote) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this ExecutionRemote.
-func (mg *ExecutionRemote) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *ExecutionRemote) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this ExecutionRemote.
-func (mg *ExecutionRemote) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ExecutionRemote) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ExecutionRemote.
-func (mg *ExecutionRemote) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *ExecutionRemote) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ExecutionRemote.
-func (mg *ExecutionRemote) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *ExecutionRemote) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

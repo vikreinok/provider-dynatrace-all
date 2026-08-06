@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type FixedOffsetInitParameters struct {
@@ -391,8 +391,8 @@ type SchedulingRuleParameters struct {
 
 // SchedulingRuleSpec defines the desired state of SchedulingRule
 type SchedulingRuleSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SchedulingRuleParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SchedulingRuleParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -408,8 +408,8 @@ type SchedulingRuleSpec struct {
 
 // SchedulingRuleStatus defines the observed state of SchedulingRule.
 type SchedulingRuleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SchedulingRuleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SchedulingRuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

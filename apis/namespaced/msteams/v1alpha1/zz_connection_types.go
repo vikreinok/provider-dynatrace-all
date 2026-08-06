@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionInitParameters struct {
@@ -30,7 +29,7 @@ type ConnectionInitParameters struct {
 
 	// (String, Sensitive) The Webhook URL that links to the channel
 	// The Webhook URL that links to the channel
-	WebhookSecretRef v1.LocalSecretKeySelector `json:"webhookSecretRef" tf:"-"`
+	WebhookSecretRef v2.LocalSecretKeySelector `json:"webhookSecretRef" tf:"-"`
 }
 
 type ConnectionObservation struct {
@@ -71,7 +70,7 @@ type ConnectionParameters struct {
 	// (String, Sensitive) The Webhook URL that links to the channel
 	// The Webhook URL that links to the channel
 	// +kubebuilder:validation:Optional
-	WebhookSecretRef v1.LocalSecretKeySelector `json:"webhookSecretRef" tf:"-"`
+	WebhookSecretRef v2.LocalSecretKeySelector `json:"webhookSecretRef" tf:"-"`
 }
 
 // ConnectionSpec defines the desired state of Connection
@@ -93,8 +92,8 @@ type ConnectionSpec struct {
 
 // ConnectionStatus defines the observed state of Connection.
 type ConnectionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConnectionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

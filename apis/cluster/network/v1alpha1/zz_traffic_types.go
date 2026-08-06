@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ExcludeIPInitParameters struct {
@@ -161,8 +161,8 @@ type TrafficParameters struct {
 
 // TrafficSpec defines the desired state of Traffic
 type TrafficSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrafficParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrafficParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -178,8 +178,8 @@ type TrafficSpec struct {
 
 // TrafficStatus defines the observed state of Traffic.
 type TrafficStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrafficObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrafficObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

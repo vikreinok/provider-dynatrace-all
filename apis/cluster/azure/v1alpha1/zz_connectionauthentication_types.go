@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionAuthenticationInitParameters struct {
@@ -66,8 +66,8 @@ type ConnectionAuthenticationParameters struct {
 
 // ConnectionAuthenticationSpec defines the desired state of ConnectionAuthentication
 type ConnectionAuthenticationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConnectionAuthenticationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ConnectionAuthenticationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -83,8 +83,8 @@ type ConnectionAuthenticationSpec struct {
 
 // ConnectionAuthenticationStatus defines the observed state of ConnectionAuthentication.
 type ConnectionAuthenticationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConnectionAuthenticationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConnectionAuthenticationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

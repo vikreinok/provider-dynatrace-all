@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AllowRuleInitParameters struct {
@@ -107,8 +107,8 @@ type MetricsAllowlistParameters struct {
 
 // MetricsAllowlistSpec defines the desired state of MetricsAllowlist
 type MetricsAllowlistSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     MetricsAllowlistParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   MetricsAllowlistParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -124,8 +124,8 @@ type MetricsAllowlistSpec struct {
 
 // MetricsAllowlistStatus defines the observed state of MetricsAllowlist.
 type MetricsAllowlistStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MetricsAllowlistObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MetricsAllowlistObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

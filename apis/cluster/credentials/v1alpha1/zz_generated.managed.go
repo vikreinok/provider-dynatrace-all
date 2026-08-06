@@ -6,54 +6,54 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Credentials.
-func (mg *Credentials) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Credentials) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Credentials.
-func (mg *Credentials) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Credentials) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Credentials.
-func (mg *Credentials) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Credentials) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Credentials.
-func (mg *Credentials) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Credentials) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Credentials.
-func (mg *Credentials) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Credentials) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Credentials.
-func (mg *Credentials) SetConditions(c ...xpv1.Condition) {
+func (mg *Credentials) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Credentials.
-func (mg *Credentials) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Credentials) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Credentials.
-func (mg *Credentials) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Credentials) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Credentials.
-func (mg *Credentials) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Credentials) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Credentials.
-func (mg *Credentials) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Credentials) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

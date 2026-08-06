@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CredentialsInitParameters struct {
@@ -34,7 +33,7 @@ type CredentialsInitParameters struct {
 
 	// (String, Sensitive) The password of the Cloud Foundry foundation credentials.
 	// The password of the Cloud Foundry foundation credentials.
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) Any attributes that aren't yet supported by this provider
 	// Any attributes that aren't yet supported by this provider
@@ -100,7 +99,7 @@ type CredentialsParameters struct {
 	// (String, Sensitive) The password of the Cloud Foundry foundation credentials.
 	// The password of the Cloud Foundry foundation credentials.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) Any attributes that aren't yet supported by this provider
 	// Any attributes that aren't yet supported by this provider
@@ -132,8 +131,8 @@ type CredentialsSpec struct {
 
 // CredentialsStatus defines the observed state of Credentials.
 type CredentialsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CredentialsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CredentialsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

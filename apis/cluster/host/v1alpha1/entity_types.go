@@ -8,7 +8,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v1 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type HostEntityInitParameters struct {
@@ -46,8 +46,8 @@ type HostEntityParameters struct {
 
 // HostEntitySpec defines the desired state of HostEntity
 type HostEntitySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     HostEntityParameters `json:"forProvider"`
+	v1.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   HostEntityParameters `json:"forProvider"`
 	// InitProvider holds the same fields as ForProvider, with the exception
 	// of Identifier and other resource reference fields.
 	InitProvider HostEntityInitParameters `json:"initProvider,omitempty"`
@@ -55,8 +55,8 @@ type HostEntitySpec struct {
 
 // HostEntityStatus defines the observed state of HostEntity.
 type HostEntityStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        HostEntityObservation `json:"atProvider,omitempty"`
+	v1.ManagedResourceStatus `json:",inline"`
+	AtProvider               HostEntityObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

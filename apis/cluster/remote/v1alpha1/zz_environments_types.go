@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type EnvironmentsInitParameters struct {
@@ -25,7 +25,7 @@ type EnvironmentsInitParameters struct {
 
 	// (String, Sensitive) Provide a valid token created on the remote environment.
 	// Provide a valid token created on the remote environment.
-	TokenSecretRef v1.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
 
 	// (String) Specify the full URI to the remote environment. Your local environment will have to be able to connect this URI on a network level.
 	// Specify the full URI to the remote environment. Your local environment will have to be able to connect this URI on a network level.
@@ -65,7 +65,7 @@ type EnvironmentsParameters struct {
 	// (String, Sensitive) Provide a valid token created on the remote environment.
 	// Provide a valid token created on the remote environment.
 	// +kubebuilder:validation:Optional
-	TokenSecretRef v1.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.SecretKeySelector `json:"tokenSecretRef" tf:"-"`
 
 	// (String) Specify the full URI to the remote environment. Your local environment will have to be able to connect this URI on a network level.
 	// Specify the full URI to the remote environment. Your local environment will have to be able to connect this URI on a network level.
@@ -75,8 +75,8 @@ type EnvironmentsParameters struct {
 
 // EnvironmentsSpec defines the desired state of Environments
 type EnvironmentsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     EnvironmentsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   EnvironmentsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -92,8 +92,8 @@ type EnvironmentsSpec struct {
 
 // EnvironmentsStatus defines the observed state of Environments.
 type EnvironmentsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        EnvironmentsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               EnvironmentsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

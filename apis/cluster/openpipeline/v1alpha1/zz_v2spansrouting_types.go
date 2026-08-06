@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2SpansRoutingInitParameters struct {
@@ -82,11 +82,11 @@ type V2SpansRoutingRoutingEntriesRoutingEntryInitParameters struct {
 
 	// Reference to a V2SpansPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDRef *v1.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
+	PipelineIDRef *v2.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
 
 	// Selector for a V2SpansPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDSelector *v1.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
+	PipelineIDSelector *v2.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
 
 	// (String) Pipeline Type. Possible values: builtin, custom
 	// Pipeline Type. Possible values: `builtin`, `custom`
@@ -150,11 +150,11 @@ type V2SpansRoutingRoutingEntriesRoutingEntryParameters struct {
 
 	// Reference to a V2SpansPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDRef *v1.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
+	PipelineIDRef *v2.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
 
 	// Selector for a V2SpansPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDSelector *v1.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
+	PipelineIDSelector *v2.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
 
 	// (String) Pipeline Type. Possible values: builtin, custom
 	// Pipeline Type. Possible values: `builtin`, `custom`
@@ -164,8 +164,8 @@ type V2SpansRoutingRoutingEntriesRoutingEntryParameters struct {
 
 // V2SpansRoutingSpec defines the desired state of V2SpansRouting
 type V2SpansRoutingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     V2SpansRoutingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   V2SpansRoutingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -181,8 +181,8 @@ type V2SpansRoutingSpec struct {
 
 // V2SpansRoutingStatus defines the observed state of V2SpansRouting.
 type V2SpansRoutingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2SpansRoutingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2SpansRoutingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AzureLogForwardingProcessorFieldExtractionInitParameters struct {
@@ -3990,8 +3990,8 @@ type SecurityContextProcessorSecurityContextProcessorParameters struct {
 
 // DavisEventsSpec defines the desired state of DavisEvents
 type DavisEventsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     DavisEventsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   DavisEventsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -4007,8 +4007,8 @@ type DavisEventsSpec struct {
 
 // DavisEventsStatus defines the observed state of DavisEvents.
 type DavisEventsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        DavisEventsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               DavisEventsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

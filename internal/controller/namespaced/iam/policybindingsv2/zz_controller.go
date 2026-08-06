@@ -25,6 +25,15 @@ import (
 	features "github.com/vikreinok/provider-dynatrace-all/internal/features"
 )
 
+// SetupWebhookWithManager registers the conversion webhook for PolicyBindingsV2.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	if err := ctrl.NewWebhookManagedBy(mgr, &v1alpha1.PolicyBindingsV2{}).
+		Complete(); err != nil {
+		return errors.Wrap(err, "cannot register webhook for the kind v1alpha1.PolicyBindingsV2")
+	}
+	return nil
+}
+
 // SetupGated adds a controller that reconciles PolicyBindingsV2 managed resources.
 func SetupGated(mgr ctrl.Manager, o tjcontroller.Options) error {
 	o.Options.Gate.Register(func() {
@@ -39,9 +48,6 @@ func SetupGated(mgr ctrl.Manager, o tjcontroller.Options) error {
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	name := managed.ControllerName(v1alpha1.PolicyBindingsV2_GroupVersionKind.String())
 	var initializers managed.InitializerChain
-	for _, i := range o.Provider.Resources["dynatrace_iam_policy_bindings_v2"].InitializerFns {
-		initializers = append(initializers, i(mgr.GetClient()))
-	}
 	eventHandler := handler.NewEventHandler(handler.WithLogger(o.Logger.WithValues("gvk", v1alpha1.PolicyBindingsV2_GroupVersionKind)))
 	ac := tjcontroller.NewAPICallbacks(mgr, xpresource.ManagedKind(v1alpha1.PolicyBindingsV2_GroupVersionKind), tjcontroller.WithEventHandler(eventHandler))
 	opts := []managed.ReconcilerOption{
@@ -63,16 +69,6 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	}
 	if o.MetricOptions != nil {
 		opts = append(opts, managed.WithMetricRecorder(o.MetricOptions.MRMetrics))
-	}
-
-	// register webhooks for the kind v1alpha1.PolicyBindingsV2
-	// if they're enabled.
-	if o.StartWebhooks {
-		if err := ctrl.NewWebhookManagedBy(mgr).
-			For(&v1alpha1.PolicyBindingsV2{}).
-			Complete(); err != nil {
-			return errors.Wrap(err, "cannot register webhook for the kind v1alpha1.PolicyBindingsV2")
-		}
 	}
 
 	if o.MetricOptions != nil && o.MetricOptions.MRStateMetrics != nil {

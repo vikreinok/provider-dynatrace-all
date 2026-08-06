@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SMTPInitParameters struct {
@@ -33,7 +33,7 @@ type SMTPInitParameters struct {
 
 	// (String, Sensitive) Password
 	// Password
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (Number) Integer value of port. Default: 25
 	// Integer value of port. Default: `25`
@@ -115,7 +115,7 @@ type SMTPParameters struct {
 	// (String, Sensitive) Password
 	// Password
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (Number) Integer value of port. Default: 25
 	// Integer value of port. Default: `25`
@@ -140,8 +140,8 @@ type SMTPParameters struct {
 
 // SMTPSpec defines the desired state of SMTP
 type SMTPSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SMTPParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SMTPParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -157,8 +157,8 @@ type SMTPSpec struct {
 
 // SMTPStatus defines the observed state of SMTP.
 type SMTPStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SMTPObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SMTPObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type EventPatternInitParameters struct {
@@ -89,7 +88,7 @@ type KubernetesInitParameters struct {
 
 	// (String, Sensitive) Create a bearer token for Kubernetes or OpenShift.
 	// Create a bearer token for [Kubernetes](https://dt-url.net/og43szq "Kubernetes") or [OpenShift](https://dt-url.net/7l43xtp "OpenShift").
-	AuthTokenSecretRef *v1.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
+	AuthTokenSecretRef *v2.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) Require valid certificates for communication with API server (recommended)
 	// Require valid certificates for communication with API server (recommended)
@@ -246,7 +245,7 @@ type KubernetesParameters struct {
 	// (String, Sensitive) Create a bearer token for Kubernetes or OpenShift.
 	// Create a bearer token for [Kubernetes](https://dt-url.net/og43szq "Kubernetes") or [OpenShift](https://dt-url.net/7l43xtp "OpenShift").
 	// +kubebuilder:validation:Optional
-	AuthTokenSecretRef *v1.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
+	AuthTokenSecretRef *v2.LocalSecretKeySelector `json:"authTokenSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) Require valid certificates for communication with API server (recommended)
 	// Require valid certificates for communication with API server (recommended)
@@ -351,8 +350,8 @@ type KubernetesSpec struct {
 
 // KubernetesStatus defines the observed state of Kubernetes.
 type KubernetesStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        KubernetesObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               KubernetesObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

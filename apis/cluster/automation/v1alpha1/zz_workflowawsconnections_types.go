@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type WebIdentityInitParameters struct {
@@ -18,7 +18,7 @@ type WebIdentityInitParameters struct {
 
 	// (String, Sensitive) The ARN of the AWS role that should be assumed
 	// The ARN of the AWS role that should be assumed
-	RoleArnSecretRef v1.SecretKeySelector `json:"roleArnSecretRef" tf:"-"`
+	RoleArnSecretRef v2.SecretKeySelector `json:"roleArnSecretRef" tf:"-"`
 }
 
 type WebIdentityObservation struct {
@@ -29,12 +29,12 @@ type WebIdentityParameters struct {
 	// (List of String, Sensitive) An optional list of policies that can be used to restrict the AWS role
 	// An optional list of policies that can be used to restrict the AWS role
 	// +kubebuilder:validation:Optional
-	PolicyArnsSecretRef *[]v1.SecretKeySelector `json:"policyArnsSecretRef,omitempty" tf:"-"`
+	PolicyArnsSecretRef *[]v2.SecretKeySelector `json:"policyArnsSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The ARN of the AWS role that should be assumed
 	// The ARN of the AWS role that should be assumed
 	// +kubebuilder:validation:Optional
-	RoleArnSecretRef v1.SecretKeySelector `json:"roleArnSecretRef" tf:"-"`
+	RoleArnSecretRef v2.SecretKeySelector `json:"roleArnSecretRef" tf:"-"`
 }
 
 type WorkflowAwsConnectionsInitParameters struct {
@@ -90,8 +90,8 @@ type WorkflowAwsConnectionsParameters struct {
 
 // WorkflowAwsConnectionsSpec defines the desired state of WorkflowAwsConnections
 type WorkflowAwsConnectionsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     WorkflowAwsConnectionsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   WorkflowAwsConnectionsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -107,8 +107,8 @@ type WorkflowAwsConnectionsSpec struct {
 
 // WorkflowAwsConnectionsStatus defines the observed state of WorkflowAwsConnections.
 type WorkflowAwsConnectionsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WorkflowAwsConnectionsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WorkflowAwsConnectionsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

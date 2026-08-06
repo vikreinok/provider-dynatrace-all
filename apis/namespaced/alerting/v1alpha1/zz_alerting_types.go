@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AlertingInitParameters struct {
@@ -31,11 +30,11 @@ type AlertingInitParameters struct {
 
 	// Reference to a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneRef *v1.NamespacedReference `json:"managementZoneRef,omitempty" tf:"-"`
+	ManagementZoneRef *v2.NamespacedReference `json:"managementZoneRef,omitempty" tf:"-"`
 
 	// Selector for a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneSelector *v1.NamespacedSelector `json:"managementZoneSelector,omitempty" tf:"-"`
+	ManagementZoneSelector *v2.NamespacedSelector `json:"managementZoneSelector,omitempty" tf:"-"`
 
 	// (String) The name of the alerting profile, displayed in the UI
 	// The name of the alerting profile, displayed in the UI
@@ -92,11 +91,11 @@ type AlertingParameters struct {
 
 	// Reference to a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneRef *v1.NamespacedReference `json:"managementZoneRef,omitempty" tf:"-"`
+	ManagementZoneRef *v2.NamespacedReference `json:"managementZoneRef,omitempty" tf:"-"`
 
 	// Selector for a ZoneV2 in management to populate managementZone.
 	// +kubebuilder:validation:Optional
-	ManagementZoneSelector *v1.NamespacedSelector `json:"managementZoneSelector,omitempty" tf:"-"`
+	ManagementZoneSelector *v2.NamespacedSelector `json:"managementZoneSelector,omitempty" tf:"-"`
 
 	// (String) The name of the alerting profile, displayed in the UI
 	// The name of the alerting profile, displayed in the UI
@@ -591,8 +590,8 @@ type AlertingSpec struct {
 
 // AlertingStatus defines the observed state of Alerting.
 type AlertingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AlertingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AlertingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

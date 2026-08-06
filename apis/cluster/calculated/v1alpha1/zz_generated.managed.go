@@ -6,204 +6,204 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this MobileMetric.
-func (mg *MobileMetric) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *MobileMetric) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this MobileMetric.
-func (mg *MobileMetric) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *MobileMetric) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this MobileMetric.
-func (mg *MobileMetric) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *MobileMetric) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this MobileMetric.
-func (mg *MobileMetric) GetProviderConfigReference() *xpv1.Reference {
+func (mg *MobileMetric) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this MobileMetric.
-func (mg *MobileMetric) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *MobileMetric) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this MobileMetric.
-func (mg *MobileMetric) SetConditions(c ...xpv1.Condition) {
+func (mg *MobileMetric) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this MobileMetric.
-func (mg *MobileMetric) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *MobileMetric) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this MobileMetric.
-func (mg *MobileMetric) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *MobileMetric) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this MobileMetric.
-func (mg *MobileMetric) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *MobileMetric) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this MobileMetric.
-func (mg *MobileMetric) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *MobileMetric) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this ServiceMetric.
-func (mg *ServiceMetric) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ServiceMetric) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this ServiceMetric.
-func (mg *ServiceMetric) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *ServiceMetric) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this ServiceMetric.
-func (mg *ServiceMetric) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ServiceMetric) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ServiceMetric.
-func (mg *ServiceMetric) GetProviderConfigReference() *xpv1.Reference {
+func (mg *ServiceMetric) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ServiceMetric.
-func (mg *ServiceMetric) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *ServiceMetric) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ServiceMetric.
-func (mg *ServiceMetric) SetConditions(c ...xpv1.Condition) {
+func (mg *ServiceMetric) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this ServiceMetric.
-func (mg *ServiceMetric) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *ServiceMetric) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this ServiceMetric.
-func (mg *ServiceMetric) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ServiceMetric) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ServiceMetric.
-func (mg *ServiceMetric) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *ServiceMetric) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ServiceMetric.
-func (mg *ServiceMetric) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *ServiceMetric) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this SyntheticMetric.
-func (mg *SyntheticMetric) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *SyntheticMetric) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this SyntheticMetric.
-func (mg *SyntheticMetric) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *SyntheticMetric) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this SyntheticMetric.
-func (mg *SyntheticMetric) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *SyntheticMetric) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this SyntheticMetric.
-func (mg *SyntheticMetric) GetProviderConfigReference() *xpv1.Reference {
+func (mg *SyntheticMetric) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this SyntheticMetric.
-func (mg *SyntheticMetric) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *SyntheticMetric) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this SyntheticMetric.
-func (mg *SyntheticMetric) SetConditions(c ...xpv1.Condition) {
+func (mg *SyntheticMetric) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this SyntheticMetric.
-func (mg *SyntheticMetric) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *SyntheticMetric) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this SyntheticMetric.
-func (mg *SyntheticMetric) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *SyntheticMetric) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this SyntheticMetric.
-func (mg *SyntheticMetric) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *SyntheticMetric) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this SyntheticMetric.
-func (mg *SyntheticMetric) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *SyntheticMetric) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this WebMetric.
-func (mg *WebMetric) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *WebMetric) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this WebMetric.
-func (mg *WebMetric) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *WebMetric) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this WebMetric.
-func (mg *WebMetric) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *WebMetric) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this WebMetric.
-func (mg *WebMetric) GetProviderConfigReference() *xpv1.Reference {
+func (mg *WebMetric) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this WebMetric.
-func (mg *WebMetric) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *WebMetric) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this WebMetric.
-func (mg *WebMetric) SetConditions(c ...xpv1.Condition) {
+func (mg *WebMetric) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this WebMetric.
-func (mg *WebMetric) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *WebMetric) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this WebMetric.
-func (mg *WebMetric) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *WebMetric) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this WebMetric.
-func (mg *WebMetric) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *WebMetric) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this WebMetric.
-func (mg *WebMetric) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *WebMetric) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

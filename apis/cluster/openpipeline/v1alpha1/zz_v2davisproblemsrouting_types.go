@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2DavisProblemsRoutingInitParameters struct {
@@ -146,8 +146,8 @@ type V2DavisProblemsRoutingRoutingEntriesRoutingEntryParameters struct {
 
 // V2DavisProblemsRoutingSpec defines the desired state of V2DavisProblemsRouting
 type V2DavisProblemsRoutingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     V2DavisProblemsRoutingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   V2DavisProblemsRoutingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -163,8 +163,8 @@ type V2DavisProblemsRoutingSpec struct {
 
 // V2DavisProblemsRoutingStatus defines the observed state of V2DavisProblemsRouting.
 type V2DavisProblemsRoutingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2DavisProblemsRoutingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2DavisProblemsRoutingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

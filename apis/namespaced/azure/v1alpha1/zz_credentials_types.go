@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CredentialsInitParameters struct {
@@ -34,7 +33,7 @@ type CredentialsInitParameters struct {
 
 	// (String, Sensitive) The secret key associated with the Application ID.  For security reasons, GET requests return this field as null. Submit your key on creation or update of the configuration. If the field is omitted during an update, the old value remains unaffected.
 	// The secret key associated with the Application ID.  For security reasons, GET requests return this field as `null`. Submit your key on creation or update of the configuration. If the field is omitted during an update, the old value remains unaffected.
-	KeySecretRef *v1.LocalSecretKeySelector `json:"keySecretRef,omitempty" tf:"-"`
+	KeySecretRef *v2.LocalSecretKeySelector `json:"keySecretRef,omitempty" tf:"-"`
 
 	// _ are allowed
 	// The unique name of the Azure credentials configuration.  Allowed characters are letters, numbers, and spaces. Also the special characters `.+-_` are allowed
@@ -148,7 +147,7 @@ type CredentialsParameters struct {
 	// (String, Sensitive) The secret key associated with the Application ID.  For security reasons, GET requests return this field as null. Submit your key on creation or update of the configuration. If the field is omitted during an update, the old value remains unaffected.
 	// The secret key associated with the Application ID.  For security reasons, GET requests return this field as `null`. Submit your key on creation or update of the configuration. If the field is omitted during an update, the old value remains unaffected.
 	// +kubebuilder:validation:Optional
-	KeySecretRef *v1.LocalSecretKeySelector `json:"keySecretRef,omitempty" tf:"-"`
+	KeySecretRef *v2.LocalSecretKeySelector `json:"keySecretRef,omitempty" tf:"-"`
 
 	// _ are allowed
 	// The unique name of the Azure credentials configuration.  Allowed characters are letters, numbers, and spaces. Also the special characters `.+-_` are allowed
@@ -402,8 +401,8 @@ type CredentialsSpec struct {
 
 // CredentialsStatus defines the observed state of Credentials.
 type CredentialsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CredentialsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CredentialsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

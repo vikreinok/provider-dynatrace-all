@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AddressMaskingInitParameters struct {
@@ -84,8 +83,8 @@ type AddressMaskingSpec struct {
 
 // AddressMaskingStatus defines the observed state of AddressMasking.
 type AddressMaskingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AddressMaskingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AddressMaskingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

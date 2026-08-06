@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ServiceDiscoveryInitParameters struct {
@@ -53,8 +53,8 @@ type ServiceDiscoveryParameters struct {
 
 // ServiceDiscoverySpec defines the desired state of ServiceDiscovery
 type ServiceDiscoverySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ServiceDiscoveryParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ServiceDiscoveryParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -70,8 +70,8 @@ type ServiceDiscoverySpec struct {
 
 // ServiceDiscoveryStatus defines the observed state of ServiceDiscovery.
 type ServiceDiscoveryStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ServiceDiscoveryObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ServiceDiscoveryObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionInitParameters struct {
@@ -21,7 +21,7 @@ type ConnectionInitParameters struct {
 
 	// (String, Sensitive) Client secret of the ServiceNow OAuth server
 	// Client secret of the ServiceNow OAuth server
-	ClientSecretSecretRef *v1.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) A unique and clearly identifiable connection name to your ServiceNow instance.
 	// A unique and clearly identifiable connection name to your ServiceNow instance.
@@ -29,7 +29,7 @@ type ConnectionInitParameters struct {
 
 	// (String, Sensitive) Password of the ServiceNow user.
 	// Password of the ServiceNow user.
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// credentials
 	// Possible Values: `basic`, `client-credentials`
@@ -80,7 +80,7 @@ type ConnectionParameters struct {
 	// (String, Sensitive) Client secret of the ServiceNow OAuth server
 	// Client secret of the ServiceNow OAuth server
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef *v1.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) A unique and clearly identifiable connection name to your ServiceNow instance.
 	// A unique and clearly identifiable connection name to your ServiceNow instance.
@@ -90,7 +90,7 @@ type ConnectionParameters struct {
 	// (String, Sensitive) Password of the ServiceNow user.
 	// Password of the ServiceNow user.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// credentials
 	// Possible Values: `basic`, `client-credentials`
@@ -110,8 +110,8 @@ type ConnectionParameters struct {
 
 // ConnectionSpec defines the desired state of Connection
 type ConnectionSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConnectionParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ConnectionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -127,8 +127,8 @@ type ConnectionSpec struct {
 
 // ConnectionStatus defines the observed state of Connection.
 type ConnectionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConnectionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type BindingsInitParameters struct {
@@ -69,8 +69,8 @@ type BindingsParameters struct {
 
 // BindingsSpec defines the desired state of Bindings
 type BindingsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     BindingsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   BindingsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -86,8 +86,8 @@ type BindingsSpec struct {
 
 // BindingsStatus defines the observed state of Bindings.
 type BindingsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        BindingsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               BindingsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

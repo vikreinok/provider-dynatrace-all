@@ -6,54 +6,54 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Notification.
-func (mg *Notification) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Notification) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Notification.
-func (mg *Notification) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Notification) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Notification.
-func (mg *Notification) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Notification) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Notification.
-func (mg *Notification) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Notification) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Notification.
-func (mg *Notification) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Notification) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Notification.
-func (mg *Notification) SetConditions(c ...xpv1.Condition) {
+func (mg *Notification) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Notification.
-func (mg *Notification) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Notification) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Notification.
-func (mg *Notification) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Notification) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Notification.
-func (mg *Notification) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Notification) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Notification.
-func (mg *Notification) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Notification) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

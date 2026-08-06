@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MonitoringInitParameters struct {
@@ -115,8 +114,8 @@ type MonitoringSpec struct {
 
 // MonitoringStatus defines the observed state of Monitoring.
 type MonitoringStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MonitoringObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MonitoringObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PreferencesInitParameters struct {
@@ -40,8 +40,8 @@ type PreferencesParameters struct {
 
 // PreferencesSpec defines the desired state of Preferences
 type PreferencesSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     PreferencesParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   PreferencesParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -57,8 +57,8 @@ type PreferencesSpec struct {
 
 // PreferencesStatus defines the observed state of Preferences.
 type PreferencesStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PreferencesObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PreferencesObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

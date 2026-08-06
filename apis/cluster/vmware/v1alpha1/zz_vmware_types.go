@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type VmwareInitParameters struct {
@@ -37,7 +37,7 @@ type VmwareInitParameters struct {
 
 	// (String, Sensitive) no documentation available
 	// no documentation available
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Provide user credentials for the vCenter or standalone ESXi host:
 	// Provide user credentials for the vCenter or standalone ESXi host:
@@ -103,7 +103,7 @@ type VmwareParameters struct {
 	// (String, Sensitive) no documentation available
 	// no documentation available
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Provide user credentials for the vCenter or standalone ESXi host:
 	// Provide user credentials for the vCenter or standalone ESXi host:
@@ -113,8 +113,8 @@ type VmwareParameters struct {
 
 // VmwareSpec defines the desired state of Vmware
 type VmwareSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     VmwareParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   VmwareParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -130,8 +130,8 @@ type VmwareSpec struct {
 
 // VmwareStatus defines the observed state of Vmware.
 type VmwareStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        VmwareObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               VmwareObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

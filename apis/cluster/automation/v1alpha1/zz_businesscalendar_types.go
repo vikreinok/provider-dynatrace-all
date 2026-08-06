@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type BusinessCalendarInitParameters struct {
@@ -178,8 +178,8 @@ type HolidaysParameters struct {
 
 // BusinessCalendarSpec defines the desired state of BusinessCalendar
 type BusinessCalendarSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     BusinessCalendarParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   BusinessCalendarParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -195,8 +195,8 @@ type BusinessCalendarSpec struct {
 
 // BusinessCalendarStatus defines the observed state of BusinessCalendar.
 type BusinessCalendarStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        BusinessCalendarObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               BusinessCalendarObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

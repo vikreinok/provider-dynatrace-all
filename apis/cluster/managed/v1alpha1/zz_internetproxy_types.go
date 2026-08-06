@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type InternetProxyInitParameters struct {
@@ -22,7 +22,7 @@ type InternetProxyInitParameters struct {
 
 	// (String, Sensitive) Password of proxy server, null means do not change previous value
 	// Password of proxy server, null means do not change previous value
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (Number) Port of proxy server
 	// Port of proxy server
@@ -79,7 +79,7 @@ type InternetProxyParameters struct {
 	// (String, Sensitive) Password of proxy server, null means do not change previous value
 	// Password of proxy server, null means do not change previous value
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (Number) Port of proxy server
 	// Port of proxy server
@@ -104,8 +104,8 @@ type InternetProxyParameters struct {
 
 // InternetProxySpec defines the desired state of InternetProxy
 type InternetProxySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     InternetProxyParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   InternetProxyParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -121,8 +121,8 @@ type InternetProxySpec struct {
 
 // InternetProxyStatus defines the observed state of InternetProxy.
 type InternetProxyStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        InternetProxyObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               InternetProxyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

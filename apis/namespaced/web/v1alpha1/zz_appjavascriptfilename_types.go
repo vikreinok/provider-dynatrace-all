@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppJavascriptFilenameInitParameters struct {
@@ -54,8 +53,8 @@ type AppJavascriptFilenameSpec struct {
 
 // AppJavascriptFilenameStatus defines the observed state of AppJavascriptFilename.
 type AppJavascriptFilenameStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AppJavascriptFilenameObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AppJavascriptFilenameObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

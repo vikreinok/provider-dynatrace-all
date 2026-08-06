@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionInitParameters struct {
@@ -22,7 +21,7 @@ type ConnectionInitParameters struct {
 
 	// (String, Sensitive) The password of the user or API token obtained from the Jenkins UI (Dashboard > User > Configure > API Token)
 	// The password of the user or API token obtained from the Jenkins UI (Dashboard > User > Configure > API Token)
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Base URL of your Jenkins instance (e.g. https://[YOUR_JENKINS_DOMAIN]/)
 	// Base URL of your Jenkins instance (e.g. https://[YOUR_JENKINS_DOMAIN]/)
@@ -61,7 +60,7 @@ type ConnectionParameters struct {
 	// (String, Sensitive) The password of the user or API token obtained from the Jenkins UI (Dashboard > User > Configure > API Token)
 	// The password of the user or API token obtained from the Jenkins UI (Dashboard > User > Configure > API Token)
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Base URL of your Jenkins instance (e.g. https://[YOUR_JENKINS_DOMAIN]/)
 	// Base URL of your Jenkins instance (e.g. https://[YOUR_JENKINS_DOMAIN]/)
@@ -93,8 +92,8 @@ type ConnectionSpec struct {
 
 // ConnectionStatus defines the observed state of Connection.
 type ConnectionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConnectionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

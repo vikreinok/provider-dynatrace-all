@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type WorkflowK8SConnectionsInitParameters struct {
@@ -30,7 +29,7 @@ type WorkflowK8SConnectionsInitParameters struct {
 
 	// (String, Sensitive) Token
 	// Token
-	TokenSecretRef v1.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
 
 	// ID for the cluster, set to the UID of the kube-system namespace
 	// A pseudo-ID for the cluster, set to the UID of the kube-system namespace
@@ -79,7 +78,7 @@ type WorkflowK8SConnectionsParameters struct {
 	// (String, Sensitive) Token
 	// Token
 	// +kubebuilder:validation:Optional
-	TokenSecretRef v1.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
+	TokenSecretRef v2.LocalSecretKeySelector `json:"tokenSecretRef" tf:"-"`
 
 	// ID for the cluster, set to the UID of the kube-system namespace
 	// A pseudo-ID for the cluster, set to the UID of the kube-system namespace
@@ -106,8 +105,8 @@ type WorkflowK8SConnectionsSpec struct {
 
 // WorkflowK8SConnectionsStatus defines the observed state of WorkflowK8SConnections.
 type WorkflowK8SConnectionsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WorkflowK8SConnectionsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WorkflowK8SConnectionsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

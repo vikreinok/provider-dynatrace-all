@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type NotificationInitParameters struct {
@@ -65,7 +65,7 @@ type NotificationInitParameters struct {
 
 	// (String, Sensitive) Set up an incoming WebHook integration within your Slack account. Copy and paste the generated WebHook URL into the field above.
 	// Set up an incoming WebHook integration within your Slack account. Copy and paste the generated WebHook URL into the field above.
-	URLSecretRef v1.SecretKeySelector `json:"urlSecretRef" tf:"-"`
+	URLSecretRef v2.SecretKeySelector `json:"urlSecretRef" tf:"-"`
 }
 
 type NotificationObservation struct {
@@ -181,13 +181,13 @@ type NotificationParameters struct {
 	// (String, Sensitive) Set up an incoming WebHook integration within your Slack account. Copy and paste the generated WebHook URL into the field above.
 	// Set up an incoming WebHook integration within your Slack account. Copy and paste the generated WebHook URL into the field above.
 	// +kubebuilder:validation:Optional
-	URLSecretRef v1.SecretKeySelector `json:"urlSecretRef" tf:"-"`
+	URLSecretRef v2.SecretKeySelector `json:"urlSecretRef" tf:"-"`
 }
 
 // NotificationSpec defines the desired state of Notification
 type NotificationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     NotificationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   NotificationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -203,8 +203,8 @@ type NotificationSpec struct {
 
 // NotificationStatus defines the observed state of Notification.
 type NotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        NotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               NotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

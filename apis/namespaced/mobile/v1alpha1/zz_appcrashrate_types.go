@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppCrashRateInitParameters struct {
@@ -215,8 +214,8 @@ type AppCrashRateSpec struct {
 
 // AppCrashRateStatus defines the observed state of AppCrashRate.
 type AppCrashRateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AppCrashRateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AppCrashRateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

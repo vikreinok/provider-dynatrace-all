@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ControllerConnectionsInitParameters struct {
@@ -22,7 +21,7 @@ type ControllerConnectionsInitParameters struct {
 
 	// (String, Sensitive) API access token for the Ansible Automation Controller. Please note that this token is not refreshed and can expire.
 	// API access token for the Ansible Automation Controller. Please note that this token is not refreshed and can expire.
-	TokenSecretRef *v1.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Api_token
 	// Possible Values: `Api_token`
@@ -61,7 +60,7 @@ type ControllerConnectionsParameters struct {
 	// (String, Sensitive) API access token for the Ansible Automation Controller. Please note that this token is not refreshed and can expire.
 	// API access token for the Ansible Automation Controller. Please note that this token is not refreshed and can expire.
 	// +kubebuilder:validation:Optional
-	TokenSecretRef *v1.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.LocalSecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Api_token
 	// Possible Values: `Api_token`
@@ -93,8 +92,8 @@ type ControllerConnectionsSpec struct {
 
 // ControllerConnectionsStatus defines the observed state of ControllerConnections.
 type ControllerConnectionsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ControllerConnectionsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ControllerConnectionsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

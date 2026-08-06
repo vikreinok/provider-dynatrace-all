@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CompositionPipelineGroupCompositionStagesInitParameters struct {
@@ -275,8 +274,8 @@ type V2DavisProblemsPipelinegroupsSpec struct {
 
 // V2DavisProblemsPipelinegroupsStatus defines the observed state of V2DavisProblemsPipelinegroups.
 type V2DavisProblemsPipelinegroupsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2DavisProblemsPipelinegroupsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2DavisProblemsPipelinegroupsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

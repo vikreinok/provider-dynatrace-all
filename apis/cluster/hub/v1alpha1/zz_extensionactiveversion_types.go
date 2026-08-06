@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ExtensionActiveVersionInitParameters struct {
@@ -53,8 +53,8 @@ type ExtensionActiveVersionParameters struct {
 
 // ExtensionActiveVersionSpec defines the desired state of ExtensionActiveVersion
 type ExtensionActiveVersionSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ExtensionActiveVersionParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ExtensionActiveVersionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -70,8 +70,8 @@ type ExtensionActiveVersionSpec struct {
 
 // ExtensionActiveVersionStatus defines the observed state of ExtensionActiveVersion.
 type ExtensionActiveVersionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ExtensionActiveVersionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ExtensionActiveVersionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

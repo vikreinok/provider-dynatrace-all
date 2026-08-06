@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type BrokenLinksInitParameters struct {
@@ -568,8 +568,8 @@ type SuccessForcingExceptionsParameters struct {
 
 // DetectionParametersSpec defines the desired state of DetectionParameters
 type DetectionParametersSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     DetectionParametersParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   DetectionParametersParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -585,8 +585,8 @@ type DetectionParametersSpec struct {
 
 // DetectionParametersStatus defines the observed state of DetectionParameters.
 type DetectionParametersStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        DetectionParametersObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               DetectionParametersObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

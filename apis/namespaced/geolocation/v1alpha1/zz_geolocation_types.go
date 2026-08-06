@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type GeolocationInitParameters struct {
@@ -71,8 +70,8 @@ type GeolocationSpec struct {
 
 // GeolocationStatus defines the observed state of Geolocation.
 type GeolocationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        GeolocationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               GeolocationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

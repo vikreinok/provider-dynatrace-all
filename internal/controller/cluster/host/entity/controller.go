@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"net/url"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
@@ -123,7 +123,7 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 	}
 
 	if entityName == "" {
-		cr.SetConditions(xpv1.ReconcileError(errors.New("spec.forProvider.name is required")))
+		cr.SetConditions(xpv2.ReconcileError(errors.New("spec.forProvider.name is required")))
 		return managed.ExternalObservation{
 			ResourceExists:   true,
 			ResourceUpToDate: true,
@@ -132,7 +132,7 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 
 	id, tags, count, err := e.service.Lookup(ctx, entityType, entityName)
 	if err != nil {
-		cr.SetConditions(xpv1.ReconcileError(err))
+		cr.SetConditions(xpv2.ReconcileError(err))
 		return managed.ExternalObservation{}, err
 	}
 
@@ -141,14 +141,14 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 		cr.Status.AtProvider.Tags = tags
 		meta.SetExternalName(cr, id)
 		if count > 1 {
-			cr.SetConditions(xpv1.Available().WithMessage(fmt.Sprintf("Warning: Multiple entities (%d) matched query. Using first match: %s", count, id)))
+			cr.SetConditions(xpv2.Available().WithMessage(fmt.Sprintf("Warning: Multiple entities (%d) matched query. Using first match: %s", count, id)))
 		} else {
-			cr.SetConditions(xpv1.Available())
+			cr.SetConditions(xpv2.Available())
 		}
 	} else {
 		cr.Status.AtProvider.EntityID = nil
 		cr.Status.AtProvider.Tags = nil
-		cr.SetConditions(xpv1.Unavailable().WithMessage(fmt.Sprintf("Entity %s not found in Dynatrace yet", entityName)))
+		cr.SetConditions(xpv2.Unavailable().WithMessage(fmt.Sprintf("Entity %s not found in Dynatrace yet", entityName)))
 	}
 
 	return managed.ExternalObservation{

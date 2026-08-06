@@ -6,104 +6,104 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ReplayResourceCapture) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *ReplayResourceCapture) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ReplayResourceCapture) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) GetProviderConfigReference() *xpv1.Reference {
+func (mg *ReplayResourceCapture) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *ReplayResourceCapture) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) SetConditions(c ...xpv1.Condition) {
+func (mg *ReplayResourceCapture) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *ReplayResourceCapture) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ReplayResourceCapture) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *ReplayResourceCapture) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ReplayResourceCapture.
-func (mg *ReplayResourceCapture) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *ReplayResourceCapture) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ReplayWebPrivacy) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *ReplayWebPrivacy) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ReplayWebPrivacy) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) GetProviderConfigReference() *xpv1.Reference {
+func (mg *ReplayWebPrivacy) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *ReplayWebPrivacy) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) SetConditions(c ...xpv1.Condition) {
+func (mg *ReplayWebPrivacy) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *ReplayWebPrivacy) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ReplayWebPrivacy) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *ReplayWebPrivacy) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ReplayWebPrivacy.
-func (mg *ReplayWebPrivacy) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *ReplayWebPrivacy) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

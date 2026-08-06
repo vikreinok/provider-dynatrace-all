@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SMTPInitParameters struct {
@@ -34,7 +33,7 @@ type SMTPInitParameters struct {
 
 	// (String, Sensitive) Password
 	// Password
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (Number) Integer value of port. Default: 25
 	// Integer value of port. Default: `25`
@@ -116,7 +115,7 @@ type SMTPParameters struct {
 	// (String, Sensitive) Password
 	// Password
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (Number) Integer value of port. Default: 25
 	// Integer value of port. Default: `25`
@@ -158,8 +157,8 @@ type SMTPSpec struct {
 
 // SMTPStatus defines the observed state of SMTP.
 type SMTPStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SMTPObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SMTPObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

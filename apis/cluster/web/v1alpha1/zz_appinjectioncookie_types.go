@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppInjectionCookieInitParameters struct {
@@ -79,8 +79,8 @@ type AppInjectionCookieParameters struct {
 
 // AppInjectionCookieSpec defines the desired state of AppInjectionCookie
 type AppInjectionCookieSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AppInjectionCookieParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AppInjectionCookieParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -96,8 +96,8 @@ type AppInjectionCookieSpec struct {
 
 // AppInjectionCookieStatus defines the observed state of AppInjectionCookie.
 type AppInjectionCookieStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AppInjectionCookieObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AppInjectionCookieObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2SecurityEventsPipelinesCostAllocationInitParameters struct {
@@ -40114,8 +40113,8 @@ type V2SecurityEventsPipelinesSpec struct {
 
 // V2SecurityEventsPipelinesStatus defines the observed state of V2SecurityEventsPipelines.
 type V2SecurityEventsPipelinesStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2SecurityEventsPipelinesObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2SecurityEventsPipelinesObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

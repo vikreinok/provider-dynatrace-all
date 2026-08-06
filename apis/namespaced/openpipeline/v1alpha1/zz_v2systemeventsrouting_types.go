@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2SystemEventsRoutingInitParameters struct {
@@ -164,8 +163,8 @@ type V2SystemEventsRoutingSpec struct {
 
 // V2SystemEventsRoutingStatus defines the observed state of V2SystemEventsRouting.
 type V2SystemEventsRoutingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2SystemEventsRoutingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2SystemEventsRoutingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

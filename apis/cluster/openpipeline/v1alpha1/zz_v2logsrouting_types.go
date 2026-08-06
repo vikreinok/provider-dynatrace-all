@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2LogsRoutingInitParameters struct {
@@ -82,11 +82,11 @@ type V2LogsRoutingRoutingEntriesRoutingEntryInitParameters struct {
 
 	// Reference to a V2LogsPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDRef *v1.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
+	PipelineIDRef *v2.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
 
 	// Selector for a V2LogsPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDSelector *v1.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
+	PipelineIDSelector *v2.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
 
 	// (String) Pipeline Type. Possible values: builtin, custom
 	// Pipeline Type. Possible values: `builtin`, `custom`
@@ -150,11 +150,11 @@ type V2LogsRoutingRoutingEntriesRoutingEntryParameters struct {
 
 	// Reference to a V2LogsPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDRef *v1.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
+	PipelineIDRef *v2.Reference `json:"pipelineIdRef,omitempty" tf:"-"`
 
 	// Selector for a V2LogsPipelines to populate pipelineId.
 	// +kubebuilder:validation:Optional
-	PipelineIDSelector *v1.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
+	PipelineIDSelector *v2.Selector `json:"pipelineIdSelector,omitempty" tf:"-"`
 
 	// (String) Pipeline Type. Possible values: builtin, custom
 	// Pipeline Type. Possible values: `builtin`, `custom`
@@ -164,8 +164,8 @@ type V2LogsRoutingRoutingEntriesRoutingEntryParameters struct {
 
 // V2LogsRoutingSpec defines the desired state of V2LogsRouting
 type V2LogsRoutingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     V2LogsRoutingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   V2LogsRoutingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -181,8 +181,8 @@ type V2LogsRoutingSpec struct {
 
 // V2LogsRoutingStatus defines the observed state of V2LogsRouting.
 type V2LogsRoutingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2LogsRoutingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2LogsRoutingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

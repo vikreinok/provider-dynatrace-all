@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TowerNotificationInitParameters struct {
@@ -71,7 +71,7 @@ type TowerNotificationInitParameters struct {
 
 	// (String, Sensitive) Account password.
 	// Account password.
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) The ID of the associated alerting profile.
 	// The ID of the associated alerting profile.
@@ -215,7 +215,7 @@ type TowerNotificationParameters struct {
 	// (String, Sensitive) Account password.
 	// Account password.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) The ID of the associated alerting profile.
 	// The ID of the associated alerting profile.
@@ -230,8 +230,8 @@ type TowerNotificationParameters struct {
 
 // TowerNotificationSpec defines the desired state of TowerNotification
 type TowerNotificationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TowerNotificationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TowerNotificationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -247,8 +247,8 @@ type TowerNotificationSpec struct {
 
 // TowerNotificationStatus defines the observed state of TowerNotification.
 type TowerNotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TowerNotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TowerNotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

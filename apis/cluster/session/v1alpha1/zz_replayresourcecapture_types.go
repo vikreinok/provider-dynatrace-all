@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ReplayResourceCaptureInitParameters struct {
@@ -69,8 +69,8 @@ type ReplayResourceCaptureParameters struct {
 
 // ReplayResourceCaptureSpec defines the desired state of ReplayResourceCapture
 type ReplayResourceCaptureSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ReplayResourceCaptureParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ReplayResourceCaptureParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -86,8 +86,8 @@ type ReplayResourceCaptureSpec struct {
 
 // ReplayResourceCaptureStatus defines the observed state of ReplayResourceCapture.
 type ReplayResourceCaptureStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ReplayResourceCaptureObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ReplayResourceCaptureObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

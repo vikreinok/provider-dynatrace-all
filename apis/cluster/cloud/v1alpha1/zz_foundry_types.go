@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type FoundryInitParameters struct {
@@ -37,7 +37,7 @@ type FoundryInitParameters struct {
 
 	// (String, Sensitive) Cloud Foundry Password
 	// Cloud Foundry Password
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Cloud Foundry Username
 	// Cloud Foundry Username
@@ -104,7 +104,7 @@ type FoundryParameters struct {
 	// (String, Sensitive) Cloud Foundry Password
 	// Cloud Foundry Password
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (String) Cloud Foundry Username
 	// Cloud Foundry Username
@@ -114,8 +114,8 @@ type FoundryParameters struct {
 
 // FoundrySpec defines the desired state of Foundry
 type FoundrySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     FoundryParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   FoundryParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -131,8 +131,8 @@ type FoundrySpec struct {
 
 // FoundryStatus defines the observed state of Foundry.
 type FoundryStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        FoundryObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               FoundryObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

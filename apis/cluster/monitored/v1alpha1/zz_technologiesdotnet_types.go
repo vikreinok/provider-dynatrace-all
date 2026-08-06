@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TechnologiesDotnetInitParameters struct {
@@ -66,8 +66,8 @@ type TechnologiesDotnetParameters struct {
 
 // TechnologiesDotnetSpec defines the desired state of TechnologiesDotnet
 type TechnologiesDotnetSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TechnologiesDotnetParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TechnologiesDotnetParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -83,8 +83,8 @@ type TechnologiesDotnetSpec struct {
 
 // TechnologiesDotnetStatus defines the observed state of TechnologiesDotnet.
 type TechnologiesDotnetStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TechnologiesDotnetObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TechnologiesDotnetObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

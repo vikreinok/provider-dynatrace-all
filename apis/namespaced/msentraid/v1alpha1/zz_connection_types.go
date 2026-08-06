@@ -10,19 +10,18 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionInitParameters struct {
 
 	// (String, Sensitive) Application (client) ID of your app registered in Microsoft Azure App registrations
 	// Application (client) ID of your app registered in Microsoft Azure App registrations
-	ApplicationIDSecretRef v1.LocalSecretKeySelector `json:"applicationIdSecretRef" tf:"-"`
+	ApplicationIDSecretRef v2.LocalSecretKeySelector `json:"applicationIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Client secret of your app registered in Microsoft Azure App registrations
 	// Client secret of your app registered in Microsoft Azure App registrations
-	ClientSecretSecretRef v1.LocalSecretKeySelector `json:"clientSecretSecretRef" tf:"-"`
+	ClientSecretSecretRef v2.LocalSecretKeySelector `json:"clientSecretSecretRef" tf:"-"`
 
 	// (String) Description
 	// Description
@@ -30,7 +29,7 @@ type ConnectionInitParameters struct {
 
 	// (String, Sensitive) Directory (tenant) ID of Microsoft Entra Identity Developer
 	// Directory (tenant) ID of Microsoft Entra Identity Developer
-	DirectoryIDSecretRef v1.LocalSecretKeySelector `json:"directoryIdSecretRef" tf:"-"`
+	DirectoryIDSecretRef v2.LocalSecretKeySelector `json:"directoryIdSecretRef" tf:"-"`
 
 	// (String) The name of the Microsoft Entra Identity Developer connection
 	// The name of the Microsoft Entra Identity Developer connection
@@ -56,12 +55,12 @@ type ConnectionParameters struct {
 	// (String, Sensitive) Application (client) ID of your app registered in Microsoft Azure App registrations
 	// Application (client) ID of your app registered in Microsoft Azure App registrations
 	// +kubebuilder:validation:Optional
-	ApplicationIDSecretRef v1.LocalSecretKeySelector `json:"applicationIdSecretRef" tf:"-"`
+	ApplicationIDSecretRef v2.LocalSecretKeySelector `json:"applicationIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Client secret of your app registered in Microsoft Azure App registrations
 	// Client secret of your app registered in Microsoft Azure App registrations
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef v1.LocalSecretKeySelector `json:"clientSecretSecretRef" tf:"-"`
+	ClientSecretSecretRef v2.LocalSecretKeySelector `json:"clientSecretSecretRef" tf:"-"`
 
 	// (String) Description
 	// Description
@@ -71,7 +70,7 @@ type ConnectionParameters struct {
 	// (String, Sensitive) Directory (tenant) ID of Microsoft Entra Identity Developer
 	// Directory (tenant) ID of Microsoft Entra Identity Developer
 	// +kubebuilder:validation:Optional
-	DirectoryIDSecretRef v1.LocalSecretKeySelector `json:"directoryIdSecretRef" tf:"-"`
+	DirectoryIDSecretRef v2.LocalSecretKeySelector `json:"directoryIdSecretRef" tf:"-"`
 
 	// (String) The name of the Microsoft Entra Identity Developer connection
 	// The name of the Microsoft Entra Identity Developer connection
@@ -98,8 +97,8 @@ type ConnectionSpec struct {
 
 // ConnectionStatus defines the observed state of Connection.
 type ConnectionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConnectionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConnectionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

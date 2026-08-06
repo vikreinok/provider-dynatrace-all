@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Workloaddetection.
-func (mg *Workloaddetection) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Workloaddetection) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Workloaddetection.
-func (mg *Workloaddetection) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Workloaddetection) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Workloaddetection.
-func (mg *Workloaddetection) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Workloaddetection) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Workloaddetection.
-func (mg *Workloaddetection) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Workloaddetection) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Workloaddetection.
-func (mg *Workloaddetection) SetConditions(c ...xpv1.Condition) {
+func (mg *Workloaddetection) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Workloaddetection.
-func (mg *Workloaddetection) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Workloaddetection) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Workloaddetection.
-func (mg *Workloaddetection) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Workloaddetection) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Workloaddetection.
-func (mg *Workloaddetection) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Workloaddetection) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

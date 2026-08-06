@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PermissionInitParameters struct {
@@ -240,8 +240,8 @@ type SharingParameters struct {
 
 // SharingSpec defines the desired state of Sharing
 type SharingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SharingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SharingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -257,8 +257,8 @@ type SharingSpec struct {
 
 // SharingStatus defines the observed state of Sharing.
 type SharingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SharingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SharingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

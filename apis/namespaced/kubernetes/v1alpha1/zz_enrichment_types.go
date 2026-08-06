@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type EnrichmentInitParameters struct {
@@ -299,8 +298,8 @@ type EnrichmentSpec struct {
 
 // EnrichmentStatus defines the observed state of Enrichment.
 type EnrichmentStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        EnrichmentObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               EnrichmentObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

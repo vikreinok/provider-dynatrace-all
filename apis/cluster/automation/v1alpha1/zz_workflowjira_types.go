@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type WorkflowJiraInitParameters struct {
@@ -25,11 +25,11 @@ type WorkflowJiraInitParameters struct {
 
 	// (String, Sensitive) Password of the Jira user
 	// Password of the Jira user
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Token for the selected authentication type
 	// Token for the selected authentication type
-	TokenSecretRef *v1.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Basic, Cloud_token, Pat
 	// Possible Values: `Basic`, `Cloud_token`, `Pat`
@@ -85,12 +85,12 @@ type WorkflowJiraParameters struct {
 	// (String, Sensitive) Password of the Jira user
 	// Password of the Jira user
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Token for the selected authentication type
 	// Token for the selected authentication type
 	// +kubebuilder:validation:Optional
-	TokenSecretRef *v1.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) Possible Values: Basic, Cloud_token, Pat
 	// Possible Values: `Basic`, `Cloud_token`, `Pat`
@@ -110,8 +110,8 @@ type WorkflowJiraParameters struct {
 
 // WorkflowJiraSpec defines the desired state of WorkflowJira
 type WorkflowJiraSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     WorkflowJiraParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   WorkflowJiraParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -127,8 +127,8 @@ type WorkflowJiraSpec struct {
 
 // WorkflowJiraStatus defines the observed state of WorkflowJira.
 type WorkflowJiraStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WorkflowJiraObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WorkflowJiraObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

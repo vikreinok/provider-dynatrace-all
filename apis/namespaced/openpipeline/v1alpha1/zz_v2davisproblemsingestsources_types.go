@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type V2DavisProblemsIngestsourcesInitParameters struct {
@@ -4246,8 +4245,8 @@ type V2DavisProblemsIngestsourcesSpec struct {
 
 // V2DavisProblemsIngestsourcesStatus defines the observed state of V2DavisProblemsIngestsources.
 type V2DavisProblemsIngestsourcesStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2DavisProblemsIngestsourcesObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2DavisProblemsIngestsourcesObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

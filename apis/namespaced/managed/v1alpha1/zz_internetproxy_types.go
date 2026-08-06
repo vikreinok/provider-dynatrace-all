@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type InternetProxyInitParameters struct {
@@ -23,7 +22,7 @@ type InternetProxyInitParameters struct {
 
 	// (String, Sensitive) Password of proxy server, null means do not change previous value
 	// Password of proxy server, null means do not change previous value
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (Number) Port of proxy server
 	// Port of proxy server
@@ -80,7 +79,7 @@ type InternetProxyParameters struct {
 	// (String, Sensitive) Password of proxy server, null means do not change previous value
 	// Password of proxy server, null means do not change previous value
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (Number) Port of proxy server
 	// Port of proxy server
@@ -122,8 +121,8 @@ type InternetProxySpec struct {
 
 // InternetProxyStatus defines the observed state of InternetProxy.
 type InternetProxyStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        InternetProxyObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               InternetProxyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

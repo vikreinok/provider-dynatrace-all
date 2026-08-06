@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CaptureRuleInitParameters struct {
@@ -175,8 +175,8 @@ type MatchesParameters struct {
 
 // CaptureRuleSpec defines the desired state of CaptureRule
 type CaptureRuleSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     CaptureRuleParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   CaptureRuleParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -192,8 +192,8 @@ type CaptureRuleSpec struct {
 
 // CaptureRuleStatus defines the observed state of CaptureRule.
 type CaptureRuleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CaptureRuleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CaptureRuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

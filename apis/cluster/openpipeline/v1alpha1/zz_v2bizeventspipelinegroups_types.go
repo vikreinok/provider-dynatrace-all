@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CompositionInitParameters struct {
@@ -257,8 +257,8 @@ type V2BizeventsPipelinegroupsParameters struct {
 
 // V2BizeventsPipelinegroupsSpec defines the desired state of V2BizeventsPipelinegroups
 type V2BizeventsPipelinegroupsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     V2BizeventsPipelinegroupsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   V2BizeventsPipelinegroupsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -274,8 +274,8 @@ type V2BizeventsPipelinegroupsSpec struct {
 
 // V2BizeventsPipelinegroupsStatus defines the observed state of V2BizeventsPipelinegroups.
 type V2BizeventsPipelinegroupsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        V2BizeventsPipelinegroupsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               V2BizeventsPipelinegroupsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

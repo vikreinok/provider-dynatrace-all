@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type NotificationInitParameters struct {
@@ -28,7 +27,7 @@ type NotificationInitParameters struct {
 
 	// (String, Sensitive) The authorization token for the Trello account.
 	// The authorization token for the Trello account.
-	AuthorizationTokenSecretRef v1.LocalSecretKeySelector `json:"authorizationTokenSecretRef" tf:"-"`
+	AuthorizationTokenSecretRef v2.LocalSecretKeySelector `json:"authorizationTokenSecretRef" tf:"-"`
 
 	// (String) Trello board ID problem cards should be assigned to
 	// Trello board ID problem cards should be assigned to
@@ -220,7 +219,7 @@ type NotificationParameters struct {
 	// (String, Sensitive) The authorization token for the Trello account.
 	// The authorization token for the Trello account.
 	// +kubebuilder:validation:Optional
-	AuthorizationTokenSecretRef v1.LocalSecretKeySelector `json:"authorizationTokenSecretRef" tf:"-"`
+	AuthorizationTokenSecretRef v2.LocalSecretKeySelector `json:"authorizationTokenSecretRef" tf:"-"`
 
 	// (String) Trello board ID problem cards should be assigned to
 	// Trello board ID problem cards should be assigned to
@@ -328,8 +327,8 @@ type NotificationSpec struct {
 
 // NotificationStatus defines the observed state of Notification.
 type NotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        NotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               NotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

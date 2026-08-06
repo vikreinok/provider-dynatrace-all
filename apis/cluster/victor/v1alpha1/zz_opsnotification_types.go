@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type OpsNotificationInitParameters struct {
@@ -19,7 +19,7 @@ type OpsNotificationInitParameters struct {
 	// The API key for the target Splunk On-Call account.
 	//
 	// Receive your Splunk On-Call API key by navigating to: Settings -> Integrations -> Rest Endpoint -> Dynatrace.
-	APIKeySecretRef *v1.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
+	APIKeySecretRef *v2.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
 
 	// (Boolean) This setting is enabled (true) or disabled (false)
 	// This setting is enabled (`true`) or disabled (`false`)
@@ -123,7 +123,7 @@ type OpsNotificationParameters struct {
 	//
 	// Receive your Splunk On-Call API key by navigating to: Settings -> Integrations -> Rest Endpoint -> Dynatrace.
 	// +kubebuilder:validation:Optional
-	APIKeySecretRef *v1.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
+	APIKeySecretRef *v2.SecretKeySelector `json:"apiKeySecretRef,omitempty" tf:"-"`
 
 	// (Boolean) This setting is enabled (true) or disabled (false)
 	// This setting is enabled (`true`) or disabled (`false`)
@@ -178,8 +178,8 @@ type OpsNotificationParameters struct {
 
 // OpsNotificationSpec defines the desired state of OpsNotification
 type OpsNotificationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     OpsNotificationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   OpsNotificationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -195,8 +195,8 @@ type OpsNotificationSpec struct {
 
 // OpsNotificationStatus defines the observed state of OpsNotification.
 type OpsNotificationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OpsNotificationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OpsNotificationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

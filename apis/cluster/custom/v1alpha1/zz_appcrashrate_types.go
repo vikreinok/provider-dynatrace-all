@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppCrashRateInitParameters struct {
@@ -197,8 +197,8 @@ type CrashRateIncreaseParameters struct {
 
 // AppCrashRateSpec defines the desired state of AppCrashRate
 type AppCrashRateSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AppCrashRateParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AppCrashRateParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -214,8 +214,8 @@ type AppCrashRateSpec struct {
 
 // AppCrashRateStatus defines the observed state of AppCrashRate.
 type AppCrashRateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AppCrashRateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AppCrashRateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

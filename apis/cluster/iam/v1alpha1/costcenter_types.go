@@ -8,7 +8,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v1 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CostCenterInitParameters struct {
@@ -42,8 +42,8 @@ type CostCenterParameters struct {
 
 // CostCenterSpec defines the desired state of CostCenter
 type CostCenterSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     CostCenterParameters `json:"forProvider"`
+	v1.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   CostCenterParameters `json:"forProvider"`
 	// InitProvider holds the same fields as ForProvider, with the exception
 	// of Identifier and other resource reference fields.
 	InitProvider CostCenterInitParameters `json:"initProvider,omitempty"`
@@ -51,8 +51,8 @@ type CostCenterSpec struct {
 
 // CostCenterStatus defines the observed state of CostCenter.
 type CostCenterStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CostCenterObservation `json:"atProvider,omitempty"`
+	v1.ManagedResourceStatus `json:",inline"`
+	AtProvider               CostCenterObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
