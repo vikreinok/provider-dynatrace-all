@@ -11,13 +11,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
-	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
 	"github.com/pkg/errors"
 	"golang.org/x/oauth2/clientcredentials"
@@ -100,10 +101,11 @@ func (c *connector) Connect(ctx context.Context, mg resource.Managed) (managed.E
 		return nil, errors.Wrap(err, errNewClient)
 	}
 
-	return &external{service: svc}, nil
+	return &external{kube: c.kube, service: svc}, nil
 }
 
 type external struct {
+	kube    client.Client
 	service service
 }
 
@@ -114,7 +116,12 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 	}
 
 	key := meta.GetExternalName(cr)
-	if key == "" {
+	targetKey := key
+	if cr.Spec.ForProvider.Key != nil && *cr.Spec.ForProvider.Key != "" {
+		targetKey = *cr.Spec.ForProvider.Key
+	}
+
+	if key == "" && targetKey == "" {
 		return managed.ExternalObservation{ResourceExists: false}, nil
 	}
 
@@ -124,7 +131,13 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 	}
 
 	for _, item := range list {
-		if item.Key == key {
+		if (key != "" && item.Key == key) || (targetKey != "" && item.Key == targetKey) {
+			if meta.GetExternalName(cr) != item.Key {
+				meta.SetExternalName(cr, item.Key)
+				if err := e.kube.Update(ctx, cr); err != nil {
+					return managed.ExternalObservation{}, errors.Wrap(err, "cannot update external-name annotation")
+				}
+			}
 			cr.Status.AtProvider.Key = &item.Key
 			cr.Status.AtProvider.Value = &item.Value
 			cr.Status.AtProvider.ID = &item.Key
@@ -146,12 +159,31 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 		return managed.ExternalCreation{}, errors.New(errNotCostCenter)
 	}
 
-	err := e.service.Create(ctx, *cr.Spec.ForProvider.Key, *cr.Spec.ForProvider.Value)
+	if cr.Spec.ForProvider.Key == nil {
+		return managed.ExternalCreation{}, errors.New("spec.forProvider.key is required")
+	}
+	key := *cr.Spec.ForProvider.Key
+	val := ""
+	if cr.Spec.ForProvider.Value != nil {
+		val = *cr.Spec.ForProvider.Value
+	}
+
+	err := e.service.Create(ctx, key, val)
 	if err != nil {
+		if strings.Contains(err.Error(), "already been stored") {
+			meta.SetExternalName(cr, key)
+			if updateErr := e.kube.Update(ctx, cr); updateErr != nil {
+				return managed.ExternalCreation{}, errors.Wrap(updateErr, "cannot update external-name annotation after conflict")
+			}
+			return managed.ExternalCreation{}, nil
+		}
 		return managed.ExternalCreation{}, err
 	}
 
-	meta.SetExternalName(cr, *cr.Spec.ForProvider.Key)
+	meta.SetExternalName(cr, key)
+	if updateErr := e.kube.Update(ctx, cr); updateErr != nil {
+		return managed.ExternalCreation{}, errors.Wrap(updateErr, "cannot update external-name annotation")
+	}
 	return managed.ExternalCreation{}, nil
 }
 
@@ -161,7 +193,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 		return managed.ExternalUpdate{}, errors.New(errNotCostCenter)
 	}
 
-	err := e.service.Update(ctx, *cr.Spec.ForProvider.Key, *cr.Spec.ForProvider.Value)
+	key := meta.GetExternalName(cr)
+	if key == "" && cr.Spec.ForProvider.Key != nil {
+		key = *cr.Spec.ForProvider.Key
+	}
+	val := ""
+	if cr.Spec.ForProvider.Value != nil {
+		val = *cr.Spec.ForProvider.Value
+	}
+
+	err := e.service.Update(ctx, key, val)
 	return managed.ExternalUpdate{}, err
 }
 
@@ -291,7 +332,7 @@ func (s *apiService) Delete(ctx context.Context, key string) error {
 	}
 	defer func() { _ = resp.Body.Close() }()
 
-	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusNoContent {
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusNoContent && resp.StatusCode != http.StatusNotFound {
 		b, _ := io.ReadAll(resp.Body)
 		return fmt.Errorf("unexpected status code %d: %s", resp.StatusCode, string(b))
 	}
