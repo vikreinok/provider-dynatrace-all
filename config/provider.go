@@ -162,5 +162,49 @@ func DefaultResourceConfigurations() ujconfig.ResourceOption {
 				Type: "github.com/vikreinok/provider-dynatrace-all/apis/cluster/management/v1alpha1.ZoneV2",
 			}
 		}
+
+		// Register HCLInterpolationEscaper to automatically escape `${` -> `$${` in strings sent ToTerraform
+		r.TerraformConversions = append(r.TerraformConversions, &HCLInterpolationEscaper{})
 	}
+}
+
+type HCLInterpolationEscaper struct{}
+
+func (e *HCLInterpolationEscaper) Convert(params map[string]any, r *ujconfig.Resource, mode ujconfig.Mode) (map[string]any, error) {
+	if mode != ujconfig.ToTerraform {
+		return params, nil
+	}
+	return escapeMap(params), nil
+}
+
+func escapeMap(m map[string]any) map[string]any {
+	res := make(map[string]any, len(m))
+	for k, v := range m {
+		res[k] = escapeValue(v)
+	}
+	return res
+}
+
+func escapeValue(v any) any {
+	switch val := v.(type) {
+	case string:
+		return escapeHCLString(val)
+	case map[string]any:
+		return escapeMap(val)
+	case []any:
+		res := make([]any, len(val))
+		for i, item := range val {
+			res[i] = escapeValue(item)
+		}
+		return res
+	default:
+		return v
+	}
+}
+
+func escapeHCLString(s string) string {
+	s = strings.ReplaceAll(s, "$${", "\x00")
+	s = strings.ReplaceAll(s, "${", "$${")
+	s = strings.ReplaceAll(s, "\x00", "$${")
+	return s
 }
